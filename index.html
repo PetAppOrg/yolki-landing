@@ -2112,7 +2112,7 @@
     <div class="pull-handle"></div>
   </div>
   <div class="video-card" id="videoCard">
-    <video id="heroVideo" muted loop playsinline preload="metadata">
+    <video id="heroVideo" muted loop playsinline preload="metadata" poster="video-cover.png">
       <source src="hero-video.mp4" type="video/mp4">
     </video>
     <div class="video-overlay" id="videoOverlay">
@@ -2779,25 +2779,20 @@ requestAnimationFrame(animate);
   const overlay = document.getElementById('videoOverlay');
   if (!video || !overlay) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        video.play().catch(() => {});
-        overlay.classList.add('hidden');
-      } else {
-        video.pause();
-        overlay.classList.remove('hidden');
-      }
-    });
-  }, { threshold: 0.5 });
-  observer.observe(video);
-
+  // Click overlay to play
   overlay.addEventListener('click', () => {
     video.play().catch(() => {});
     overlay.classList.add('hidden');
   });
+
+  // Click video to pause and show cover again
   video.addEventListener('click', () => {
     video.pause();
+    overlay.classList.remove('hidden');
+  });
+
+  // When video ends or pauses, show overlay
+  video.addEventListener('pause', () => {
     overlay.classList.remove('hidden');
   });
 })();
