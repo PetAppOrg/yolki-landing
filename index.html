@@ -453,7 +453,10 @@
     justify-content: center;
     height: 100vh;
     margin-top: -100vh; /* pull up into the sticky wrapper space */
+    transition: background 0.4s ease;
   }
+
+  .section-video.playing { background: #000; }
 
   .video-pull-tab {
     display: flex;
@@ -3073,6 +3076,7 @@ requestAnimationFrame(animate);
 (function() {
   const video = document.getElementById('heroVideo');
   const overlay = document.getElementById('videoOverlay');
+  const section = document.querySelector('.section-video');
   if (!video || !overlay) return;
 
   // Click overlay to play
@@ -3081,6 +3085,7 @@ requestAnimationFrame(animate);
     video.volume = 1;
     video.play().then(() => {
       overlay.classList.add('hidden');
+      if (section) section.classList.add('playing');
     }).catch((err) => {
       console.warn('Video play error:', err);
       overlay.classList.add('hidden');
@@ -3096,10 +3101,12 @@ requestAnimationFrame(animate);
   // When video ends or pauses, show overlay
   video.addEventListener('pause', () => {
     overlay.classList.remove('hidden');
+    if (section) section.classList.remove('playing');
   });
   video.addEventListener('ended', () => {
     video.currentTime = 0;
     overlay.classList.remove('hidden');
+    if (section) section.classList.remove('playing');
   });
 })();
 
