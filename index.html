@@ -3410,30 +3410,32 @@ requestAnimationFrame(animate);
   });
 })();
 
-// ─── SCROLL: cover & zoom effect on each main section ───
+// ─── SCROLL: cover & zoom (section leaves zooming to background as next covers) ───
 (function() {
   const selector = '.cosmos-block, .section-blog, .section-proof, .section-compare, .section-pricing, .section-app, .section-faq';
   const sections = Array.from(document.querySelectorAll(selector));
   if (!sections.length) return;
 
-  sections.forEach(s => {
-    s.style.transformOrigin = 'center top';
-    s.style.willChange = 'transform, border-radius';
+  sections.forEach((s, i) => {
+    s.style.position = 'sticky';
+    s.style.top = '0';
+    s.style.minHeight = '100vh';
+    s.style.zIndex = String(10 + i);
+    s.style.transformOrigin = 'center center';
+    s.style.willChange = 'transform, opacity';
   });
 
   let ticking = false;
   function update() {
-    const vh = window.innerHeight;
+    const scrollY = window.scrollY || window.pageYOffset;
     sections.forEach(section => {
-      const rect = section.getBoundingClientRect();
-      // Progress: 0 when top edge reaches bottom of viewport, 1 when top edge reaches top
-      const raw = 1 - rect.top / vh;
-      const p = Math.max(0, Math.min(1, raw));
-      const scale = 0.92 + p * 0.08;
-      const radius = (1 - p) * 36;
+      const top = section.offsetTop;
+      const h = section.offsetHeight || 1;
+      const p = Math.max(0, Math.min(1, (scrollY - top) / h));
+      const scale = 1 - p * 0.15;
+      const opacity = 1 - p * 0.6;
       section.style.transform = `scale(${scale})`;
-      section.style.borderTopLeftRadius = `${radius}px`;
-      section.style.borderTopRightRadius = `${radius}px`;
+      section.style.opacity = opacity;
     });
     ticking = false;
   }
