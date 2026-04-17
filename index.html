@@ -2212,12 +2212,32 @@
     box-shadow: 0 3px 8px rgba(0,0,0,0.08);
   }
 
+  /* Motion-blur streak trail above each chaotic pill during fall */
+  .compare-pill-chaos::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    transform: translateX(-50%);
+    width: 65%;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(160,160,160,0) 0%, rgba(160,160,160,0.3) 60%, rgba(160,160,160,0.55) 100%);
+    border-radius: 40%;
+    filter: blur(3px);
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .section-compare.visible .compare-jar-yolki .compare-pill {
     animation: pillFallYolki .7s cubic-bezier(.3,1.4,.5,1) var(--d, 0s) forwards;
   }
 
   .section-compare.visible .compare-pill-chaos {
-    animation: pillFallChaos .9s cubic-bezier(.3,1.2,.5,1) var(--d, 0s) forwards;
+    animation: pillFallChaos 1.1s cubic-bezier(.5,0,.5,1) var(--d, 0s) forwards;
+  }
+
+  .section-compare.visible .compare-pill-chaos::before {
+    animation: streakFade 1.1s cubic-bezier(.5,0,.5,1) var(--d, 0s) forwards;
   }
 
   @keyframes pillFallYolki {
@@ -2226,8 +2246,17 @@
   }
 
   @keyframes pillFallChaos {
-    from { transform: translateY(-80px) rotate(0deg); opacity: 0; }
-    to { transform: translateY(0) rotate(var(--rot, 0deg)); opacity: 1; }
+    0% { transform: translateY(-220px) rotate(0deg); opacity: 0; filter: blur(2px); }
+    15% { opacity: 1; filter: blur(2px); }
+    70% { filter: blur(1.5px); }
+    100% { transform: translateY(0) rotate(var(--rot, 0deg)); opacity: 1; filter: blur(0); }
+  }
+
+  @keyframes streakFade {
+    0% { opacity: 0; height: 40px; }
+    25% { opacity: 0.9; height: 160px; }
+    75% { opacity: 0.7; height: 100px; }
+    100% { opacity: 0; height: 0; }
   }
 
   .compare-cta {
