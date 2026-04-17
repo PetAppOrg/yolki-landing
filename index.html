@@ -2066,73 +2066,163 @@
     background: var(--primary);
     position: relative;
     z-index: 10;
-    overflow: hidden;
+    padding: 48px 32px 32px;
     border-radius: 32px 32px 0 0;
   }
 
-  .footer-inner {
-    position: relative;
-    max-width: 1200px;
+  .footer-card {
+    max-width: 1300px;
     margin: 0 auto;
-    padding: 80px 40px 32px;
+    background: var(--bg);
+    border-radius: 32px;
+    padding: 64px 56px 32px;
+    overflow: hidden;
   }
 
-  .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 60px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .footer-brand-name {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 28px;
-    color: var(--white);
-  }
-
-  .footer-right {
-    display: flex;
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
     gap: 48px;
+    margin-bottom: 48px;
   }
 
-  .footer-col {
+  .footer-subscribe {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .footer-col a {
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--white);
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .footer-col a:hover {
-    opacity: 0.7;
-  }
-
-  .footer-bottom-bar {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-top: 24px;
-    position: relative;
-    z-index: 2;
+    border: 2px solid var(--primary);
+    border-radius: 50px;
+    padding: 4px;
+    gap: 4px;
+    background: #fff;
+    max-width: 440px;
+  }
+  .footer-subscribe input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 12px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+  }
+  .footer-subscribe input::placeholder { color: var(--text-muted); opacity: 0.7; }
+  .footer-subscribe button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.25s;
+    white-space: nowrap;
+  }
+  .footer-subscribe button:hover { background: #00A8A3; }
+
+  .footer-desc {
+    margin-top: 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 420px;
   }
 
-  .footer-bottom-bar span {
+  .footer-trust {
+    display: flex;
+    gap: 28px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .footer-trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
     font-size: 13px;
-    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+    color: var(--text);
+  }
+  .footer-trust-item svg {
+    color: var(--primary);
+    flex-shrink: 0;
   }
 
-  .footer-logo-img { display: none; }
-  .footer-coflint-img { display: none; }
+  .footer-col h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+  .footer-col a,
+  .footer-col p {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 10px;
+  }
+  .footer-col a:hover { color: var(--primary); }
+
+  .footer-brand-block {
+    background: var(--secondary);
+    border-radius: 24px;
+    padding: 56px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    margin-bottom: 32px;
+  }
+  .footer-brand-block img {
+    height: 150px;
+    width: auto;
+    max-width: 100%;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 24px;
+    padding-top: 8px;
+  }
+  .footer-designed {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer-socials {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  .footer-socials a {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--text);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .footer-socials a:hover { background: var(--primary); }
+  .footer-copy {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: right;
+  }
 
   /* ─── ANIMATIONS ─── */
   @keyframes fadeInUp {
@@ -2183,9 +2273,14 @@
     .testimonials-grid { grid-template-columns: 1fr; }
     .proof-stats { flex-direction: column; gap: 32px; }
     .cta-box { padding: 48px 28px; border-radius: 24px; }
-    .footer-content { flex-direction: column; gap: 32px; }
-    .footer-right { flex-direction: row; gap: 40px; }
-    .footer-bottom-bar { flex-direction: column; gap: 8px; text-align: center; }
+    .footer-card { padding: 40px 24px 24px; }
+    .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    .footer-brand-block { padding: 36px 20px; min-height: 160px; }
+    .footer-brand-block img { height: 90px; }
+    .footer-bottom { grid-template-columns: 1fr; text-align: center; gap: 16px; }
+    .footer-copy { text-align: center; }
+    .footer-designed { text-align: center; }
+    .site-footer { padding: 32px 16px 24px; }
   }
 
   /* ═══════════════════════════════════════════ */
@@ -2921,28 +3016,52 @@
 <!-- FOOTER                                      -->
 <!-- ═══════════════════════════════════════════ -->
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-content">
-      <div class="footer-left">
-        <span class="footer-brand-name">Yolki Pet</span>
+  <div class="footer-card">
+    <div class="footer-top">
+      <div>
+        <form class="footer-subscribe" onsubmit="return false;">
+          <input type="email" placeholder="Seu e-mail" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="footer-desc">Educação preventiva e acompanhamento de saúde pro seu pet viver mais e melhor. Validado por veterinários.</p>
+        <div class="footer-trust">
+          <span class="footer-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            Validado por vets
+          </span>
+          <span class="footer-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Seguro & confiável
+          </span>
+        </div>
       </div>
-      <div class="footer-right">
-        <div class="footer-col">
-          <a href="#como-funciona">Como funciona</a>
-          <a href="#features">Features</a>
-          <a href="#download">Cadastro</a>
-          <a href="#faq">FAQ</a>
-        </div>
-        <div class="footer-col">
-          <a href="https://coflint.com" target="_blank">Coflint</a>
-          <a href="#conteudo">Blog</a>
-          <a href="mailto:franz@coflint.com">Contato</a>
-        </div>
+      <div class="footer-col">
+        <h4>Quick links</h4>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#features">Features</a>
+        <a href="#comparacao">Comparativo</a>
+        <a href="#planos">Planos</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get in touch</h4>
+        <p>Coflint OÜ<br>Tallinn, Estônia</p>
+        <p><a href="mailto:franz@coflint.com">franz@coflint.com</a></p>
       </div>
     </div>
-    <div class="footer-bottom-bar">
-      <span>Yolki Pet by Coflint OÜ</span>
-      <span>Designed and built in Brazil</span>
+
+    <div class="footer-brand-block">
+      <img src="yolki-logo.svg" alt="Yolki Pet">
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-designed">Designed and built in Brazil</div>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      </div>
+      <div class="footer-copy">© 2026 Yolki Pet by Coflint OÜ. All rights reserved</div>
     </div>
   </div>
 </footer>
