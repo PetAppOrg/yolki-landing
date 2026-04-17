@@ -2218,7 +2218,13 @@
     animation: none !important;
     transform-origin: center;
     will-change: transform;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
   }
+
+  .compare-jar-gray { cursor: grab; }
+  .compare-jar-gray:active { cursor: grabbing; }
 
   .section-compare.visible .compare-jar-yolki .compare-pill {
     animation: pillFallYolki .7s cubic-bezier(.3,1.4,.5,1) var(--d, 0s) forwards;
@@ -3180,40 +3186,41 @@ requestAnimationFrame(animate);
   }
 
   function initJarPhysics(jar) {
-    const { Engine, World, Bodies } = Matter;
+    const { Engine, World, Bodies, Runner, Events, Mouse, MouseConstraint } = Matter;
     const engine = Engine.create();
     engine.world.gravity.y = 1;
+    engine.positionIterations = 10;
 
     const w = jar.clientWidth;
     const h = jar.clientHeight;
     const wallT = 60;
 
     World.add(engine.world, [
-      Bodies.rectangle(w/2, h + wallT/2, w + wallT*2, wallT, { isStatic: true, friction: 0.4 }),
-      Bodies.rectangle(-wallT/2, h/2, wallT, h*3, { isStatic: true, friction: 0.4 }),
-      Bodies.rectangle(w + wallT/2, h/2, wallT, h*3, { isStatic: true, friction: 0.4 }),
+      Bodies.rectangle(w/2, h + wallT/2 - 4, w + wallT*2, wallT, { isStatic: true, friction: 0.1, restitution: 0.3 }),
+      Bodies.rectangle(-wallT/2 + 4, h/2, wallT, h*3, { isStatic: true, friction: 0.1, restitution: 0.3 }),
+      Bodies.rectangle(w + wallT/2 - 4, h/2, wallT, h*3, { isStatic: true, friction: 0.1, restitution: 0.3 }),
     ]);
 
     const pills = Array.from(jar.querySelectorAll('.compare-pill-chaos'));
     const items = [];
+    const dropXs = [0.3, 0.65, 0.25, 0.55, 0.4, 0.7];
 
-    pills.forEach((pill) => {
+    pills.forEach((pill, i) => {
       const pw = pill.offsetWidth;
       const ph = pill.offsetHeight;
-      const delayStr = (pill.style.getPropertyValue('--d') || '0s').trim();
-      const delayMs = parseFloat(delayStr) * 1000;
+      const delayMs = i * 500;
 
       setTimeout(() => {
-        const dropX = w/2 + (Math.random() - 0.5) * (w * 0.3);
-        const dropY = -80 - Math.random() * 60;
+        const dropX = dropXs[i % dropXs.length] * w + (Math.random() - 0.5) * 20;
+        const dropY = -100 - Math.random() * 40;
         const body = Bodies.rectangle(dropX, dropY, pw, ph, {
           chamfer: { radius: ph/2 },
-          restitution: 0.15,
-          friction: 0.5,
-          frictionAir: 0.015,
-          density: 0.002,
-          angle: (Math.random() - 0.5) * 0.6,
-          angularVelocity: (Math.random() - 0.5) * 0.08,
+          restitution: 0.5,
+          friction: 0.1,
+          frictionAir: 0.01,
+          density: 0.01,
+          angle: (Math.random() - 0.5) * 0.5,
+          angularVelocity: (Math.random() - 0.5) * 0.05,
         });
         World.add(engine.world, body);
         pill.style.transform = `translate(${body.position.x - pw/2}px, ${body.position.y - ph/2}px) rotate(${body.angle}rad)`;
@@ -3222,20 +3229,27 @@ requestAnimationFrame(animate);
       }, delayMs);
     });
 
-    let last = performance.now();
-    function tick(now) {
-      const dt = Math.min(now - last, 32);
-      last = now;
-      Engine.update(engine, dt);
+    // Drag interaction — pills remain grabbable after settling
+    const mouse = Mouse.create(jar);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse,
+      constraint: { stiffness: 0.2, render: { visible: false } },
+    });
+    World.add(engine.world, mouseConstraint);
+    // Don't hijack page scroll wheel
+    jar.removeEventListener('wheel', mouse.mousewheel);
+    jar.removeEventListener('DOMMouseScroll', mouse.mousewheel);
 
+    // Runner + DOM sync via afterUpdate (runs right after each physics step)
+    const runner = Runner.create();
+    Runner.run(runner, engine);
+
+    Events.on(engine, 'afterUpdate', () => {
       for (let i = 0; i < items.length; i++) {
         const { body, pill, pw, ph } = items[i];
         pill.style.transform = `translate(${body.position.x - pw/2}px, ${body.position.y - ph/2}px) rotate(${body.angle}rad)`;
       }
-
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+    });
   }
 })();
 </script>
