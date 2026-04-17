@@ -955,6 +955,98 @@
     font-weight: 800;
   }
 
+  /* Billing toggle (mensal/anual) */
+  .billing-toggle-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  .billing-toggle-wrap .toggle-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+  .billing-toggle-wrap .toggle-label.active { color: #fff; }
+  .billing-toggle-wrap .toggle-label .save-badge {
+    background: var(--success);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 50px;
+    letter-spacing: 0.3px;
+  }
+  .billing-toggle {
+    width: 52px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.25s;
+  }
+  .billing-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  .billing-toggle.annual { background: var(--success); border-color: var(--success); }
+  .billing-toggle.annual .billing-toggle-thumb { transform: translateX(24px); }
+
+  /* Plan tagline + save */
+  .plan-tagline {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .pricing-featured .plan-tagline { color: rgba(255, 255, 255, 0.75); }
+  .plan-features-intro {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    opacity: 0.7;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+    margin-bottom: 4px;
+  }
+  .pricing-featured .plan-features-intro {
+    color: rgba(255, 255, 255, 0.7);
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+  }
+  .plan-save {
+    margin-top: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .plan-save strong { color: var(--success); font-weight: 800; }
+  .pricing-featured .plan-save { color: rgba(255, 255, 255, 0.7); }
+  .pricing-featured .plan-save strong { color: #FFE38F; }
+
   /* ═══════════════════════════════════════════ */
   /* SPRINT 3 — TRUST, SCREENSHOTS, FOUNDERS,   */
   /* PRIVACY                                     */
@@ -4004,15 +4096,25 @@
     <h2 class="pricing-main-title">No dia do lançamento,<br><span class="hl">você terá:</span></h2>
     <p class="pricing-lead">Quem entra agora na lista garante <strong>3 meses do Pro grátis</strong> no Open Beta. Depois, escolhe como quiser.</p>
 
+    <!-- Billing toggle (sales psychology: anchor + save badge) -->
+    <div class="billing-toggle-wrap">
+      <span id="toggleMonthly" class="toggle-label active">Mensal</span>
+      <button id="pricingToggle" class="billing-toggle" aria-label="Alternar mensal/anual">
+        <span class="billing-toggle-thumb"></span>
+      </button>
+      <span id="toggleAnnual" class="toggle-label">Anual <span class="save-badge">-25%</span></span>
+    </div>
+
     <div class="pricing-grid">
       <!-- FREE -->
       <div class="pricing-card">
         <h3 class="plan-name">Grátis</h3>
+        <p class="plan-tagline">Pra começar sem compromisso.</p>
         <div class="plan-features-list">
+          <span><em class="hl-num">1</em> perfil de tutor</span>
           <span><em class="hl-num">1</em> perfil de pet</span>
-          <span><em class="hl-num">3</em> discoveries por dia</span>
+          <span><em class="hl-num">1</em> discovery por dia</span>
           <span>Gamificação básica</span>
-          <span>Streaks e badges</span>
         </div>
         <div class="plan-price">
           <span class="price-currency">R$</span><span class="price-value">0</span>
@@ -4027,33 +4129,36 @@
           <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTEiIGhlaWdodD0iODIiIHZpZXdCb3g9IjAgMCA5MSA4MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQ1LjI5NjkgMC4wNDk4MDQ3QzcwLjI4NiAwLjA0OTgwNDcgOTAuNTQzOSAyMC4zMDc3IDkwLjU0MzkgNDUuMjk2OVY1MS4yNUM5MC41NDM5IDY4LjIwNTEgNzYuNzk4OSA4MS45NTAyIDU5Ljg0MzggODEuOTUwMkgzMC43NUMxMy43OTQ5IDgxLjk1MDIgMC4wNDk4MDQ3IDY4LjIwNTEgMC4wNDk4MDQ3IDUxLjI1VjQ1LjI5NjlDMC4wNDk4MDQ3IDIwLjMwNzcgMjAuMzA3NyAwLjA0OTgwNDcgNDUuMjk2OSAwLjA0OTgwNDdaIiBmaWxsPSIjMDBCQ0I1IiBmaWxsLW9wYWNpdHk9IjAuMSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwLjEiLz4KPHBhdGggZD0iTTUuMTU1NzYgNTAuNDA1OUM1LjE1NTc2IDI4LjAzMzIgMjMuMjkyNCA5Ljg5NjU1IDQ1LjY2NTIgOS44OTY1NUM2OC4wMzc5IDkuODk2NTUgODYuMTc0NiAyOC4wMzMyIDg2LjE3NDYgNTAuNDA1OVY1NC4wNzc2Qzg2LjE3NDYgNjguNzE3OSA3NC4zMDYyIDgwLjU4NjIgNTkuNjY1OSA4MC41ODYySDMxLjY2NDRDMTcuMDI0MSA4MC41ODYyIDUuMTU1NzYgNjguNzE3OSA1LjE1NTc2IDU0LjA3NzZWNTAuNDA1OVoiIGZpbGw9IiMwMEJDQjUiLz4KPHBhdGggZD0iTTYuNjI4NzggNDguNTY0NkM2LjYyODc4IDI3LjIwODggMjMuOTQxMSA5Ljg5NjU1IDQ1LjI5NjggOS44OTY1NUM2Ni42NTI2IDkuODk2NTUgODMuOTY0OSAyNy4yMDg4IDgzLjk2NDkgNDguNTY0NlY1Mi4zMTAzQzgzLjk2NDkgNjYuMzY1IDcyLjU3MTMgNzcuNzU4NiA1OC41MTY2IDc3Ljc1ODZIMzIuMDc3QzE4LjAyMjMgNzcuNzU4NiA2LjYyODc4IDY2LjM2NSA2LjYyODc4IDUyLjMxMDNWNDguNTY0NloiIGZpbGw9InVybCgjcGFpbnQwX3JhZGlhbF8xNzRfMikiLz4KPHBhdGggZD0iTTY1LjY0MjYgMTcuNDA5NkM2My45ODk4IDE0LjY3NjIgNjguMTk5NSAxMi4wOTk4IDcxLjI4MjkgMTIuOTMzOUM3NC4wNDc0IDEzLjY4MTYgNzYuODA5IDE2LjAwODYgNzcuODAxNCAxOC42OTQ5Qzc4Ljc2NjggMjEuMzA3OSA3OC42NTM1IDI0LjEyMSA3Ni4xMzE3IDI3LjQwNDNDNzIuMzQ5NiAzMi4zMjgzIDczLjcyMzggMjMuNDUzOSA3MC4yMDUxIDIwLjc1MTNDNjguMjYyOSAxOS4yNTk1IDY2LjMzOTkgMTguNTYyNyA2NS42NDI2IDE3LjQwOTZaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjI5Ii8+CjxjaXJjbGUgY3g9IjU4IiBjeT0iMzgiIHI9IjEyIiBmaWxsPSIjRTlFOUU5Ii8+CjxjaXJjbGUgY3g9IjU4LjUiIGN5PSIzNi41IiByPSIxMi41IiBmaWxsPSJ3aGl0ZSIvPgo8Y2lyY2xlIGN4PSI1OC41IiBjeT0iMzcuNSIgcj0iNy41IiB0cmFuc2Zvcm09InJvdGF0ZSg0LjU3MTE1IDU4LjUgMzcuNSkiIGZpbGw9IiNGMkUwRkEiLz4KPGNpcmNsZSBjeD0iNTkuNSIgY3k9IjM2LjUiIHI9IjcuNSIgZmlsbD0iIzhGMDZDRCIvPgo8Y2lyY2xlIGN4PSI2NCIgY3k9IjMwIiByPSI0IiBmaWxsPSJ3aGl0ZSIvPgo8Y2lyY2xlIGN4PSIzNCIgY3k9IjM4IiByPSIxMiIgZmlsbD0iI0U5RTlFOSIvPgo8Y2lyY2xlIGN4PSIzNC41IiBjeT0iMzYuNSIgcj0iMTIuNSIgZmlsbD0id2hpdGUiLz4KPGNpcmNsZSBjeD0iMzQuNSIgY3k9IjM3LjUiIHI9IjcuNSIgdHJhbnNmb3JtPSJyb3RhdGUoNC41NzExNSAzNC41IDM3LjUpIiBmaWxsPSIjRjJFMEZBIi8+CjxjaXJjbGUgY3g9IjM1LjUiIGN5PSIzNi41IiByPSI3LjUiIGZpbGw9IiM4RjA2Q0QiLz4KPGNpcmNsZSBjeD0iNDAiIGN5PSIzMCIgcj0iNCIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTMwLjMxMzcgNTcuMTA0M0MyOS4yNTIgNjEuNzU4MiAzNS44MzY5IDYxLjkzMzMgMzcuNjc3MSA2MC42MTUiIHN0cm9rZT0iIzA1NEE0OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik00NS4yOTY5IDAuMDQ5ODA0N0M3MC4yODYgMC4wNDk4MDQ3IDkwLjU0MzkgMjAuMzA3NyA5MC41NDM5IDQ1LjI5NjlWNTEuMjVDOTAuNTQzOSA2OC4yMDUxIDc2Ljc5ODkgODEuOTUwMiA1OS44NDM4IDgxLjk1MDJIMzAuNzVDMTMuNzk0OSA4MS45NTAyIDAuMDQ5ODA0NyA2OC4yMDUxIDAuMDQ5ODA0NyA1MS4yNVY0NS4yOTY5QzAuMDQ5ODA0NyAyMC4zMDc3IDIwLjMwNzcgMC4wNDk4MDQ3IDQ1LjI5NjkgMC4wNDk4MDQ3WiIgZmlsbD0iIzAwQkNCNSIgZmlsbC1vcGFjaXR5PSIwLjEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMC4xIi8+CjxwYXRoIGQ9Ik01LjE1NTc2IDUwLjQwNTlDNS4xNTU3NiAyOC4wMzMyIDIzLjI5MjQgOS44OTY1NSA0NS42NjUyIDkuODk2NTVDNjguMDM3OSA5Ljg5NjU1IDg2LjE3NDYgMjguMDMzMiA4Ni4xNzQ2IDUwLjQwNTlWNTQuMDc3NkM4Ni4xNzQ2IDY4LjcxNzkgNzQuMzA2MiA4MC41ODYyIDU5LjY2NTkgODAuNTg2MkgzMS42NjQ0QzE3LjAyNDEgODAuNTg2MiA1LjE1NTc2IDY4LjcxNzkgNS4xNTU3NiA1NC4wNzc2VjUwLjQwNTlaIiBmaWxsPSIjMDBCQ0I1Ii8+CjxwYXRoIGQ9Ik02LjYyODc4IDQ4LjU2NDZDNi42Mjg3OCAyNy4yMDg4IDIzLjk0MTEgOS44OTY1NSA0NS4yOTY4IDkuODk2NTVDNjYuNjUyNiA5Ljg5NjU1IDgzLjk2NDkgMjcuMjA4OCA4My45NjQ5IDQ4LjU2NDZWNTIuMzEwM0M4My45NjQ5IDY2LjM2NSA3Mi41NzEzIDc3Ljc1ODYgNTguNTE2NiA3Ny43NTg2SDMyLjA3N0MxOC4wMjIzIDc3Ljc1ODYgNi42Mjg3OCA2Ni4zNjUgNi42Mjg3OCA1Mi4zMTAzVjQ4LjU2NDZaIiBmaWxsPSJ1cmwoI3BhaW50MV9yYWRpYWxfMTc0XzIpIi8+CjxwYXRoIGQ9Ik02NS42NDI2IDE3LjQwOTZDNjMuOTg5OCAxNC42NzYyIDY4LjE5OTUgMTIuMDk5OCA3MS4yODI5IDEyLjkzMzlDNzQuMDQ3NCAxMy42ODE2IDc2LjgwOSAxNi4wMDg2IDc3LjgwMTQgMTguNjk0OUM3OC43NjY4IDIxLjMwNzkgNzguNjUzNSAyNC4xMjEgNzYuMTMxNyAyNy40MDQzQzcyLjM0OTYgMzIuMzI4MyA3My43MjM4IDIzLjQ1MzkgNzAuMjA1MSAyMC43NTEzQzY4LjI2MjkgMTkuMjU5NSA2Ni4zMzk5IDE4LjU2MjcgNjUuNjQyNiAxNy40MDk2WiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC4yOSIvPgo8Y2lyY2xlIGN4PSI1OCIgY3k9IjM4IiByPSIxMiIgZmlsbD0iI0U5RTlFOSIvPgo8Y2lyY2xlIGN4PSI1OC41IiBjeT0iMzYuNSIgcj0iMTIuNSIgZmlsbD0id2hpdGUiLz4KPGNpcmNsZSBjeD0iNTguNSIgY3k9IjM3LjUiIHI9IjcuNSIgdHJhbnNmb3JtPSJyb3RhdGUoNC41NzExNSA1OC41IDM3LjUpIiBmaWxsPSIjRjJFMEZBIi8+CjxjaXJjbGUgY3g9IjU5LjUiIGN5PSIzNi41IiByPSI3LjUiIGZpbGw9IiM4RjA2Q0QiLz4KPGNpcmNsZSBjeD0iNjQiIGN5PSIzMCIgcj0iNCIgZmlsbD0id2hpdGUiLz4KPGNpcmNsZSBjeD0iMzQiIGN5PSIzOCIgcj0iMTIiIGZpbGw9IiNFOUU5RTkiLz4KPGNpcmNsZSBjeD0iMzQuNSIgY3k9IjM2LjUiIHI9IjEyLjUiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjM0LjUiIGN5PSIzNy41IiByPSI3LjUiIHRyYW5zZm9ybT0icm90YXRlKDQuNTcxMTUgMzQuNSAzNy41KSIgZmlsbD0iI0YyRTBGQSIvPgo8Y2lyY2xlIGN4PSIzNS41IiBjeT0iMzYuNSIgcj0iNy41IiBmaWxsPSIjOEYwNkNEIi8+CjxjaXJjbGUgY3g9IjQwIiBjeT0iMzAiIHI9IjQiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0zMC4zMTM3IDU3LjEwNDNDMjkuMjUyIDYxLjc1ODIgMzUuODM2OSA2MS45MzMzIDM3LjY3NzEgNjAuNjE1IiBzdHJva2U9IiMwNTRBNDgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8ZGVmcz4KPHJhZGlhbEdyYWRpZW50IGlkPSJwYWludDBfcmFkaWFsXzE3NF8yIiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoLTQwLjE2OTcgNTYuNTUxNyAtNjQuMTg1NSAtNDEuMTExNCA1My45MzE1IDMyLjUxNzIpIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIG9mZnNldD0iMC4wNTAxNDc4IiBzdG9wLWNvbG9yPSIjQjFGMUVGIiBzdG9wLW9wYWNpdHk9IjAuOTgiLz4KPHN0b3Agb2Zmc2V0PSIwLjYwNTY3MSIgc3RvcC1jb2xvcj0iIzAwQkNCNSIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MV9yYWRpYWxfMTc0XzIiIGN4PSIwIiBjeT0iMCIgcj0iMSIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgtNDAuMTY5NyA1Ni41NTE3IC02NC4xODU1IC00MS4xMTE0IDUzLjkzMTUgMzIuNTE3MikiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agb2Zmc2V0PSIwLjA1MDE0NzgiIHN0b3AtY29sb3I9IiNCMUYxRUYiIHN0b3Atb3BhY2l0eT0iMC45OCIvPgo8c3RvcCBvZmZzZXQ9IjAuNjA1NjcxIiBzdG9wLWNvbG9yPSIjMDBCQ0I1Ii8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+Cg==" alt="Yolki" style="height:64px;">
         </div>
         <h3 class="plan-name">Pro</h3>
+        <p class="plan-tagline">Pra quem cuida a sério.</p>
         <div class="plan-features-list">
+          <span class="plan-features-intro">Tudo do Grátis, mais:</span>
           <span><em class="hl-num">3</em> perfis de pets</span>
-          <span><em class="hl-num">Ilimitados</em> discoveries</span>
+          <span><em class="hl-num">3</em> discoveries por dia</span>
           <span>Hub de estatísticas</span>
           <span>Lembretes inteligentes</span>
-          <span>2x Yolks</span>
         </div>
         <div class="plan-price">
-          <span class="price-currency">R$</span><span class="price-value" data-monthly="14" data-annual="11"><span class="price-amount">14</span></span><span class="price-cents">,<span class="cents-amount" data-monthly="90" data-annual="90">90</span></span>
+          <span class="price-currency">R$</span><span class="price-value" data-monthly="19" data-annual="14"><span class="price-amount">19</span></span><span class="price-cents">,<span class="cents-amount" data-monthly="90" data-annual="90">90</span></span>
           <span class="price-period">por mês</span>
         </div>
+        <p class="plan-save">No plano anual, <strong>economize R$ 60/ano</strong></p>
       </div>
 
       <!-- FAMÍLIA -->
       <div class="pricing-card">
         <h3 class="plan-name">Família</h3>
+        <p class="plan-tagline">Cuidando de todos numa conta só.</p>
         <div class="plan-features-list">
-          <span><em class="hl-num">Ilimitados</em> pets</span>
-          <span><em class="hl-num">4</em> tutores na conta</span>
-          <span>Tudo do Pro</span>
-          <span>3x Yolks</span>
+          <span class="plan-features-intro">Tudo do Pro, mais:</span>
+          <span><em class="hl-num">5</em> perfis de tutor</span>
+          <span><em class="hl-num">10</em> perfis de pet</span>
           <span>Suporte prioritário</span>
         </div>
         <div class="plan-price">
-          <span class="price-currency">R$</span><span class="price-value" data-monthly="24" data-annual="19"><span class="price-amount">24</span></span><span class="price-cents">,<span class="cents-amount" data-monthly="90" data-annual="90">90</span></span>
+          <span class="price-currency">R$</span><span class="price-value" data-monthly="39" data-annual="24"><span class="price-amount">39</span></span><span class="price-cents">,<span class="cents-amount" data-monthly="90" data-annual="90">90</span></span>
           <span class="price-period">por mês</span>
         </div>
+        <p class="plan-save">No plano anual, <strong>economize R$ 180/ano</strong></p>
       </div>
     </div>
 
@@ -4897,6 +5002,7 @@ requestAnimationFrame(animate);
     '.app-left', '.app-right',
     '.app-description', '.waitlist-note',
     '.testimonial-disclaimer',
+    '.phone-mockup',
   ];
 
   // Parents whose direct children should stagger
