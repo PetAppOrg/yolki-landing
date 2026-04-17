@@ -664,9 +664,18 @@
   }
 
   .cosmos-card {
-    border-radius: 20px;
+    --smooth-corners: 5;
+    border-radius: 36px;
     overflow: hidden;
     position: relative;
+  }
+
+  @supports (mask: paint(smooth-corners)) {
+    .cosmos-card {
+      border-radius: 0;
+      mask: paint(smooth-corners);
+      -webkit-mask: paint(smooth-corners);
+    }
   }
 
   .cosmos-card img {
@@ -688,10 +697,19 @@
   }
 
   .cosmos-card-stack img {
+    --smooth-corners: 5;
     flex: 1;
-    border-radius: 16px;
+    border-radius: 30px;
     object-fit: cover;
     min-height: 0;
+  }
+
+  @supports (mask: paint(smooth-corners)) {
+    .cosmos-card-stack img {
+      border-radius: 0;
+      mask: paint(smooth-corners);
+      -webkit-mask: paint(smooth-corners);
+    }
   }
 
   .cosmos-overlay-pill {
@@ -3406,6 +3424,11 @@ requestAnimationFrame(animate);
     if (e.key === 'Escape') closeMenu();
   });
 })();
+
+// ─── SMOOTH CORNERS (Apple squircle) via CSS Paint API (Chromium only) ───
+if ('paintWorklet' in CSS) {
+  CSS.paintWorklet.addModule('smooth-corners.js').catch(() => {});
+}
 
 // ─── COMPARE SECTION: Yolki CSS pills + Matter.js physics for chaos jars ───
 (function() {
