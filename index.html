@@ -1115,6 +1115,10 @@
     max-width: 720px;
     margin: 0 auto 64px;
   }
+  .screens-header .section-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
   .screens-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1480,10 +1484,10 @@
   /* Split layout — text | image | text */
   .cosmos-split {
     display: grid;
-    grid-template-columns: 1fr 1.2fr 1fr;
-    gap: 48px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
     align-items: center;
-    max-width: 1100px;
+    max-width: 960px;
     margin: 0 auto;
   }
 
@@ -1504,7 +1508,6 @@
   }
 
   .cosmos-split-center .cosmos-card-tall {
-    aspect-ratio: 3 / 4.5;
     border-radius: 24px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.12);
   }
@@ -3382,6 +3385,18 @@
     color: var(--text);
   }
 
+  .compare-title .hl {
+    color: var(--primary);
+  }
+
+  .compare-title .compare-vs {
+    font-weight: 400;
+    font-size: 0.65em;
+    color: var(--text-muted);
+    margin: 0 0.1em;
+    vertical-align: middle;
+  }
+
   .compare-subtitle {
     font-size: 18px;
     color: var(--text-muted);
@@ -3758,8 +3773,8 @@
         </div>
       </div>
       <div class="testimonial-card testimonial-light">
-        <div class="testimonial-photo" style="background: var(--secondary);">
-          <img src="ana-carolina.png" alt="Ana Carolina" class="photo-cutout">
+        <div class="testimonial-photo">
+          <div class="photo-placeholder" style="background: var(--secondary);">AC</div>
         </div>
         <div class="testimonial-body">
           <p>"Descobri coisas sobre a saúde do meu cachorro que eu nem imaginava. Agora tenho mais tranquilidade no dia a dia."</p>
@@ -3834,7 +3849,6 @@
       </div>
       <div class="cosmos-card cosmos-card-tall">
         <img src="images/idosos-com-cachorro.webp" alt="Casal com corgi" loading="lazy">
-        <div class="cosmos-overlay-pill">🧠 3 min por dia</div>
       </div>
       <div class="cosmos-card cosmos-card-tall">
         <img src="images/casal-na-janela.webp" alt="Casal com gato" loading="lazy">
@@ -4042,7 +4056,7 @@
 <section class="section-compare" id="comparacao">
   <div class="section-container">
     <div class="compare-heading">
-      <h2 class="compare-title">Yolki Pet vs. <span class="hl">o resto</span></h2>
+      <h2 class="compare-title"><span class="hl">Yolki Pet</span> <span class="compare-vs">vs.</span> o resto</h2>
       <p class="compare-subtitle">Veja a diferença entre ter um especialista que conhece seu pet e sair caçando informação por aí.</p>
     </div>
 
