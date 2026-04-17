@@ -2184,7 +2184,7 @@
     <div class="pull-handle"></div>
   </div>
   <div class="video-card" id="videoCard">
-    <video id="heroVideo" loop playsinline preload="metadata" poster="video-cover.png">
+    <video id="heroVideo" playsinline preload="metadata" poster="video-cover.png">
       <source src="hero-video.mp4" type="video/mp4">
 
     </video>
@@ -2857,6 +2857,10 @@ requestAnimationFrame(animate);
 
   // When video ends or pauses, show overlay
   video.addEventListener('pause', () => {
+    overlay.classList.remove('hidden');
+  });
+  video.addEventListener('ended', () => {
+    video.currentTime = 0;
     overlay.classList.remove('hidden');
   });
 })();
