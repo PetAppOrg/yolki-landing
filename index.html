@@ -2079,27 +2079,17 @@
     z-index: 10;
     padding: 48px 32px 32px;
     border-radius: 32px 32px 0 0;
+    margin-top: -32px;
   }
 
   .footer-card {
     max-width: 1300px;
     margin: 0 auto;
-    background: #242425;
+    background: #FFFFFF;
     border-radius: 32px;
     padding: 64px 56px 32px;
     overflow: visible;
   }
-
-  .footer-card .footer-desc { color: rgba(255,255,255,0.7); }
-  .footer-card .footer-trust-item { color: #fff; }
-  .footer-card .footer-col h4 { color: #fff; }
-  .footer-card .footer-col a,
-  .footer-card .footer-col p { color: rgba(255,255,255,0.7); }
-  .footer-card .footer-col a:hover { color: var(--primary); }
-  .footer-card .footer-designed,
-  .footer-card .footer-copy { color: rgba(255,255,255,0.6); }
-  .footer-card .footer-socials a { background: rgba(255,255,255,0.1); }
-  .footer-card .footer-socials a:hover { background: var(--primary); }
 
   .footer-top {
     display: grid;
@@ -2275,7 +2265,12 @@
   }
 
   @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
+    nav { padding: 12px 16px; }
+    .nav-logo img { height: 54px !important; }
+    .nav-right { gap: 8px; }
+    .nav-cta { padding: 0 18px; height: 44px; font-size: 13px; }
+    .lang-btn { width: 44px; height: 44px; font-size: 18px; }
+
     .orbital-wrapper { width: 360px; height: 360px; }
     .orbital-center { width: 80px; height: 80px; }
     .hero-headline { left: 20px; bottom: 50px; }
@@ -2284,11 +2279,13 @@
 
     .section-container { padding: 0 20px; }
     .section-proof, .section-pricing, .section-cta, .section-app, .section-faq { padding: 80px 0; }
+    .cosmos-block { padding: 72px 0; }
     .testimonials-grid, .pricing-grid, .blog-grid { grid-template-columns: 1fr; }
     .pricing-card-featured { transform: scale(1); }
     .pricing-card-featured:hover { transform: translateY(-4px); }
     .pricing-grid { max-width: 400px; }
     .pricing-signup-form { flex-direction: column; }
+    .pricing-main-title { font-size: clamp(28px, 7vw, 40px); }
     .testimonials-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
     .app-grid { grid-template-columns: 1fr; text-align: center; }
@@ -2298,13 +2295,59 @@
     .testimonials-grid { grid-template-columns: 1fr; }
     .proof-stats { flex-direction: column; gap: 32px; }
     .cta-box { padding: 48px 28px; border-radius: 24px; }
-    .footer-card { padding: 40px 24px 24px; }
-    .footer-top { grid-template-columns: 1fr; gap: 36px; }
-    .footer-brand-block { padding: 16px 20px; }
+    .section-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
+    .cosmos-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
+    .compare-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
+    .faq-main-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
+    .blog-main-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
+
+    /* Compare section */
+    .compare-jar { height: 340px; max-width: 100%; }
+    .compare-label { font-size: 18px; }
+    .compare-pill { font-size: 11px; padding: 8px 14px; }
+    .compare-details-link { font-size: 14px; padding: 12px 22px; }
+
+    /* FAQ */
+    .faq-item summary { padding: 18px 22px; font-size: 15px; }
+    .faq-item p { padding: 0 22px 18px; font-size: 14px; }
+
+    /* Testimonials */
+    .testimonial-card { padding: 24px; }
+
+    /* Entry animations - shorter slide on mobile */
+    .reveal, .reveal-stagger > * { transform: translateY(18px); transition-duration: .7s; }
+
+    /* Footer */
+    .footer-card { padding: 40px 20px 24px; border-radius: 24px; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-brand-block {
+      max-width: 100%;
+      padding: 24px 20px 0;
+      margin-bottom: 32px;
+      border-radius: 18px;
+    }
+    .footer-brand-block img { margin-bottom: -4%; }
     .footer-bottom { grid-template-columns: 1fr; text-align: center; gap: 16px; }
     .footer-copy { text-align: center; }
     .footer-designed { text-align: center; }
-    .site-footer { padding: 32px 16px 24px; }
+    .site-footer { padding: 24px 12px 20px; border-radius: 24px 24px 0 0; }
+
+    /* Subscribe form: keep inline if possible, stack on smaller */
+    .footer-subscribe { flex-wrap: wrap; }
+    .footer-subscribe input { min-width: 0; flex: 1 1 100%; }
+    .footer-subscribe button { flex: 1 1 auto; padding: 10px 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .orbital-wrapper { width: 300px; height: 300px; }
+    .orbital-center { width: 70px; height: 70px; }
+    .hero-headline h1 { font-size: 26px; }
+    .compare-jar { height: 300px; }
+    .compare-pill { font-size: 10px; padding: 6px 12px; }
+    .compare-label { font-size: 16px; }
+    .nav-logo img { height: 46px !important; }
+    .nav-cta { padding: 0 14px; height: 40px; font-size: 12px; }
+    .lang-btn { width: 40px; height: 40px; font-size: 16px; }
   }
 
   /* ═══════════════════════════════════════════ */
