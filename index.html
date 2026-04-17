@@ -451,6 +451,161 @@
     display: block;
   }
 
+  /* ─── HERO SUB + CTAs + PROOF BAR ─── */
+  .hero-sub {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(15px, 1.3vw, 19px);
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-top: 20px;
+    animation: fadeInUp 1s ease-out 0.8s both;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease-out 1s both;
+  }
+
+  .hero-cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--secondary);
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 0 32px;
+    height: 56px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 6px 20px rgba(167, 111, 255, 0.28);
+  }
+  .hero-cta-primary:hover {
+    background: #8F52E8;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(167, 111, 255, 0.38);
+  }
+
+  .hero-cta-secondary {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s;
+  }
+  .hero-cta-secondary:hover { opacity: 0.65; }
+
+  .hero-proof-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding: 9px 18px;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    animation: fadeInUp 1s ease-out 1.2s both;
+  }
+  .hero-proof-bar .proof-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 0 0 rgba(94, 184, 100, 0.5);
+    animation: proofPulse 2s ease-in-out infinite;
+  }
+  .hero-proof-bar .proof-sep {
+    width: 1px;
+    height: 14px;
+    background: rgba(0, 0, 0, 0.15);
+  }
+  .hero-proof-bar .proof-count {
+    color: var(--secondary);
+    font-weight: 800;
+  }
+  .hero-proof-bar .proof-mini-cd {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .hero-proof-bar .proof-mini-cd strong {
+    color: var(--text-primary);
+    font-weight: 800;
+  }
+
+  @keyframes proofPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(94, 184, 100, 0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(94, 184, 100, 0); }
+  }
+
+  /* ─── MOBILE STICKY CTA ─── */
+  .mobile-sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom)) 16px;
+    background: #fff;
+    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.10);
+    transform: translateY(120%);
+    transition: transform 0.35s ease-out;
+  }
+  .mobile-sticky-cta.visible { transform: translateY(0); }
+  .mobile-sticky-cta .msc-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    line-height: 1.3;
+    color: var(--text-muted);
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .mobile-sticky-cta .msc-label strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 1px;
+  }
+  .mobile-sticky-cta .msc-btn {
+    flex-shrink: 0;
+    background: var(--secondary);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .mobile-sticky-cta .msc-btn:active { transform: scale(0.97); }
+
   /* ─── SCROLL ARROW ─── */
   .hero-scroll-arrow {
     position: absolute;
@@ -2273,8 +2428,14 @@
 
     .orbital-wrapper { width: 360px; height: 360px; }
     .orbital-center { width: 80px; height: 80px; }
-    .hero-headline { left: 20px; bottom: 50px; }
+    .hero-headline { left: 20px; right: 20px; bottom: 40px; }
     .hero-headline h1 { font-size: 32px; letter-spacing: -1px; }
+    .hero-sub { font-size: 14px; margin-top: 14px; }
+    .hero-cta-group { margin-top: 22px; gap: 10px; flex-direction: column; align-items: stretch; }
+    .hero-cta-primary { width: 100%; justify-content: center; height: 52px; font-size: 15px; }
+    .hero-cta-secondary { width: 100%; justify-content: center; padding: 8px 0; }
+    .hero-proof-bar { margin-top: 18px; padding: 8px 14px; font-size: 12px; gap: 10px; flex-wrap: wrap; }
+    .mobile-sticky-cta { display: flex; }
     .side-tags { display: none; }
 
     .section-container { padding: 0 20px; }
@@ -2667,9 +2828,27 @@
   <!-- HEADLINE -->
   <div class="hero-headline">
     <h1>
-      Seu pet vive mais,
-      <span class="highlight">com você aprendendo.</span>
+      Seu pet vive mais.
+      <span class="highlight">Começa com 2 min do seu dia.</span>
     </h1>
+    <p class="hero-sub">
+      Micro-aulas diárias e monitoramento de saúde validado por veterinários.
+      Dois minutos por dia para você. Anos a mais ao lado dele.
+    </p>
+    <div class="hero-cta-group">
+      <a href="#download" class="hero-cta-primary" data-cta="hero-primary">
+        Garantir minha vaga grátis →
+      </a>
+      <a href="#video-reveal" class="hero-cta-secondary" data-cta="hero-secondary">
+        Ver como funciona ↓
+      </a>
+    </div>
+    <div class="hero-proof-bar" role="status" aria-live="polite">
+      <span class="proof-dot" aria-hidden="true"></span>
+      <span>🐾 <span class="proof-count">+247</span> tutores já na lista</span>
+      <span class="proof-sep" aria-hidden="true"></span>
+      <span class="proof-mini-cd">Open Beta em <strong id="heroCdDays">--</strong>d <strong id="heroCdHours">--</strong>h</span>
+    </div>
   </div>
 
   <div class="hero-scroll-arrow">
@@ -3362,7 +3541,9 @@ requestAnimationFrame(animate);
   const hours = document.getElementById('cdHours');
   const mins = document.getElementById('cdMins');
   const secs = document.getElementById('cdSecs');
-  if (!days) return;
+  const heroDays = document.getElementById('heroCdDays');
+  const heroHours = document.getElementById('heroCdHours');
+  if (!days && !heroDays) return;
 
   function update() {
     const now = Date.now();
@@ -3371,13 +3552,39 @@ requestAnimationFrame(animate);
     const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const s = Math.floor((diff % (1000 * 60)) / 1000);
-    days.textContent = String(d).padStart(2, '0');
-    hours.textContent = String(h).padStart(2, '0');
-    mins.textContent = String(m).padStart(2, '0');
-    secs.textContent = String(s).padStart(2, '0');
+    if (days) days.textContent = String(d).padStart(2, '0');
+    if (hours) hours.textContent = String(h).padStart(2, '0');
+    if (mins) mins.textContent = String(m).padStart(2, '0');
+    if (secs) secs.textContent = String(s).padStart(2, '0');
+    if (heroDays) heroDays.textContent = String(d);
+    if (heroHours) heroHours.textContent = String(h).padStart(2, '0');
   }
   update();
   setInterval(update, 1000);
+})();
+
+// ─── MOBILE STICKY CTA (show after 400px scroll, hide near #download) ───
+(function() {
+  const cta = document.getElementById('mobileStickyCta');
+  if (!cta) return;
+  const download = document.getElementById('download');
+
+  function update() {
+    const scrolled = window.scrollY > 400;
+    let nearDownload = false;
+    if (download) {
+      const rect = download.getBoundingClientRect();
+      nearDownload = rect.top < window.innerHeight && rect.bottom > 0;
+    }
+    if (scrolled && !nearDownload) {
+      cta.classList.add('visible');
+    } else {
+      cta.classList.remove('visible');
+    }
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
 })();
 
 // ─── WAITLIST FORM (pre-configured, no backend yet) ───
@@ -3897,6 +4104,17 @@ requestAnimationFrame(animate);
   }
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- MOBILE STICKY CTA                            -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="mobile-sticky-cta" id="mobileStickyCta" aria-hidden="false">
+  <div class="msc-label">
+    <strong>Vagas limitadas · Open Beta</strong>
+    Grátis para quem entra agora
+  </div>
+  <a href="#download" class="msc-btn" data-cta="mobile-sticky">Garantir vaga →</a>
+</div>
 
 </body>
 </html>
