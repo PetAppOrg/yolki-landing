@@ -664,18 +664,9 @@
   }
 
   .cosmos-card {
-    --smooth-corners: 5;
     border-radius: 36px;
     overflow: hidden;
     position: relative;
-  }
-
-  @supports (mask: paint(smooth-corners)) {
-    .cosmos-card {
-      border-radius: 0;
-      mask: paint(smooth-corners);
-      -webkit-mask: paint(smooth-corners);
-    }
   }
 
   .cosmos-card img {
@@ -697,20 +688,14 @@
   }
 
   .cosmos-card-stack img {
-    --smooth-corners: 5;
     flex: 1;
     border-radius: 30px;
     object-fit: cover;
     min-height: 0;
   }
 
-  @supports (mask: paint(smooth-corners)) {
-    .cosmos-card-stack img {
-      border-radius: 0;
-      mask: paint(smooth-corners);
-      -webkit-mask: paint(smooth-corners);
-    }
-  }
+  /* Squircle (figma-style corner smoothing) is applied via JS clip-path */
+  .squircle { border-radius: 0 !important; }
 
   .cosmos-overlay-pill {
     position: absolute;
@@ -762,7 +747,7 @@
 
   .cosmos-feature-img {
     position: relative;
-    border-radius: 20px;
+    border-radius: 36px;
     overflow: hidden;
     aspect-ratio: 3 / 4;
     margin-bottom: 20px;
@@ -3425,10 +3410,91 @@ requestAnimationFrame(animate);
   });
 })();
 
-// ─── SMOOTH CORNERS (Apple squircle) via CSS Paint API (Chromium only) ───
-if ('paintWorklet' in CSS) {
-  CSS.paintWorklet.addModule('smooth-corners.js').catch(() => {});
-}
+// ─── SQUIRCLE CORNERS (figma-style 100% smoothing, cross-browser via clip-path) ───
+(function() {
+  const CORNER_RADIUS = 36;
+  const CORNER_SMOOTHING = 1;
+  const SELECTORS = ['.cosmos-card-tall', '.cosmos-feature-img', '.cosmos-card-stack img'];
+
+  const deg2rad = d => d * Math.PI / 180;
+
+  function getPathParams(r, s) {
+    const p = (1 + s) * r;
+    const arcMeasure = 90 * (1 - s);
+    const arcSectionLength = Math.sin(deg2rad(arcMeasure / 2)) * r * Math.sqrt(2);
+    const angleAlpha = (90 - arcMeasure) / 2;
+    const p3p4 = r * Math.tan(deg2rad(angleAlpha / 2));
+    const angleBeta = 45 * s;
+    const c = p3p4 * Math.cos(deg2rad(angleBeta));
+    const d = c * Math.tan(deg2rad(angleBeta));
+    const b = (p - arcSectionLength - c - d) / 3;
+    const a = 2 * b;
+    return { a, b, c, d, p, arcSectionLength, r };
+  }
+
+  function squirclePath(w, h, radius, smoothing) {
+    // Cap radius so (1+s)*r doesn't exceed half the shorter side
+    const maxR = Math.min(w, h) / 2 / (1 + smoothing);
+    const r = Math.min(radius, maxR);
+    const s = Math.max(0, Math.min(1, smoothing));
+    const { a, b, c, d, p, arcSectionLength } = getPathParams(r, s);
+    return (
+      `M ${w - p} 0 ` +
+      `c ${a} 0 ${a + b} 0 ${a + b + c} ${d} ` +
+      `a ${r} ${r} 0 0 1 ${arcSectionLength} ${arcSectionLength} ` +
+      `c ${d} ${c} ${d} ${b + c} ${d} ${a + b + c} ` +
+      `L ${w} ${h - p} ` +
+      `c 0 ${a} 0 ${a + b} ${-d} ${a + b + c} ` +
+      `a ${r} ${r} 0 0 1 ${-arcSectionLength} ${arcSectionLength} ` +
+      `c ${-c} ${d} ${-(b + c)} ${d} ${-(a + b + c)} ${d} ` +
+      `L ${p} ${h} ` +
+      `c ${-a} 0 ${-(a + b)} 0 ${-(a + b + c)} ${-d} ` +
+      `a ${r} ${r} 0 0 1 ${-arcSectionLength} ${-arcSectionLength} ` +
+      `c ${-d} ${-c} ${-d} ${-(b + c)} ${-d} ${-(a + b + c)} ` +
+      `L 0 ${p} ` +
+      `c 0 ${-a} 0 ${-(a + b)} ${d} ${-(a + b + c)} ` +
+      `a ${r} ${r} 0 0 1 ${arcSectionLength} ${-arcSectionLength} ` +
+      `c ${c} ${-d} ${b + c} ${-d} ${a + b + c} ${-d} ` +
+      `Z`
+    );
+  }
+
+  function apply(el) {
+    const w = el.clientWidth;
+    const h = el.clientHeight;
+    if (w < 8 || h < 8) return;
+    const path = squirclePath(w, h, CORNER_RADIUS, CORNER_SMOOTHING);
+    const value = `path('${path}')`;
+    el.style.clipPath = value;
+    el.style.webkitClipPath = value;
+  }
+
+  const targets = new Set();
+  SELECTORS.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('squircle');
+      targets.add(el);
+    });
+  });
+
+  targets.forEach(apply);
+
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(entries => {
+      entries.forEach(e => apply(e.target));
+    });
+    targets.forEach(el => ro.observe(el));
+  } else {
+    window.addEventListener('resize', () => targets.forEach(apply), { passive: true });
+  }
+
+  // Re-apply after images load (sizes may change)
+  targets.forEach(el => {
+    el.querySelectorAll('img').forEach(img => {
+      if (!img.complete) img.addEventListener('load', () => apply(el), { once: true });
+    });
+  });
+})();
 
 // ─── COMPARE SECTION: Yolki CSS pills + Matter.js physics for chaos jars ───
 (function() {
