@@ -2084,11 +2084,22 @@
   .footer-card {
     max-width: 1300px;
     margin: 0 auto;
-    background: #FFFFFF;
+    background: #242425;
     border-radius: 32px;
     padding: 64px 56px 32px;
     overflow: visible;
   }
+
+  .footer-card .footer-desc { color: rgba(255,255,255,0.7); }
+  .footer-card .footer-trust-item { color: #fff; }
+  .footer-card .footer-col h4 { color: #fff; }
+  .footer-card .footer-col a,
+  .footer-card .footer-col p { color: rgba(255,255,255,0.7); }
+  .footer-card .footer-col a:hover { color: var(--primary); }
+  .footer-card .footer-designed,
+  .footer-card .footer-copy { color: rgba(255,255,255,0.6); }
+  .footer-card .footer-socials a { background: rgba(255,255,255,0.1); }
+  .footer-card .footer-socials a:hover { background: var(--primary); }
 
   .footer-top {
     display: grid;
@@ -2189,7 +2200,8 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    margin-bottom: 48px;
+    max-width: 75%;
+    margin: 0 auto 48px;
     position: relative;
     overflow: visible;
   }
