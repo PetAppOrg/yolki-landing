@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Yolki Pet</title>
+<meta name="description" content="Conteúdo validado por veterinários sobre longevidade, prevenção e bem-estar do seu pet.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #00C2B7;
+    --secondary: #A76FFF;
+    --accent: #FFB139;
+    --success: #5EB864;
+    --bg: #FAFAF8;
+    --text-primary: #040404;
+    --text-muted: #6B6B6B;
+    --white: #FFFFFF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(250, 250, 248, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .nav-logo img { height: 60px; }
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.2s;
+  }
+  .nav-back:hover {
+    background: var(--text-primary);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  /* Header */
+  .blog-header {
+    text-align: center;
+    padding: 80px 20px 48px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .blog-header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .blog-header h1 .hl { color: var(--primary); }
+  .blog-header p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* Grid */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px 96px;
+  }
+  .blog-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+  .blog-image {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+  }
+  .blog-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+  }
+  .blog-body {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .blog-date {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .blog-body h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+  .blog-excerpt {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    flex: 1;
+  }
+  .blog-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-top: 14px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .blog-meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+  /* CTA back */
+  .blog-cta-back {
+    text-align: center;
+    padding: 0 20px 96px;
+  }
+  .blog-cta-back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--secondary);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 6px 20px rgba(167, 111, 255, 0.28);
+  }
+  .blog-cta-back a:hover {
+    background: #8F52E8;
+    transform: translateY(-2px);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  footer a { color: var(--secondary); text-decoration: none; }
+
+  @media (max-width: 900px) {
+    .blog-grid { grid-template-columns: 1fr; padding: 0 20px 64px; gap: 20px; }
+    .blog-header { padding: 56px 20px 32px; }
+    nav { padding: 16px 20px; }
+    .nav-logo img { height: 48px; }
+    .nav-back { font-size: 13px; padding: 7px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="./">
+    <img src="yolki-logo.svg" alt="Yolki Pet">
+  </a>
+  <a class="nav-back" href="./">← Voltar</a>
+</nav>
+
+<header class="blog-header">
+  <h1>Conteúdo que transforma<br><span class="hl">cuidado em ciência</span></h1>
+  <p>Artigos revisados por veterinários sobre longevidade, prevenção e bem-estar do seu pet.</p>
+</header>
+
+<div class="blog-grid">
+  <a href="#" class="blog-card">
+    <div class="blog-image">
+      <div class="blog-img-placeholder" style="background: linear-gradient(135deg, #F5D5B0, #E8B87A, #D4956A);">🐕</div>
+    </div>
+    <div class="blog-body">
+      <span class="blog-date">/NUTRIÇÃO</span>
+      <h3>5 alimentos que aumentam a longevidade do seu cão</h3>
+      <p class="blog-excerpt">Descubra quais ingredientes naturais podem fazer diferença real na saúde e expectativa de vida do seu melhor amigo.</p>
+      <div class="blog-meta">
+        <span>Dr. Carlos Mendes</span>
+        <span>5 min de leitura</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="#" class="blog-card">
+    <div class="blog-image">
+      <div class="blog-img-placeholder" style="background: linear-gradient(135deg, #B8D4E3, #7BAED0, #5A93BE);">🐾</div>
+    </div>
+    <div class="blog-body">
+      <span class="blog-date">/PREVENÇÃO</span>
+      <h3>Sinais precoces de problemas cardíacos em pets</h3>
+      <p class="blog-excerpt">Aprenda a identificar os sintomas que passam despercebidos e quando levar seu pet ao veterinário.</p>
+      <div class="blog-meta">
+        <span>Dra. Ana Santos</span>
+        <span>7 min de leitura</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="#" class="blog-card">
+    <div class="blog-image">
+      <div class="blog-img-placeholder" style="background: linear-gradient(135deg, #C5E6C4, #8FCF8D, #5EB864);">🐶</div>
+    </div>
+    <div class="blog-body">
+      <span class="blog-date">/BEM-ESTAR</span>
+      <h3>Como criar uma rotina saudável para seu pet</h3>
+      <p class="blog-excerpt">Hábitos simples que você pode implementar hoje para melhorar a qualidade de vida do seu companheiro.</p>
+      <div class="blog-meta">
+        <span>Dr. Pedro Lima</span>
+        <span>6 min de leitura</span>
+      </div>
+    </div>
+  </a>
+</div>
+
+<div class="blog-cta-back">
+  <a href="./#download">Garantir minha vaga no Yolki →</a>
+</div>
+
+<footer>
+  © 2026 Yolki Pet by Coflint OÜ · <a href="./">Voltar ao site</a>
+</footer>
+
+</body>
+</html>

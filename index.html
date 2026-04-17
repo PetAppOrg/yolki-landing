@@ -2456,6 +2456,150 @@
     color: var(--text-muted);
   }
 
+  /* Referral box (Sprint 4 item 17) */
+  .success-header { margin-bottom: 20px; }
+  .waitlist-success h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .success-position {
+    color: var(--primary);
+    font-weight: 800;
+  }
+
+  .referral-box {
+    background: linear-gradient(135deg, rgba(0,194,183,0.08), rgba(167,111,255,0.1));
+    border: 1px solid rgba(167, 111, 255, 0.2);
+    border-radius: 18px;
+    padding: 20px;
+    margin-top: 12px;
+    text-align: left;
+  }
+  .referral-box h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .referral-box .referral-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .referral-box .referral-desc strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .referral-link-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .referral-link {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 10px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    color: var(--text-primary);
+    outline: none;
+    text-overflow: ellipsis;
+  }
+  .referral-copy {
+    flex-shrink: 0;
+    background: var(--secondary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .referral-copy:hover { background: #8F52E8; }
+  .referral-copy.copied { background: var(--success); }
+
+  .referral-share-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .referral-share {
+    flex: 1 1 auto;
+    min-width: 90px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .referral-share:hover {
+    border-color: var(--secondary);
+    background: rgba(167, 111, 255, 0.06);
+    transform: translateY(-1px);
+  }
+
+  .referral-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.08);
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+    flex-wrap: wrap;
+  }
+  .referral-meta strong { color: var(--secondary); font-weight: 800; }
+  .referral-meta-sep { opacity: 0.4; }
+
+  .waitlist-error {
+    display: none;
+    padding: 12px 14px;
+    background: rgba(251, 90, 97, 0.08);
+    border: 1px solid rgba(251, 90, 97, 0.25);
+    border-radius: 12px;
+    color: var(--error);
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 12px;
+    font-family: 'Nunito', sans-serif;
+  }
+  .waitlist-error.visible { display: block; }
+
+  @media (max-width: 768px) {
+    .referral-box { padding: 16px; }
+    .referral-share-row { gap: 5px; }
+    .referral-share { font-size: 11px; padding: 8px 10px; min-width: 72px; }
+  }
+
   /* ─── FLOATING PET CARDS ─── */
   .floating-cards-container {
     position: absolute;
@@ -3174,7 +3318,7 @@
     <a href="#features">O app</a>
     <a href="#depoimentos">Depoimentos</a>
     <a href="#planos">Planos</a>
-    <a href="#conteudo">Blog</a>
+    <a href="./blog.html">Blog</a>
     <a href="#faq">FAQ</a>
   </div>
   <div class="nav-right">
@@ -3533,10 +3677,8 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- SECTION: BLOG / CONTEÚDO                    -->
-<!-- ═══════════════════════════════════════════ -->
-<section class="section-blog" id="conteudo">
+<!-- BLOG moved to /blog.html — hidden on home -->
+<section class="section-blog" id="conteudo" style="display:none;" aria-hidden="true">
   <div class="section-container">
     <h2 class="blog-main-title">Conteúdo que transforma<br>cuidado em ciência</h2>
 
@@ -3755,10 +3897,31 @@
           <button type="submit" id="waitlistSubmit">Garantir minha vaga</button>
         </form>
         <div class="waitlist-success" id="waitlistSuccess" style="display:none;">
-          <div class="success-icon">✓</div>
-          <strong>Você está na lista!</strong>
-          <p>Enviaremos um email de confirmação em breve.</p>
+          <div class="success-header">
+            <div class="success-icon">✓</div>
+            <h3>Você está dentro, <span id="successName">tutor(a)</span>! 🐾</h3>
+            <p>Posição atual na fila: <span class="success-position" id="successPosition">--</span></p>
+          </div>
+          <div class="referral-box">
+            <h4>Quer subir na fila?</h4>
+            <p class="referral-desc">A cada amigo que entrar pelo seu link: você sobe <strong>10 posições</strong> e ganha <strong>1 mês extra de Pro</strong> no lançamento. <strong>Top 100</strong> = Pro vitalício.</p>
+            <div class="referral-link-row">
+              <input type="text" class="referral-link" id="referralLink" readonly aria-label="Seu link de convite">
+              <button type="button" class="referral-copy" id="referralCopy" aria-label="Copiar link">📋 Copiar</button>
+            </div>
+            <div class="referral-share-row">
+              <a href="#" class="referral-share" id="shareWhatsapp" target="_blank" rel="noopener">📱 WhatsApp</a>
+              <a href="#" class="referral-share" id="shareX" target="_blank" rel="noopener">𝕏 Compartilhar</a>
+              <a href="#" class="referral-share" id="shareEmail">📧 Email</a>
+            </div>
+            <div class="referral-meta">
+              <span>Seus convites: <strong id="successReferrals">0</strong></span>
+              <span class="referral-meta-sep">·</span>
+              <span>Próxima recompensa: <strong>1 convite</strong></span>
+            </div>
+          </div>
         </div>
+        <div class="waitlist-error" id="waitlistError" role="alert"></div>
         <p class="waitlist-note">Gratuito · Sem cartão · Sem spam</p>
 
         <div class="app-bottom-row">
@@ -3905,6 +4068,16 @@
     </div>
   </div>
 </footer>
+
+<!-- Supabase client (for waitlist + referral) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  window.__SUPABASE_URL__ = 'https://evfzrtgmuhosvbtbihcg.supabase.co';
+  window.__SUPABASE_KEY__ = 'sb_publishable_fudNkYqIArYsrgw26UNysw_3njzf_w-';
+  if (window.supabase && window.supabase.createClient) {
+    window.sbClient = window.supabase.createClient(window.__SUPABASE_URL__, window.__SUPABASE_KEY__);
+  }
+</script>
 
 <script>
 // ─── ORBITAL ENGINE ───
@@ -4117,35 +4290,158 @@ requestAnimationFrame(animate);
   update();
 })();
 
-// ─── WAITLIST FORM (pre-configured, no backend yet) ───
+// ─── REFERRAL URL HANDLER (?r=code stored for later submit) ───
+(function() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('r');
+    if (code && /^[a-z0-9]{4,16}$/i.test(code)) {
+      localStorage.setItem('yolki_ref', code);
+    }
+  } catch (_) {}
+})();
+
+// ─── WAITLIST FORM + REFERRAL UI ───
 (function() {
   const form = document.getElementById('waitlistForm');
   const success = document.getElementById('waitlistSuccess');
   const submit = document.getElementById('waitlistSubmit');
+  const errorBox = document.getElementById('waitlistError');
   if (!form) return;
 
-  form.addEventListener('submit', function(e) {
+  const nameEl = document.getElementById('successName');
+  const posEl = document.getElementById('successPosition');
+  const refEl = document.getElementById('successReferrals');
+  const linkInput = document.getElementById('referralLink');
+  const copyBtn = document.getElementById('referralCopy');
+  const shareWA = document.getElementById('shareWhatsapp');
+  const shareX = document.getElementById('shareX');
+  const shareEmail = document.getElementById('shareEmail');
+
+  function showError(msg) {
+    errorBox.textContent = msg;
+    errorBox.classList.add('visible');
+    setTimeout(() => errorBox.classList.remove('visible'), 6000);
+  }
+
+  function buildReferralLink(code) {
+    const origin = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+    return origin + '?r=' + encodeURIComponent(code);
+  }
+
+  function renderSuccess(result) {
+    const firstName = (result.name || '').split(' ')[0] || 'tutor(a)';
+    nameEl.textContent = firstName;
+    posEl.textContent = '#' + result.position;
+    refEl.textContent = result.referrals_count || 0;
+
+    const link = buildReferralLink(result.referral_code);
+    linkInput.value = link;
+
+    const shareText = `Entrei na lista do Yolki Pet — app que ajuda o meu pet a viver mais 🐾. Garante sua vaga comigo:`;
+    shareWA.href = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + link)}`;
+    shareX.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(link)}`;
+    shareEmail.href = `mailto:?subject=${encodeURIComponent('Conheça o Yolki Pet')}&body=${encodeURIComponent(shareText + '\n\n' + link)}`;
+
+    form.style.display = 'none';
+    success.style.display = 'block';
+
+    // Persist for returning visitors
+    try {
+      localStorage.setItem('yolki_waitlist', JSON.stringify({
+        name: result.name,
+        email: result.email || null,
+        position: result.position,
+        referral_code: result.referral_code,
+        referrals_count: result.referrals_count,
+      }));
+    } catch (_) {}
+  }
+
+  async function refreshFromCache(cached) {
+    if (!window.sbClient || !cached.email) return cached;
+    try {
+      const { data: fresh } = await window.sbClient.rpc('get_waitlist_position', { p_email: cached.email });
+      if (fresh && fresh.found) {
+        return { ...cached, ...fresh };
+      }
+    } catch (_) {}
+    return cached;
+  }
+
+  // Copy to clipboard
+  copyBtn.addEventListener('click', async function() {
+    try {
+      await navigator.clipboard.writeText(linkInput.value);
+      copyBtn.textContent = '✓ Copiado!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = '📋 Copiar';
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    } catch (_) {
+      linkInput.select();
+      document.execCommand('copy');
+    }
+  });
+
+  // Form submit → Supabase RPC
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
     const data = new FormData(form);
-    const name = data.get('name');
-    const email = data.get('email');
-    const city = data.get('city');
+    const name = (data.get('name') || '').trim();
+    const email = (data.get('email') || '').trim();
+    const city = (data.get('city') || '').trim();
+    const referredBy = localStorage.getItem('yolki_ref') || null;
 
-    // TODO: Connect to backend API
-    // POST /api/waitlist { name, email, city }
-    // - Save to database
-    // - Send confirmation email to user
-    // - Send notification email to hello@yolki.pet
-    console.log('Waitlist signup:', { name, email, city });
+    if (!name || !email) {
+      showError('Preencha nome e email.');
+      return;
+    }
 
-    // Show success state
     submit.textContent = 'Enviando...';
     submit.disabled = true;
-    setTimeout(() => {
-      form.style.display = 'none';
-      success.style.display = 'block';
-    }, 800);
+    errorBox.classList.remove('visible');
+
+    if (!window.sbClient) {
+      showError('Serviço indisponível. Recarregue a página e tente de novo.');
+      submit.textContent = 'Garantir minha vaga';
+      submit.disabled = false;
+      return;
+    }
+
+    try {
+      const { data: result, error } = await window.sbClient.rpc('join_waitlist', {
+        p_name: name,
+        p_email: email,
+        p_city: city || null,
+        p_referred_by: referredBy,
+      });
+
+      if (error) throw error;
+      if (!result || !result.success) throw new Error('Falha no cadastro.');
+
+      result.email = email.toLowerCase();
+      renderSuccess(result);
+    } catch (err) {
+      console.error('Waitlist error:', err);
+      showError('Não deu pra cadastrar agora. Tenta de novo em instantes.');
+      submit.textContent = 'Garantir minha vaga';
+      submit.disabled = false;
+    }
   });
+
+  // Restore success state if user already signed up + refresh from server
+  (async function() {
+    try {
+      const cached = JSON.parse(localStorage.getItem('yolki_waitlist') || 'null');
+      if (cached && cached.referral_code) {
+        renderSuccess(cached);
+        const fresh = await refreshFromCache(cached);
+        if (fresh && fresh.referral_code) renderSuccess(fresh);
+      }
+    } catch (_) {}
+  })();
 })();
 
 // ─── VIDEO PLAY/PAUSE ───
