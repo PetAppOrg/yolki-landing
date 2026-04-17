@@ -783,6 +783,7 @@
   /* Hide poster's letterbox by making video transparent until it plays */
   .section-video:not(.playing) .video-card video {
     opacity: 0;
+    pointer-events: none;
   }
   .section-video.playing .video-card video {
     opacity: 1;
@@ -792,6 +793,7 @@
   .video-overlay {
     position: absolute;
     inset: 0;
+    z-index: 3;
     background: rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
