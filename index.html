@@ -3193,6 +3193,16 @@ requestAnimationFrame(animate);
     overlay.classList.remove('hidden');
     if (section) section.classList.remove('playing');
   });
+
+  // Pause when video scrolls out of view; user must press play again to resume
+  const offscreenObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting && !video.paused) {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.2 });
+  offscreenObserver.observe(video);
 })();
 
 // ─── SCROLL: hero fade + video scale ───
