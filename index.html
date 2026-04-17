@@ -1300,7 +1300,7 @@
   /* ═══════════════════════════════════════════ */
   .section-pricing {
     padding: 120px 0;
-    background: #F8F4FC;
+    background: url('pricing-bg.jpg') center/cover no-repeat, #6C3FDC;
     position: relative;
     z-index: 10;
   }
@@ -1310,10 +1310,14 @@
     font-weight: 800;
     font-size: clamp(32px, 4.5vw, 52px);
     text-align: center;
-    color: var(--text-primary);
+    color: #fff;
     margin-bottom: 64px;
     line-height: 1.15;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.15);
   }
+
+  .section-pricing .pricing-contact { color: rgba(255,255,255,0.9); }
+  .section-pricing .pricing-contact a { color: #fff; font-weight: 600; }
 
   .pricing-grid {
     display: grid;
