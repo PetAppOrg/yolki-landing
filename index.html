@@ -2106,6 +2106,135 @@
     .footer-right { flex-direction: row; gap: 40px; }
     .footer-bottom-bar { flex-direction: column; gap: 8px; text-align: center; }
   }
+
+  /* ═══════════════════════════════════════════ */
+  /* COMPARE SECTION                             */
+  /* ═══════════════════════════════════════════ */
+  .section-compare {
+    padding: 120px 0;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .compare-heading {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .compare-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .compare-subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: end;
+  }
+
+  .compare-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .compare-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .compare-label-yolki { color: var(--primary); }
+  .compare-label-gray { color: #9a9a9a; }
+
+  .compare-jar {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    height: 440px;
+    margin: 0 auto;
+    border: 3px solid;
+    border-top: none;
+    border-radius: 0 0 70px 70px / 0 0 50px 50px;
+    overflow: hidden;
+  }
+
+  .compare-jar-yolki {
+    border-color: var(--primary);
+    background: linear-gradient(180deg, rgba(0,194,183,0.02) 0%, rgba(0,194,183,0.08) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 16px;
+  }
+
+  .compare-jar-gray {
+    border-color: #cfcfcf;
+    background: linear-gradient(180deg, rgba(150,150,150,0.03) 0%, rgba(150,150,150,0.1) 100%);
+  }
+
+  .compare-pill {
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    white-space: nowrap;
+    background: var(--pill-bg, var(--primary));
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    opacity: 0;
+  }
+
+  .compare-pill-chaos {
+    position: absolute;
+    background: #bfbfbf;
+    color: #555;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  }
+
+  .section-compare.visible .compare-jar-yolki .compare-pill {
+    animation: pillFallYolki .7s cubic-bezier(.3,1.4,.5,1) var(--d, 0s) forwards;
+  }
+
+  .section-compare.visible .compare-pill-chaos {
+    animation: pillFallChaos .9s cubic-bezier(.3,1.2,.5,1) var(--d, 0s) forwards;
+  }
+
+  @keyframes pillFallYolki {
+    from { transform: translateY(-60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes pillFallChaos {
+    from { transform: translateY(-80px) rotate(0deg); opacity: 0; }
+    to { transform: translateY(0) rotate(var(--rot, 0deg)); opacity: 1; }
+  }
+
+  @media (max-width: 768px) {
+    .compare-grid { grid-template-columns: 1fr; gap: 48px; }
+    .compare-jar { height: 380px; max-width: 300px; }
+    .section-compare { padding: 80px 0; }
+  }
 </style>
 </head>
 <body>
@@ -2388,6 +2517,61 @@
     </div>
 
     <p class="testimonial-disclaimer">*Relatos de participantes do beta fechado · 2026</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: COMPARE / POR QUE YOLKI             -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section-compare" id="comparacao">
+  <div class="section-container">
+    <div class="compare-heading">
+      <h2 class="compare-title">Yolki Pet vs. <span class="hl">o resto</span></h2>
+      <p class="compare-subtitle">Veja a diferença entre ter um especialista que conhece seu pet e sair caçando informação por aí.</p>
+    </div>
+
+    <div class="compare-grid">
+      <!-- YOLKI -->
+      <div class="compare-col">
+        <div class="compare-label compare-label-yolki">Yolki Pet</div>
+        <div class="compare-jar compare-jar-yolki">
+          <span class="compare-pill" style="--pill-bg:var(--primary);--d:.75s">Sem fake news</span>
+          <span class="compare-pill" style="--pill-bg:var(--secondary);--d:.65s">Resposta em segundos</span>
+          <span class="compare-pill" style="--pill-bg:var(--accent);--d:.55s">Emergência 24/7</span>
+          <span class="compare-pill" style="--pill-bg:var(--primary);--d:.45s">Raça e idade específicas</span>
+          <span class="compare-pill" style="--pill-bg:var(--secondary);--d:.35s">Lembretes de vacinas</span>
+          <span class="compare-pill" style="--pill-bg:var(--accent);--d:.25s">Baseado em histórico</span>
+          <span class="compare-pill" style="--pill-bg:var(--primary);--d:.15s">Personalizado</span>
+          <span class="compare-pill" style="--pill-bg:var(--secondary);--d:.05s">Validado por vets</span>
+        </div>
+      </div>
+
+      <!-- CHATGPT -->
+      <div class="compare-col">
+        <div class="compare-label compare-label-gray">ChatGPT</div>
+        <div class="compare-jar compare-jar-gray">
+          <span class="compare-pill compare-pill-chaos" style="top:12%;left:14%;--rot:-12deg;--d:0s">Sem contexto do pet</span>
+          <span class="compare-pill compare-pill-chaos" style="top:26%;left:40%;--rot:8deg;--d:.15s">Pode inventar</span>
+          <span class="compare-pill compare-pill-chaos" style="top:40%;left:8%;--rot:-5deg;--d:.3s">Genérico demais</span>
+          <span class="compare-pill compare-pill-chaos" style="top:54%;left:36%;--rot:14deg;--d:.45s">Sem histórico</span>
+          <span class="compare-pill compare-pill-chaos" style="top:68%;left:12%;--rot:-9deg;--d:.6s">Sem vet por trás</span>
+          <span class="compare-pill compare-pill-chaos" style="top:80%;left:32%;--rot:6deg;--d:.75s">Sem urgência</span>
+        </div>
+      </div>
+
+      <!-- YOUTUBE + INTERNET -->
+      <div class="compare-col">
+        <div class="compare-label compare-label-gray">YouTube + Internet</div>
+        <div class="compare-jar compare-jar-gray">
+          <span class="compare-pill compare-pill-chaos" style="top:10%;left:20%;--rot:10deg;--d:0s">Horas pesquisando</span>
+          <span class="compare-pill compare-pill-chaos" style="top:24%;left:42%;--rot:-7deg;--d:.15s">Fontes duvidosas</span>
+          <span class="compare-pill compare-pill-chaos" style="top:38%;left:6%;--rot:12deg;--d:.3s">Info conflitante</span>
+          <span class="compare-pill compare-pill-chaos" style="top:52%;left:34%;--rot:-14deg;--d:.45s">Conselhos perigosos</span>
+          <span class="compare-pill compare-pill-chaos" style="top:66%;left:10%;--rot:5deg;--d:.6s">Ads por todo lado</span>
+          <span class="compare-pill compare-pill-chaos" style="top:80%;left:30%;--rot:-10deg;--d:.75s">Desatualizado</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2905,6 +3089,21 @@ requestAnimationFrame(animate);
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+})();
+
+// ─── COMPARE SECTION: trigger pill-fall on scroll-in ───
+(function() {
+  const section = document.querySelector('.section-compare');
+  if (!section) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        section.classList.add('visible');
+        observer.unobserve(section);
+      }
+    });
+  }, { threshold: 0.2 });
+  observer.observe(section);
 })();
 </script>
 
