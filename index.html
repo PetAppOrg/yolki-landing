@@ -2594,6 +2594,144 @@
   }
   .waitlist-error.visible { display: block; }
 
+  /* ═══════════════════════════════════════════ */
+  /* EXIT-INTENT MODAL (Sprint 4 item 18)        */
+  /* ═══════════════════════════════════════════ */
+  .exit-intent-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .exit-intent-modal.visible { display: flex; animation: fadeIn .25s ease-out; }
+
+  .exit-intent-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 4, 4, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .exit-intent-card {
+    position: relative;
+    background: #fff;
+    border-radius: 24px;
+    padding: 44px 40px 36px;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.22);
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.9) translateY(8px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .exit-intent-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .exit-intent-close:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text-primary);
+  }
+
+  .exit-intent-emoji {
+    font-size: 44px;
+    margin-bottom: 10px;
+  }
+
+  .exit-intent-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+
+  .exit-intent-card p {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+  }
+  .exit-intent-card p strong { color: var(--text-primary); font-weight: 700; }
+
+  .exit-intent-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .exit-intent-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px 16px;
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .exit-intent-form input:focus { border-color: var(--primary); }
+
+  .exit-intent-form button {
+    flex-shrink: 0;
+    background: var(--secondary);
+    color: #fff;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .exit-intent-form button:hover { background: #8F52E8; }
+  .exit-intent-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .exit-intent-small {
+    font-size: 12px !important;
+    opacity: 0.8;
+    margin-bottom: 0 !important;
+  }
+
+  .exit-intent-success {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @media (max-width: 768px) {
+    .exit-intent-card { padding: 36px 24px 28px; }
+    .exit-intent-form { flex-direction: column; gap: 10px; }
+    .exit-intent-form button { width: 100%; padding: 14px; }
+  }
+
   @media (max-width: 768px) {
     .referral-box { padding: 16px; }
     .referral-share-row { gap: 5px; }
@@ -4290,6 +4428,104 @@ requestAnimationFrame(animate);
   update();
 })();
 
+// ─── EXIT-INTENT MODAL (Sprint 4 item 18) ───
+(function() {
+  const modal = document.getElementById('exitIntentModal');
+  if (!modal) return;
+  const closeBtn = document.getElementById('exitIntentClose');
+  const overlay = document.getElementById('exitIntentOverlay');
+  const form = document.getElementById('exitIntentForm');
+  const submit = document.getElementById('exitIntentSubmit');
+  const formWrap = document.getElementById('exitIntentFormWrap');
+  const successBox = document.getElementById('exitIntentSuccess');
+
+  const COOKIE = 'yolki_exit_intent';
+  const DAYS = 7;
+  let shown = false;
+  let armed = false;
+
+  function getCookie(name) {
+    const match = document.cookie.split('; ').find(c => c.startsWith(name + '='));
+    return match ? match.split('=')[1] : null;
+  }
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 864e5);
+    document.cookie = `${name}=${value}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
+  }
+
+  // Only arm on desktop, after user engages with scroll
+  function maybeArm() {
+    if (armed) return;
+    if (window.innerWidth < 900) return;
+    if (getCookie(COOKIE)) return;
+    if (window.scrollY < 300) return;
+    armed = true;
+  }
+
+  window.addEventListener('scroll', maybeArm, { passive: true });
+  maybeArm();
+
+  function openModal() {
+    if (shown || !armed) return;
+    shown = true;
+    modal.classList.add('visible');
+    modal.setAttribute('aria-hidden', 'false');
+    setCookie(COOKIE, '1', DAYS);
+    // Lock body scroll briefly
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('visible');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('mouseout', function(e) {
+    if (!armed) return;
+    if (e.clientY > 0) return;
+    if (e.relatedTarget) return;
+    openModal();
+  });
+
+  closeBtn && closeBtn.addEventListener('click', closeModal);
+  overlay && overlay.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('visible')) closeModal();
+  });
+
+  form && form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = (new FormData(form).get('email') || '').trim();
+    if (!email) return;
+
+    submit.textContent = 'Enviando...';
+    submit.disabled = true;
+
+    if (!window.sbClient) {
+      submit.textContent = 'Erro — recarregue';
+      return;
+    }
+
+    try {
+      await window.sbClient.rpc('join_waitlist', {
+        p_name: 'Pet lover',
+        p_email: email,
+        p_city: null,
+        p_referred_by: null,
+        p_source: 'exit-intent',
+      });
+      formWrap.style.display = 'none';
+      successBox.style.display = 'block';
+      setTimeout(closeModal, 3500);
+    } catch (err) {
+      console.error('Exit-intent error:', err);
+      submit.textContent = 'Quero receber';
+      submit.disabled = false;
+    }
+  });
+})();
+
 // ─── REFERRAL URL HANDLER (?r=code stored for later submit) ───
 (function() {
   try {
@@ -4416,6 +4652,7 @@ requestAnimationFrame(animate);
         p_email: email,
         p_city: city || null,
         p_referred_by: referredBy,
+        p_source: 'main',
       });
 
       if (error) throw error;
@@ -4940,6 +5177,31 @@ requestAnimationFrame(animate);
     Grátis para quem entra agora
   </div>
   <a href="#download" class="msc-btn" data-cta="mobile-sticky">Garantir vaga →</a>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- EXIT-INTENT MODAL (Sprint 4 item 18)         -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="exit-intent-modal" id="exitIntentModal" role="dialog" aria-labelledby="exit-intent-title" aria-hidden="true">
+  <div class="exit-intent-overlay" id="exitIntentOverlay"></div>
+  <div class="exit-intent-card" role="document">
+    <button type="button" class="exit-intent-close" id="exitIntentClose" aria-label="Fechar">×</button>
+    <div id="exitIntentFormWrap">
+      <div class="exit-intent-emoji" aria-hidden="true">🐾</div>
+      <h3 id="exit-intent-title">Espera aí!</h3>
+      <p>Antes de ir, receba <strong>5 dicas que podem adicionar anos à vida do seu pet</strong>. Direto no seu email, sem spam.</p>
+      <form class="exit-intent-form" id="exitIntentForm">
+        <input type="email" name="email" placeholder="seu@email.com" required autocomplete="email" aria-label="Email">
+        <button type="submit" id="exitIntentSubmit" data-cta="exit-intent">Quero receber</button>
+      </form>
+      <p class="exit-intent-small">Você sai quando quiser. Sem spam, sempre.</p>
+    </div>
+    <div class="exit-intent-success" id="exitIntentSuccess" style="display:none;">
+      <div class="exit-intent-emoji" aria-hidden="true">✅</div>
+      <h3>Pronto!</h3>
+      <p>Já separamos as dicas. Fica de olho no seu inbox nos próximos minutos.</p>
+    </div>
+  </div>
 </div>
 
 </body>
