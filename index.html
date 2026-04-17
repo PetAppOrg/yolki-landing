@@ -803,11 +803,17 @@
 
   .video-cover-img {
     position: absolute;
-    inset: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: none;
     object-fit: cover;
     object-position: center;
+    display: block;
     z-index: 1;
     transition: opacity 0.3s ease;
   }
@@ -912,8 +918,6 @@
   /* Proativo split integrado dentro do como-funciona */
   .cosmos-proativo-split {
     margin-top: 80px;
-    padding-top: 80px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .cosmos-lead {
@@ -3175,7 +3179,7 @@
   .footer-brand-block {
     background: var(--primary);
     border-radius: 24px;
-    padding: 6px 40px 0;
+    padding: 0 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3189,8 +3193,8 @@
     height: auto;
     max-width: 1000px;
     display: block;
-    transform: translateY(10%);
-    margin: 0;
+    margin: -10% 0;
+    transform: none;
   }
 
   .footer-bottom {
