@@ -136,8 +136,8 @@
     width: 47px;
     height: 47px;
     border-radius: 50%;
-    background: var(--secondary);
-    border: none;
+    background: #fff;
+    border: 1.5px solid rgba(0,0,0,0.1);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -149,9 +149,9 @@
     font-family: 'Poppins', sans-serif;
   }
   .lang-btn:hover {
-    background: #8F52E8;
+    border-color: rgba(0,0,0,0.25);
     transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(167, 111, 255, 0.3);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
   }
 
   .lang-menu {
@@ -2382,7 +2382,6 @@
     Menu
   </div>
   <div class="nav-right">
-    <a class="nav-cta" href="#">Early Access</a>
     <div class="lang-picker">
       <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
         <span class="lang-flag" id="langCurrent">🇧🇷</span>
@@ -2394,6 +2393,7 @@
         <button type="button" data-lang="de" data-flag="🇩🇪" role="menuitem"><span class="lang-flag">🇩🇪</span> Deutsch</button>
       </div>
     </div>
+    <a class="nav-cta" href="#">Early Access</a>
   </div>
 </nav>
 
