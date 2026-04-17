@@ -2834,8 +2834,14 @@ requestAnimationFrame(animate);
 
   // Click overlay to play
   overlay.addEventListener('click', () => {
-    video.play().catch(() => {});
-    overlay.classList.add('hidden');
+    video.muted = false;
+    video.volume = 1;
+    video.play().then(() => {
+      overlay.classList.add('hidden');
+    }).catch((err) => {
+      console.warn('Video play error:', err);
+      overlay.classList.add('hidden');
+    });
   });
 
   // Click video to pause and show cover again
