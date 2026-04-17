@@ -714,10 +714,11 @@
   .section-video {
     position: relative;
     z-index: 10;
-    background: var(--bg);
+    background: var(--primary);
     border-radius: 32px 32px 0 0;
     box-shadow: 0 -8px 40px rgba(0,0,0,0.1);
     padding: 40px 3vw 40px;
+    transition: background 0.9s ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -727,7 +728,7 @@
     transition: background 0.4s ease;
   }
 
-  .section-video.playing { background: #000; }
+  .section-video.playing { background: #000; transition: background 0.9s ease-in-out; }
 
   .video-pull-tab {
     display: flex;
