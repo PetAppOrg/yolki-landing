@@ -2212,6 +2212,14 @@
     box-shadow: 0 3px 8px rgba(0,0,0,0.08);
   }
 
+  .compare-pill-chaos.physics-driven {
+    top: 0 !important;
+    left: 0 !important;
+    animation: none !important;
+    transform-origin: center;
+    will-change: transform;
+  }
+
   .section-compare.visible .compare-jar-yolki .compare-pill {
     animation: pillFallYolki .7s cubic-bezier(.3,1.4,.5,1) var(--d, 0s) forwards;
   }
@@ -3131,19 +3139,104 @@ requestAnimationFrame(animate);
   onScroll();
 })();
 
-// ─── COMPARE SECTION: trigger pill-fall on scroll-in ───
+// ─── COMPARE SECTION: Yolki CSS pills + Matter.js physics for chaos jars ───
 (function() {
   const section = document.querySelector('.section-compare');
   if (!section) return;
+  let started = false;
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
-      if (e.isIntersecting) {
+      if (e.isIntersecting && !started) {
+        started = true;
         section.classList.add('visible');
         observer.unobserve(section);
+
+        // Kill CSS animation on chaos pills so physics can control them
+        document.querySelectorAll('.compare-pill-chaos').forEach(p => {
+          p.classList.add('physics-driven');
+        });
+
+        loadMatter(() => {
+          document.querySelectorAll('.compare-jar-gray').forEach(initJarPhysics);
+        }, () => {
+          // On load failure, fall back to CSS animation
+          document.querySelectorAll('.compare-pill-chaos.physics-driven').forEach(p => {
+            p.classList.remove('physics-driven');
+          });
+        });
       }
     });
   }, { threshold: 0.2 });
   observer.observe(section);
+
+  function loadMatter(onLoad, onError) {
+    if (window.Matter) { onLoad(); return; }
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js';
+    s.onload = onLoad;
+    s.onerror = onError;
+    document.head.appendChild(s);
+  }
+
+  function initJarPhysics(jar) {
+    const { Engine, World, Bodies } = Matter;
+    const engine = Engine.create();
+    engine.world.gravity.y = 1;
+
+    const w = jar.clientWidth;
+    const h = jar.clientHeight;
+    const wallT = 60;
+
+    World.add(engine.world, [
+      Bodies.rectangle(w/2, h + wallT/2, w + wallT*2, wallT, { isStatic: true, friction: 0.4 }),
+      Bodies.rectangle(-wallT/2, h/2, wallT, h*3, { isStatic: true, friction: 0.4 }),
+      Bodies.rectangle(w + wallT/2, h/2, wallT, h*3, { isStatic: true, friction: 0.4 }),
+    ]);
+
+    const pills = Array.from(jar.querySelectorAll('.compare-pill-chaos'));
+    const items = [];
+
+    pills.forEach((pill) => {
+      const pw = pill.offsetWidth;
+      const ph = pill.offsetHeight;
+      const delayStr = (pill.style.getPropertyValue('--d') || '0s').trim();
+      const delayMs = parseFloat(delayStr) * 1000;
+
+      setTimeout(() => {
+        const dropX = w/2 + (Math.random() - 0.5) * (w * 0.3);
+        const dropY = -80 - Math.random() * 60;
+        const body = Bodies.rectangle(dropX, dropY, pw, ph, {
+          chamfer: { radius: ph/2 },
+          restitution: 0.15,
+          friction: 0.5,
+          frictionAir: 0.015,
+          density: 0.002,
+          angle: (Math.random() - 0.5) * 0.6,
+          angularVelocity: (Math.random() - 0.5) * 0.08,
+        });
+        World.add(engine.world, body);
+        pill.style.transform = `translate(${body.position.x - pw/2}px, ${body.position.y - ph/2}px) rotate(${body.angle}rad)`;
+        pill.style.opacity = '1';
+        items.push({ body, pill, pw, ph });
+      }, delayMs);
+    });
+
+    let last = performance.now();
+    function tick(now) {
+      const dt = Math.min(now - last, 32);
+      last = now;
+      Engine.update(engine, dt);
+
+      for (let i = 0; i < items.length; i++) {
+        const { body, pill, pw, ph } = items[i];
+        pill.style.transform = `translate(${body.position.x - pw/2}px, ${body.position.y - ph/2}px) rotate(${body.angle}rad)`;
+      }
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 })();
 </script>
 
