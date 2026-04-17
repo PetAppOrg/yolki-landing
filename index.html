@@ -2227,25 +2227,21 @@
 
   @keyframes pillFallChaos {
     0% {
-      transform: translateY(-460px) rotate(0deg);
+      transform: translate(var(--ex, 0), -420px) rotate(0deg);
       opacity: 0;
       animation-timing-function: cubic-bezier(.55, .08, .68, .53);
     }
     8% { opacity: 1; }
-    62% {
-      transform: translateY(14px) rotate(calc(var(--rot, 0deg) * 0.85));
-      opacity: 1;
-      animation-timing-function: cubic-bezier(.33, 0, .67, 1);
+    55% {
+      transform: translate(var(--ex, 0), -18px) rotate(calc(var(--rot, 0deg) * 0.25));
+      animation-timing-function: cubic-bezier(.4, 0, .5, 1);
     }
-    80% {
-      transform: translateY(-5px) rotate(calc(var(--rot, 0deg) * 1.02));
-      animation-timing-function: cubic-bezier(.33, 0, .67, 1);
-    }
-    92% {
-      transform: translateY(2px) rotate(var(--rot, 0deg));
+    85% {
+      transform: translate(0, 4px) rotate(calc(var(--rot, 0deg) * 0.95));
+      animation-timing-function: cubic-bezier(.4, 0, .5, 1);
     }
     100% {
-      transform: translateY(0) rotate(var(--rot, 0deg));
+      transform: translate(0, 0) rotate(var(--rot, 0deg));
       opacity: 1;
     }
   }
@@ -2600,12 +2596,12 @@
       <div class="compare-col">
         <div class="compare-label compare-label-gray">ChatGPT</div>
         <div class="compare-jar compare-jar-gray">
-          <span class="compare-pill compare-pill-chaos" style="top:82%;left:24%;--rot:-12deg;--d:0s">Sem contexto do pet</span>
-          <span class="compare-pill compare-pill-chaos" style="top:72%;left:50%;--rot:8deg;--d:1.2s">Pode inventar</span>
-          <span class="compare-pill compare-pill-chaos" style="top:64%;left:18%;--rot:-5deg;--d:2.4s">Genérico demais</span>
-          <span class="compare-pill compare-pill-chaos" style="top:58%;left:46%;--rot:14deg;--d:3.6s">Sem histórico</span>
-          <span class="compare-pill compare-pill-chaos" style="top:52%;left:30%;--rot:-9deg;--d:4.8s">Sem vet por trás</span>
-          <span class="compare-pill compare-pill-chaos" style="top:46%;left:52%;--rot:6deg;--d:6.0s">Sem urgência</span>
+          <span class="compare-pill compare-pill-chaos" style="top:82%;left:5%;--rot:-8deg;--ex:105px;--d:0s">Sem contexto do pet</span>
+          <span class="compare-pill compare-pill-chaos" style="top:82%;left:55%;--rot:8deg;--ex:-50px;--d:1.2s">Pode inventar</span>
+          <span class="compare-pill compare-pill-chaos" style="top:65%;left:8%;--rot:-5deg;--ex:95px;--d:2.4s">Genérico demais</span>
+          <span class="compare-pill compare-pill-chaos" style="top:65%;left:50%;--rot:10deg;--ex:-35px;--d:3.6s">Sem histórico</span>
+          <span class="compare-pill compare-pill-chaos" style="top:48%;left:12%;--rot:-10deg;--ex:80px;--d:4.8s">Sem vet por trás</span>
+          <span class="compare-pill compare-pill-chaos" style="top:48%;left:50%;--rot:7deg;--ex:-35px;--d:6.0s">Sem urgência</span>
         </div>
       </div>
 
@@ -2613,12 +2609,12 @@
       <div class="compare-col">
         <div class="compare-label compare-label-gray">YouTube + Internet</div>
         <div class="compare-jar compare-jar-gray">
-          <span class="compare-pill compare-pill-chaos" style="top:82%;left:22%;--rot:10deg;--d:0s">Horas pesquisando</span>
-          <span class="compare-pill compare-pill-chaos" style="top:72%;left:48%;--rot:-7deg;--d:1.2s">Fontes duvidosas</span>
-          <span class="compare-pill compare-pill-chaos" style="top:64%;left:16%;--rot:12deg;--d:2.4s">Info conflitante</span>
-          <span class="compare-pill compare-pill-chaos" style="top:58%;left:42%;--rot:-14deg;--d:3.6s">Conselhos perigosos</span>
-          <span class="compare-pill compare-pill-chaos" style="top:52%;left:26%;--rot:5deg;--d:4.8s">Ads por todo lado</span>
-          <span class="compare-pill compare-pill-chaos" style="top:46%;left:50%;--rot:-10deg;--d:6.0s">Desatualizado</span>
+          <span class="compare-pill compare-pill-chaos" style="top:82%;left:5%;--rot:-7deg;--ex:105px;--d:0s">Horas pesquisando</span>
+          <span class="compare-pill compare-pill-chaos" style="top:82%;left:55%;--rot:9deg;--ex:-50px;--d:1.2s">Fontes duvidosas</span>
+          <span class="compare-pill compare-pill-chaos" style="top:65%;left:8%;--rot:-11deg;--ex:95px;--d:2.4s">Info conflitante</span>
+          <span class="compare-pill compare-pill-chaos" style="top:65%;left:50%;--rot:5deg;--ex:-35px;--d:3.6s">Conselhos perigosos</span>
+          <span class="compare-pill compare-pill-chaos" style="top:48%;left:10%;--rot:-9deg;--ex:90px;--d:4.8s">Ads por todo lado</span>
+          <span class="compare-pill compare-pill-chaos" style="top:48%;left:52%;--rot:11deg;--ex:-40px;--d:6.0s">Desatualizado</span>
         </div>
       </div>
     </div>
