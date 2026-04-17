@@ -2653,8 +2653,6 @@
   </div>
 </section>
 
-</section>
-
 <!-- ═══════════════════════════════════════════ -->
 <!-- SECTION: BLOG / CONTEÚDO                    -->
 <!-- ═══════════════════════════════════════════ -->
@@ -3422,7 +3420,7 @@ requestAnimationFrame(animate);
   sections.forEach((s, i) => {
     s.style.position = 'sticky';
     s.style.top = '0';
-    s.style.minHeight = '100vh';
+    s.style.minHeight = '130vh';
     s.style.zIndex = String(10 + i);
     s.style.transformOrigin = 'center center';
     s.style.willChange = 'transform, opacity';
@@ -3431,10 +3429,13 @@ requestAnimationFrame(animate);
   let ticking = false;
   function update() {
     const scrollY = window.scrollY || window.pageYOffset;
+    const vh = window.innerHeight;
     sections.forEach(section => {
       const top = section.offsetTop;
       const h = section.offsetHeight || 1;
-      const p = Math.max(0, Math.min(1, (scrollY - top) / h));
+      // Sticky range: time the section stays pinned (h - viewport)
+      const stickyRange = Math.max(1, h - vh);
+      const p = Math.max(0, Math.min(1, (scrollY - top) / stickyRange));
       const scale = 1 - p * 0.15;
       const opacity = 1 - p * 0.6;
       section.style.transform = `scale(${scale})`;
