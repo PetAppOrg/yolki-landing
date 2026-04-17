@@ -2230,6 +2230,36 @@
     to { transform: translateY(0) rotate(var(--rot, 0deg)); opacity: 1; }
   }
 
+  .compare-cta {
+    text-align: center;
+    margin-top: 64px;
+  }
+
+  .compare-details-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--primary);
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    border: 2px solid var(--primary);
+    transition: all 0.25s;
+  }
+
+  .compare-details-link:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,194,183,0.25);
+  }
+
+  .compare-details-link span { transition: transform 0.25s; }
+  .compare-details-link:hover span { transform: translateX(4px); }
+
   @media (max-width: 768px) {
     .compare-grid { grid-template-columns: 1fr; gap: 48px; }
     .compare-jar { height: 380px; max-width: 300px; }
@@ -2571,6 +2601,10 @@
           <span class="compare-pill compare-pill-chaos" style="top:80%;left:30%;--rot:-10deg;--d:6.0s">Desatualizado</span>
         </div>
       </div>
+    </div>
+
+    <div class="compare-cta">
+      <a class="compare-details-link" href="comparacao.html">Ver comparativo completo <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>

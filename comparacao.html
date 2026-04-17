@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparativo — Yolki Pet vs. ChatGPT vs. Google/YouTube</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #00C2B7;
+    --secondary: #A76FFF;
+    --accent: #FFB139;
+    --danger: #E85959;
+    --white: #FFFFFF;
+    --bg: #FAF9F6;
+    --bg-alt: #F3F1EC;
+    --text: #1A1A1A;
+    --text-muted: #6B6B6B;
+    --border: #E5E2DC;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(250, 249, 246, 0.85);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--primary); }
+
+  .brand {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .brand span { color: var(--primary); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 48px;
+    text-align: center;
+    background: radial-gradient(ellipse at top, rgba(0,194,183,0.08) 0%, transparent 60%);
+  }
+
+  .hero h1 {
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 .hl {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 32px 0 48px;
+  }
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .sym {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .sym-yes { background: rgba(0,194,183,0.15); color: var(--primary); }
+  .sym-no { background: rgba(232,89,89,0.12); color: var(--danger); }
+  .sym-partial { background: rgba(255,177,57,0.18); color: #C97E00; }
+
+  /* TABLE */
+  .compare-wrap {
+    padding-bottom: 120px;
+  }
+
+  .compare-card {
+    background: var(--white);
+    border-radius: 28px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.04);
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .compare-table thead th {
+    padding: 24px 20px;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    background: var(--bg-alt);
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+  }
+  .compare-table thead th:first-child {
+    text-align: left;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .compare-table thead th.yolki-col {
+    background: linear-gradient(180deg, rgba(0,194,183,0.12) 0%, rgba(0,194,183,0.06) 100%);
+    color: var(--primary);
+    font-size: 17px;
+    position: relative;
+  }
+  .compare-table thead th.yolki-col::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 0;
+    height: 3px;
+    background: var(--primary);
+  }
+
+  .compare-table tbody td {
+    padding: 22px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .compare-table tbody tr:last-child td { border-bottom: none; }
+
+  .compare-table tbody td:first-child {
+    text-align: left;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .compare-table tbody td.yolki-col {
+    background: rgba(0,194,183,0.04);
+  }
+
+  .cell-sub {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  .cell-text {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .compare-table tbody tr:hover td { background: rgba(0,0,0,0.015); }
+  .compare-table tbody tr:hover td.yolki-col { background: rgba(0,194,183,0.07); }
+
+  /* BOTTOM CTA */
+  .bottom-cta {
+    text-align: center;
+    padding: 64px 0 32px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 18px 40px;
+    background: var(--primary);
+    color: var(--white);
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+  .btn-primary:hover {
+    background: #00A8A3;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(0,194,183,0.35);
+  }
+
+  .footnote {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    opacity: 0.7;
+    padding-bottom: 48px;
+  }
+
+  @media (max-width: 860px) {
+    .compare-table thead th { padding: 16px 10px; font-size: 13px; }
+    .compare-table thead th.yolki-col { font-size: 14px; }
+    .compare-table tbody td { padding: 16px 10px; font-size: 13px; }
+    .compare-table tbody td:first-child { font-size: 13px; }
+    .cell-sub { font-size: 11px; }
+    .sym { width: 26px; height: 26px; font-size: 13px; }
+    .container { padding: 0 16px; }
+    .hero { padding: 56px 0 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      Voltar
+    </a>
+    <a href="index.html" class="brand">Yolki <span>Pet</span></a>
+    <div style="width:80px;"></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1>Comparativo <span class="hl">completo</span></h1>
+    <p>Veja dimensão por dimensão o que diferencia o Yolki Pet de ferramentas genéricas.</p>
+  </div>
+</section>
+
+<!-- LEGEND -->
+<div class="container">
+  <div class="legend">
+    <span class="legend-item"><span class="sym sym-yes">✓</span> Tem</span>
+    <span class="legend-item"><span class="sym sym-partial">◐</span> Parcial</span>
+    <span class="legend-item"><span class="sym sym-no">✕</span> Não tem</span>
+  </div>
+</div>
+
+<!-- TABLE -->
+<section class="compare-wrap">
+  <div class="container">
+    <div class="compare-card">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Dimensão</th>
+            <th class="yolki-col">Yolki Pet</th>
+            <th>ChatGPT</th>
+            <th>Google / YouTube</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Conhece o pet (raça, peso, idade)</td>
+            <td class="yolki-col"><span class="sym sym-yes">✓</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+          </tr>
+          <tr>
+            <td>Conhece o tutor (rotina, histórico)</td>
+            <td class="yolki-col"><span class="sym sym-yes">✓</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+          </tr>
+          <tr>
+            <td>Educação preventiva contínua</td>
+            <td class="yolki-col"><span class="sym sym-yes">✓</span><span class="cell-sub">Diária</span></td>
+            <td><span class="sym sym-no">✕</span><span class="cell-sub">Inexistente</span></td>
+            <td><span class="sym sym-no">✕</span><span class="cell-sub">Inexistente</span></td>
+          </tr>
+          <tr>
+            <td>Conteúdo personalizado</td>
+            <td class="yolki-col"><span class="sym sym-yes">✓</span><span class="cell-sub">100%</span></td>
+            <td><span class="sym sym-partial">◐</span><span class="cell-sub">Só se pedir</span></td>
+            <td><span class="sym sym-no">✕</span><span class="cell-sub">0%</span></td>
+          </tr>
+          <tr>
+            <td>Foco em longevidade</td>
+            <td class="yolki-col"><span class="sym sym-yes">✓</span><span class="cell-sub">Core do produto</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+          </tr>
+          <tr>
+            <td>Chat veterinário real</td>
+            <td class="yolki-col"><span class="sym sym-partial">◐</span><span class="cell-sub">Em breve</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+          </tr>
+          <tr>
+            <td>Baixo risco de desinformação</td>
+            <td class="yolki-col"><span class="sym sym-yes">✓</span><span class="cell-sub">Conteúdo curado</span></td>
+            <td><span class="sym sym-no">✕</span><span class="cell-sub">Alucinações</span></td>
+            <td><span class="sym sym-no">✕</span><span class="cell-sub">Não filtrado</span></td>
+          </tr>
+          <tr>
+            <td>Gamificação e engajamento</td>
+            <td class="yolki-col"><span class="sym sym-yes">✓</span><span class="cell-sub">Yolks, streaks</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+          </tr>
+          <tr>
+            <td>Custo</td>
+            <td class="yolki-col"><span class="cell-text">Freemium</span></td>
+            <td><span class="cell-text">Grátis (base)</span></td>
+            <td><span class="cell-text">Grátis</span></td>
+          </tr>
+          <tr>
+            <td>Consulta similar a veterinário</td>
+            <td class="yolki-col"><span class="sym sym-yes">✓</span><span class="cell-sub">Com dados reais</span></td>
+            <td><span class="sym sym-partial">◐</span><span class="cell-sub">Superficial</span></td>
+            <td><span class="sym sym-no">✕</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bottom-cta">
+      <a href="index.html#download" class="btn-primary">Garantir minha vaga</a>
+    </div>
+    <p class="footnote">Gratuito · Sem cartão · Sem spam</p>
+  </div>
+</section>
+
+</body>
+</html>
