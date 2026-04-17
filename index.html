@@ -2177,11 +2177,11 @@
   .footer-brand-block {
     background: var(--primary);
     border-radius: 24px;
-    padding: 40px 40px 0;
+    padding: 50px 40px 0;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    margin-bottom: 80px;
+    margin-bottom: 48px;
     position: relative;
     overflow: visible;
   }
@@ -2190,7 +2190,7 @@
     height: auto;
     max-width: 1000px;
     display: block;
-    transform: translateY(18%);
+    margin-bottom: -26%;
   }
 
   .footer-bottom {
@@ -2475,6 +2475,42 @@
     .compare-jar { height: 380px; max-width: 300px; }
     .section-compare { padding: 80px 0; }
   }
+
+  /* ═══════════════════════════════════════════ */
+  /* ENTRY ANIMATIONS (modern fade + slide up)   */
+  /* ═══════════════════════════════════════════ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(.2, .7, .3, 1), transform 0.9s cubic-bezier(.2, .7, .3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(.2, .7, .3, 1), transform 0.9s cubic-bezier(.2, .7, .3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-stagger.in-view > * { opacity: 1; transform: translateY(0); }
+  .reveal-stagger.in-view > *:nth-child(1) { transition-delay: 0s; }
+  .reveal-stagger.in-view > *:nth-child(2) { transition-delay: .08s; }
+  .reveal-stagger.in-view > *:nth-child(3) { transition-delay: .16s; }
+  .reveal-stagger.in-view > *:nth-child(4) { transition-delay: .24s; }
+  .reveal-stagger.in-view > *:nth-child(5) { transition-delay: .32s; }
+  .reveal-stagger.in-view > *:nth-child(6) { transition-delay: .40s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-stagger > * {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -2701,8 +2737,7 @@
 <!-- SECTION: SOCIAL PROOF                       -->
 <!-- ═══════════════════════════════════════════ -->
 <section class="section-proof" id="depoimentos">
-  <div class="section-container">
-    <span class="section-label">Quem já testou</span>
+  <div class="section-container" style="text-align:center;">
     <h2 class="section-title">Tutores que <span class="hl">confiam</span> no Yolki.</h2>
 
     <div class="testimonials-grid">
@@ -3396,6 +3431,57 @@ requestAnimationFrame(animate);
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeMenu();
+  });
+})();
+
+// ─── ENTRY ANIMATIONS (reveal on scroll-into-view) ───
+(function() {
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  // Individual elements that fade/slide up on entry
+  const revealSelectors = [
+    '.section-title', '.cosmos-title', '.cosmos-title-side', '.cosmos-body-side',
+    '.blog-main-title', '.pricing-main-title', '.faq-main-title', '.compare-title', '.compare-subtitle',
+    '.hero-title', '.hero-subtitle',
+    '.cosmos-feature', '.cosmos-card', '.cosmos-card-tall', '.cosmos-card-stack',
+    '.blog-card', '.pricing-card', '.faq-item',
+    '.testimonial-card', '.compare-col',
+    '.app-left', '.app-right',
+    '.app-description', '.waitlist-note',
+    '.testimonial-disclaimer',
+    '.section-subtitle',
+  ];
+
+  // Parents whose direct children should stagger
+  const staggerSelectors = [
+    '.cosmos-features-grid', '.blog-grid', '.pricing-grid',
+    '.testimonials-grid', '.faq-list', '.compare-grid',
+  ];
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  staggerSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('reveal-stagger');
+      io.observe(el);
+    });
+  });
+
+  revealSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      // Skip if already inside a stagger parent (to avoid double animation)
+      if (el.closest('.reveal-stagger')) return;
+      el.classList.add('reveal');
+      io.observe(el);
+    });
   });
 })();
 
