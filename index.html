@@ -2573,6 +2573,49 @@
       transition: none !important;
     }
   }
+
+  /* Word-by-word irregular text reveal for titles */
+  .words-reveal .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(12px);
+    transition:
+      opacity 0.9s cubic-bezier(.2,.7,.3,1),
+      transform 0.9s cubic-bezier(.2,.7,.3,1),
+      filter 0.9s cubic-bezier(.2,.7,.3,1);
+    transition-delay: calc(var(--wi, 0) * 0.06s + var(--wd, 0s));
+    will-change: opacity, transform, filter;
+  }
+  .words-reveal.in-view .word {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  /* Image reveal: subtle scale + fade */
+  .img-reveal {
+    transform: scale(1.08);
+    opacity: 0;
+    transition:
+      transform 1.2s cubic-bezier(.2,.7,.3,1),
+      opacity 1s cubic-bezier(.2,.7,.3,1);
+    will-change: transform, opacity;
+  }
+  .img-reveal.in-view {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .words-reveal .word,
+    .img-reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+      transition: none !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -3501,24 +3544,35 @@ requestAnimationFrame(animate);
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
-  // Individual elements that fade/slide up on entry
+  // Titles: word-by-word irregular reveal (blur + slide)
+  const titleSelectors = [
+    '.section-title', '.cosmos-title', '.cosmos-title-side',
+    '.blog-main-title', '.pricing-main-title', '.faq-main-title',
+    '.compare-title', '.compare-subtitle',
+  ];
+
+  // Other text/cards: block fade + slide
   const revealSelectors = [
-    '.section-title', '.cosmos-title', '.cosmos-title-side', '.cosmos-body-side',
-    '.blog-main-title', '.pricing-main-title', '.faq-main-title', '.compare-title', '.compare-subtitle',
-    '.hero-title', '.hero-subtitle',
+    '.cosmos-body-side', '.section-subtitle',
     '.cosmos-feature', '.cosmos-card', '.cosmos-card-tall', '.cosmos-card-stack',
     '.blog-card', '.pricing-card', '.faq-item',
     '.testimonial-card', '.compare-col',
     '.app-left', '.app-right',
     '.app-description', '.waitlist-note',
     '.testimonial-disclaimer',
-    '.section-subtitle',
   ];
 
   // Parents whose direct children should stagger
   const staggerSelectors = [
     '.cosmos-features-grid', '.blog-grid', '.pricing-grid',
     '.testimonials-grid', '.faq-list', '.compare-grid',
+  ];
+
+  // Images that should scale/fade in
+  const imgRevealSelectors = [
+    '.cosmos-card img',
+    '.cosmos-feature-img img',
+    '.cosmos-card-stack img',
   ];
 
   const io = new IntersectionObserver((entries) => {
@@ -3530,6 +3584,51 @@ requestAnimationFrame(animate);
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
+  function splitIntoWords(el) {
+    if (el.dataset.splitDone) return;
+    el.dataset.splitDone = '1';
+    let wordIndex = 0;
+
+    function recurse(node) {
+      // Clone children array since we'll modify the DOM
+      const children = Array.from(node.childNodes);
+      children.forEach(child => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          const text = child.textContent;
+          if (!text.trim()) return;
+          const parts = text.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          parts.forEach(part => {
+            if (part.trim()) {
+              const span = document.createElement('span');
+              span.className = 'word';
+              span.textContent = part;
+              span.style.setProperty('--wi', wordIndex++);
+              // Irregular jitter: 0 to 180ms random extra delay
+              span.style.setProperty('--wd', (Math.random() * 0.18).toFixed(3) + 's');
+              frag.appendChild(span);
+            } else {
+              frag.appendChild(document.createTextNode(part));
+            }
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName !== 'BR') {
+          recurse(child);
+        }
+      });
+    }
+    recurse(el);
+  }
+
+  // Titles: split and observe
+  titleSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      splitIntoWords(el);
+      el.classList.add('words-reveal');
+      io.observe(el);
+    });
+  });
+
   staggerSelectors.forEach(sel => {
     document.querySelectorAll(sel).forEach(el => {
       el.classList.add('reveal-stagger');
@@ -3539,10 +3638,18 @@ requestAnimationFrame(animate);
 
   revealSelectors.forEach(sel => {
     document.querySelectorAll(sel).forEach(el => {
-      // Skip if already inside a stagger parent (to avoid double animation)
       if (el.closest('.reveal-stagger')) return;
       el.classList.add('reveal');
       io.observe(el);
+    });
+  });
+
+  // Images: scale/fade reveal
+  imgRevealSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(img => {
+      img.classList.add('img-reveal');
+      if (img.complete) io.observe(img);
+      else img.addEventListener('load', () => io.observe(img), { once: true });
     });
   });
 })();
