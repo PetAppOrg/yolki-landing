@@ -261,6 +261,34 @@
     will-change: opacity, transform;
   }
 
+  /* Peek strip — shows ~30px of next section (video), bobs irregularly to invite scroll */
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: var(--primary);
+    border-radius: 32px 32px 0 0;
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.12);
+    z-index: 5;
+    pointer-events: none;
+    animation: peekBob 5.5s ease-in-out infinite;
+  }
+  @keyframes peekBob {
+    0%   { transform: translateY(0); }
+    17%  { transform: translateY(-5px); }
+    34%  { transform: translateY(-2px); }
+    52%  { transform: translateY(-9px); }
+    71%  { transform: translateY(-3px); }
+    88%  { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero::after { animation: none; }
+  }
+
   /* ─── FLUID WAVE BACKGROUND (hidden — hero is pure white) ─── */
   .hero-fluid {
     display: none;
