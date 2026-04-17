@@ -124,6 +124,76 @@
     box-shadow: 0 4px 20px rgba(167, 111, 255, 0.3);
   }
 
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lang-picker { position: relative; }
+
+  .lang-btn {
+    width: 47px;
+    height: 47px;
+    border-radius: 50%;
+    background: var(--secondary);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1;
+    padding: 0;
+    transition: all 0.25s;
+    font-family: 'Poppins', sans-serif;
+  }
+  .lang-btn:hover {
+    background: #8F52E8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(167, 111, 255, 0.3);
+  }
+
+  .lang-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    min-width: 160px;
+    z-index: 200;
+  }
+  .lang-menu[hidden] { display: none; }
+
+  .lang-menu button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: left;
+    color: var(--text);
+    transition: background 0.2s;
+  }
+  .lang-menu button:hover { background: rgba(167,111,255,0.1); }
+  .lang-menu button.active {
+    background: rgba(167,111,255,0.14);
+    color: var(--secondary);
+    font-weight: 600;
+  }
+
+  .lang-flag { font-size: 18px; line-height: 1; }
+
   /* ─── HERO ─── */
   .hero-sticky-wrapper {
     position: relative;
@@ -2313,6 +2383,17 @@
   </div>
   <div class="nav-right">
     <a class="nav-cta" href="#">Early Access</a>
+    <div class="lang-picker">
+      <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
+        <span class="lang-flag" id="langCurrent">🇧🇷</span>
+      </button>
+      <div class="lang-menu" id="langMenu" hidden role="menu">
+        <button type="button" data-lang="en" data-flag="🇺🇸" role="menuitem"><span class="lang-flag">🇺🇸</span> English</button>
+        <button type="button" data-lang="pt" data-flag="🇧🇷" role="menuitem" class="active"><span class="lang-flag">🇧🇷</span> Português</button>
+        <button type="button" data-lang="es" data-flag="🇪🇸" role="menuitem"><span class="lang-flag">🇪🇸</span> Español</button>
+        <button type="button" data-lang="de" data-flag="🇩🇪" role="menuitem"><span class="lang-flag">🇩🇪</span> Deutsch</button>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -3150,6 +3231,45 @@ requestAnimationFrame(animate);
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+})();
+
+// ─── LANGUAGE PICKER ───
+(function() {
+  const btn = document.getElementById('langBtn');
+  const menu = document.getElementById('langMenu');
+  const current = document.getElementById('langCurrent');
+  if (!btn || !menu || !current) return;
+
+  function closeMenu() {
+    menu.setAttribute('hidden', '');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  function openMenu() {
+    menu.removeAttribute('hidden');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (menu.hasAttribute('hidden')) openMenu(); else closeMenu();
+  });
+
+  menu.addEventListener('click', (e) => {
+    const option = e.target.closest('button[data-lang]');
+    if (!option) return;
+    current.textContent = option.dataset.flag;
+    menu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    option.classList.add('active');
+    closeMenu();
+    // TODO: hook up actual language switching when translations are ready
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!btn.contains(e.target) && !menu.contains(e.target)) closeMenu();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
 })();
 
 // ─── COMPARE SECTION: Yolki CSS pills + Matter.js physics for chaos jars ───
