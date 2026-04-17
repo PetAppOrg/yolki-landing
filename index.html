@@ -685,7 +685,7 @@
   .section-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 800;
-    font-size: clamp(32px, 4vw, 48px);
+    font-size: clamp(32px, 4.5vw, 52px);
     line-height: 1.15;
     letter-spacing: -1px;
     color: var(--text-primary);
@@ -828,9 +828,9 @@
 
   .cosmos-title {
     font-family: 'Poppins', sans-serif;
-    font-weight: 900;
-    font-size: clamp(36px, 5.5vw, 72px);
-    line-height: 1.08;
+    font-weight: 800;
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 1.15;
     text-align: center;
     color: var(--text-primary);
     margin-bottom: 56px;
@@ -1364,11 +1364,11 @@
   .blog-main-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 800;
-    font-size: clamp(32px, 4vw, 48px);
+    font-size: clamp(32px, 4.5vw, 52px);
     text-align: center;
     color: var(--text-primary);
     margin-bottom: 56px;
-    line-height: 1.2;
+    line-height: 1.15;
   }
 
   .blog-grid {
@@ -1841,7 +1841,7 @@
     font-size: clamp(32px, 4.5vw, 52px);
     text-align: center;
     color: #fff;
-    margin-bottom: 64px;
+    margin-bottom: 56px;
     line-height: 1.15;
     text-shadow: 0 2px 20px rgba(0,0,0,0.15);
   }
@@ -2810,10 +2810,11 @@
   .faq-main-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 800;
-    font-size: clamp(32px, 4vw, 48px);
+    font-size: clamp(32px, 4.5vw, 52px);
     text-align: center;
     color: var(--text-primary);
-    margin-bottom: 48px;
+    margin-bottom: 56px;
+    line-height: 1.15;
   }
 
   .faq-list {
@@ -2883,12 +2884,11 @@
   /* FOOTER                                      */
   /* ═══════════════════════════════════════════ */
   .site-footer {
-    background: var(--secondary);
+    background: transparent;
     position: relative;
     z-index: 10;
-    padding: 43px 32px 29px;
-    border-radius: 32px 32px 0 0;
-    margin-top: -32px;
+    padding: 0 32px 29px;
+    margin-top: 0;
   }
 
   .footer-card {
@@ -2995,21 +2995,22 @@
   .footer-brand-block {
     background: var(--primary);
     border-radius: 24px;
-    padding: 0 40px 0;
+    padding: 6px 40px 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    margin: 0 auto 48px;
+    margin: 0 auto 56px;
     position: relative;
     overflow: visible;
+    max-width: 1100px;
   }
   .footer-brand-block img {
     width: 100%;
     height: auto;
     max-width: 1000px;
     display: block;
-    margin-top: -13%;
-    margin-bottom: -5%;
+    transform: translateY(10%);
+    margin: 0;
   }
 
   .footer-bottom {
@@ -3110,7 +3111,7 @@
     .pricing-card-featured:hover { transform: translateY(-4px); }
     .pricing-grid { max-width: 400px; }
     .pricing-signup-form { flex-direction: column; }
-    .pricing-main-title { font-size: clamp(28px, 7vw, 40px); }
+    /* .pricing-main-title override consolidated below */
     .testimonials-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
     .app-grid { grid-template-columns: 1fr; text-align: center; }
@@ -3120,11 +3121,12 @@
     .testimonials-grid { grid-template-columns: 1fr; }
     .proof-stats { flex-direction: column; gap: 32px; }
     .cta-box { padding: 48px 28px; border-radius: 24px; }
-    .section-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
-    .cosmos-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
-    .compare-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
-    .faq-main-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
-    .blog-main-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
+    .section-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
+    .cosmos-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
+    .compare-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
+    .faq-main-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
+    .blog-main-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
+    .pricing-main-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
 
     /* Compare section */
     .compare-jar { height: 340px; max-width: 100%; }
@@ -3151,11 +3153,11 @@
       margin-bottom: 32px;
       border-radius: 18px;
     }
-    .footer-brand-block img { margin-bottom: -4%; }
+    .footer-brand-block img { transform: translateY(10%); margin: 0; }
     .footer-bottom { grid-template-columns: 1fr; text-align: center; gap: 16px; }
     .footer-copy { text-align: center; }
     .footer-designed { text-align: center; }
-    .site-footer { padding: 22px 12px 18px; border-radius: 24px 24px 0 0; }
+    .site-footer { padding: 0 12px 18px; }
 
     /* Subscribe form: keep inline if possible, stack on smaller */
     .footer-subscribe { flex-wrap: wrap; }
@@ -3193,8 +3195,8 @@
   .compare-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 800;
-    font-size: clamp(36px, 5vw, 56px);
-    line-height: 1.1;
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 1.15;
     margin-bottom: 16px;
     color: var(--text);
   }
@@ -4161,14 +4163,14 @@
     <div class="footer-top">
       <div>
         <form class="footer-subscribe" onsubmit="return false;">
-          <input type="email" placeholder="Seu e-mail" required>
-          <button type="submit">Subscribe</button>
+          <input type="email" placeholder="nome@email.com" required autocomplete="email">
+          <button type="submit">Quero receber</button>
         </form>
         <p class="footer-desc">Educação preventiva e acompanhamento de saúde pro seu pet viver mais e melhor. Validado por veterinários.</p>
         <div class="footer-trust">
           <span class="footer-trust-item">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-            Validado por vets
+            Validado
           </span>
           <span class="footer-trust-item">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -4182,6 +4184,7 @@
         <a href="#features">Features</a>
         <a href="#comparacao">Comparativo</a>
         <a href="#planos">Planos</a>
+        <a href="./blog.html">Blog</a>
         <a href="#faq">FAQ</a>
       </div>
       <div class="footer-col">
@@ -4196,7 +4199,7 @@
     </div>
 
     <div class="footer-bottom">
-      <div class="footer-designed">Designed and built in Brazil</div>
+      <div class="footer-designed">Designed with purpose, built with passion 💜</div>
       <div class="footer-socials">
         <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
@@ -4236,11 +4239,11 @@ const cards = [
 
 const wrapper = document.querySelector('.orbital-wrapper');
 
-// Responsive radius — 50% larger than before (0.38 * 1.5 = 0.57)
+// Responsive radius — tightened after Sprint 4.5 (0.52 → 0.42)
 function getOrbitRadius() {
   const w = wrapper.offsetWidth;
   const h = wrapper.offsetHeight;
-  const base = Math.min(w, h) * 0.52;
+  const base = Math.min(w, h) * 0.42;
   return base;
 }
 
@@ -4248,9 +4251,9 @@ const cx = wrapper.offsetWidth / 2;
 const cy = wrapper.offsetHeight / 2;
 let radius = getOrbitRadius();
 
-// Scale cards on mobile
+// Scale cards (–15% overall after Sprint 4.5)
 function getCardScale() {
-  return window.innerWidth < 768 ? 0.55 : (window.innerWidth < 1024 ? 0.75 : 1);
+  return window.innerWidth < 768 ? 0.47 : (window.innerWidth < 1024 ? 0.64 : 0.85);
 }
 let cardScale = getCardScale();
 
