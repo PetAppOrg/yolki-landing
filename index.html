@@ -1985,10 +1985,18 @@
   /* ═══════════════════════════════════════════ */
   .section-faq {
     padding: 120px 0;
-    background: var(--bg);
+    background: #242425;
     position: relative;
     z-index: 10;
   }
+
+  .section-faq .faq-main-title { color: #fff; }
+  .section-faq .faq-item { background: #2E2E2F; color: #fff; }
+  .section-faq .faq-item summary { color: #fff; }
+  .section-faq .faq-item p { color: rgba(255,255,255,0.75); }
+  .section-faq .faq-item summary::after { color: rgba(255,255,255,0.6); }
+  .section-faq .faq-item[open] summary { color: var(--primary); }
+  .section-faq .faq-item[open] summary::after { color: var(--primary); }
 
   .faq-main-title {
     font-family: 'Poppins', sans-serif;
@@ -2177,7 +2185,7 @@
   .footer-brand-block {
     background: var(--primary);
     border-radius: 24px;
-    padding: 50px 40px 0;
+    padding: 40px 40px 0;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -2190,7 +2198,7 @@
     height: auto;
     max-width: 1000px;
     display: block;
-    margin-bottom: -26%;
+    margin-bottom: -4%;
   }
 
   .footer-bottom {
