@@ -12,8 +12,8 @@
   "dir": "ltr",
   "categories": ["lifestyle", "health", "pets"],
   "icons": [
-    { "src": "yolki-logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "yolki-logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+    { "src": "assets/brand/yolki-logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/brand/yolki-logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
   ],
   "shortcuts": [
     { "name": "Planos", "url": "/#planos", "description": "Ver planos e preços" },

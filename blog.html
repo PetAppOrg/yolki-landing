@@ -5,7 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — Yolki Pet</title>
 <meta name="description" content="Conteúdo validado por veterinários sobre longevidade, prevenção e bem-estar do seu pet.">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/yolki-logo.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+(function() {
+  try {
+    var stored = localStorage.getItem('yolki_theme');
+    var theme = stored || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script>
+
 <style>
   :root {
     --primary: #00C2B7;
@@ -16,51 +28,132 @@
     --text-primary: #040404;
     --text-muted: #6B6B6B;
     --white: #FFFFFF;
+    --surface-2: #FFFFFF;
+    --surface-3: #FFFFFF;
+    --gutter: clamp(16px, 4vw, 40px);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1113;
+    --text-primary: #F5F5F4;
+    --text-muted: #A8A8A6;
+    --white: #F5F5F4;
+    --surface-2: #16181B;
+    --surface-3: #1C1E22;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; background: var(--bg); }
   body {
     font-family: 'Nunito', sans-serif;
     background: var(--bg);
     color: var(--text-primary);
     min-height: 100vh;
+    padding-top: 76px;
   }
 
-  /* Nav */
+  /* ═══════════════════════════════════════════ */
+  /* NAV — igual index.html (parity) */
+  /* ═══════════════════════════════════════════ */
   nav {
-    position: sticky;
-    top: 0;
+    position: fixed;
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    padding: 20px 40px;
-    background: rgba(250, 250, 248, 0.85);
-    backdrop-filter: blur(14px);
+    padding: 16px var(--gutter);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+  }
+  nav > .nav-logo { justify-self: start; }
+  nav > .nav-center-wrap { justify-self: center; }
+  nav > .nav-right { justify-self: end; }
+  .nav-center-wrap { display: inline-flex; align-items: center; gap: 10px; }
+  .nav-logo-img { height: clamp(32px, 4vw, 48px); width: auto; display: block; }
+  [data-theme="dark"] .nav-logo-img { filter: brightness(0) invert(1); }
+
+  .nav-theme {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; padding: 0;
+    background: transparent; color: var(--text-primary);
+    border: 1px solid rgba(0,0,0,0.12); border-radius: 999px; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .nav-theme:hover { border-color: var(--primary); transform: translateY(-1px); }
+  .nav-theme .nav-theme-moon { display: none; }
+  [data-theme="dark"] .nav-theme .nav-theme-sun { display: none; }
+  [data-theme="dark"] .nav-theme .nav-theme-moon { display: inline-block; }
+  [data-theme="dark"] .nav-theme { border-color: rgba(255,255,255,0.15); }
+
+  .nav-center-menu {
+    display: flex; align-items: center; gap: 2px; padding: 6px;
+    background: rgba(255,255,255,0.55);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-radius: 50px; border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
   }
-  .nav-logo img { height: 60px; }
-  .nav-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 50px;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    transition: all 0.2s;
+  .nav-center-menu a {
+    display: inline-flex; align-items: center; padding: 8px 14px;
+    font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none;
+    border-radius: 50px; transition: all 0.2s; white-space: nowrap;
   }
-  .nav-back:hover {
-    background: var(--text-primary);
-    color: #fff;
-    transform: translateY(-1px);
+  .nav-center-menu a:hover { background: rgba(0,0,0,0.06); }
+  [data-theme="dark"] .nav-center-menu {
+    background: #272727; border-color: rgba(255,255,255,0.06);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.35);
   }
+  [data-theme="dark"] .nav-center-menu a { font-weight: 300; color: rgba(245,245,244,0.9); }
+  [data-theme="dark"] .nav-center-menu a:hover { background: rgba(255,255,255,0.08); }
+  @media (max-width: 900px) { .nav-center-menu { display: none; } }
+
+  .lang-picker { position: relative; }
+  .lang-btn {
+    width: 38px; height: 38px; padding: 0;
+    background: transparent; border: 1px solid rgba(0,0,0,0.12); border-radius: 999px;
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500;
+    letter-spacing: 0.04em; color: var(--text-primary);
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .lang-btn:hover { border-color: var(--primary); transform: translateY(-1px); }
+  [data-theme="dark"] .lang-btn { border-color: rgba(255,255,255,0.15); }
+  .lang-menu {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px;
+    box-shadow: 0 10px 32px rgba(0,0,0,0.08);
+    padding: 4px; display: flex; flex-direction: column;
+    min-width: 148px; z-index: 200;
+  }
+  .lang-menu[hidden] { display: none; }
+  .lang-menu button {
+    display: flex; align-items: baseline; gap: 10px; padding: 8px 12px;
+    background: transparent; border: none; border-radius: 8px; cursor: pointer;
+    font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 14px;
+    text-align: left; color: var(--text-primary);
+    transition: background 0.15s ease;
+  }
+  .lang-menu button:hover { background: rgba(0,0,0,0.04); }
+  .lang-menu button.active { color: var(--primary); font-weight: 500; }
+  .lang-menu .lang-code {
+    font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500;
+    letter-spacing: 0.06em; color: var(--text-muted); min-width: 22px;
+  }
+  [data-theme="dark"] .lang-menu { background: #1C1E22; border-color: rgba(255,255,255,0.06); }
+  [data-theme="dark"] .lang-menu button { color: var(--text-primary); }
+
+  .nav-download {
+    font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 14px;
+    height: 50px; padding: 0 20px;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-sizing: border-box; background: var(--secondary); color: #fff;
+    border: 1px solid transparent; border-radius: 999px; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.25s ease;
+    text-decoration: none; line-height: 1; white-space: nowrap;
+  }
+  .nav-download:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(167,111,255,0.35); }
+  [data-theme="dark"] .nav-download { background: #fff; color: #000; }
+  .ic { display: inline-block; vertical-align: -0.175em; flex-shrink: 0; }
 
   /* Header */
   .blog-header {
@@ -210,11 +303,39 @@
 </head>
 <body>
 
-<nav>
-  <a class="nav-logo" href="./">
-    <img src="yolki-logo.svg" alt="Yolki Pet">
+<nav id="siteNav">
+  <a class="nav-logo" href="index.html">
+    <img src="assets/brand/yolki-logo.svg" alt="Yolki Pet" class="nav-logo-img" width="245" height="171">
   </a>
-  <a class="nav-back" href="./">← Voltar</a>
+  <div class="nav-center-wrap">
+    <button type="button" class="nav-theme" id="navTheme" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+      <svg class="ic nav-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="ic nav-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="nav-center-menu" role="navigation" aria-label="Navegação principal">
+      <a href="index.html#video-reveal">Como funciona</a>
+      <a href="index.html#depoimentos">Tutores</a>
+      <a href="index.html#planos">Planos</a>
+      <a href="index.html#faq">FAQ</a>
+    </div>
+    <div class="lang-picker">
+      <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
+        <span class="lang-code" id="langCurrent">PT</span>
+      </button>
+      <div class="lang-menu" id="langMenu" hidden role="menu">
+        <button type="button" data-lang="en" data-code="EN" role="menuitem"><span class="lang-code">EN</span> English</button>
+        <button type="button" data-lang="pt" data-code="PT" role="menuitem" class="active"><span class="lang-code">PT</span> Português</button>
+        <button type="button" data-lang="es" data-code="ES" role="menuitem"><span class="lang-code">ES</span> Español</button>
+        <button type="button" data-lang="de" data-code="DE" role="menuitem"><span class="lang-code">DE</span> Deutsch</button>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-download" href="index.html#download" data-cta="nav-download" aria-label="Baixar o app">
+      <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+      <span class="nav-download-label">Baixar</span>
+    </a>
+  </div>
 </nav>
 
 <header class="blog-header">
@@ -277,5 +398,42 @@
   © 2026 Yolki Pet by Coflint OÜ · <a href="./">Voltar ao site</a>
 </footer>
 
+<script>
+(function() {
+  const themeBtn = document.getElementById('navTheme');
+  const meta = document.querySelector('meta[name="theme-color"]');
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#0F1113' : '#00C2B7');
+  }
+  applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+  if (themeBtn) themeBtn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem('yolki_theme', next); } catch (_) {}
+  });
+  const langBtn = document.getElementById('langBtn');
+  const langMenu = document.getElementById('langMenu');
+  const langCurrent = document.getElementById('langCurrent');
+  if (langBtn && langMenu) {
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (langMenu.hasAttribute('hidden')) langMenu.removeAttribute('hidden');
+      else langMenu.setAttribute('hidden', '');
+    });
+    langMenu.addEventListener('click', (e) => {
+      const opt = e.target.closest('button[data-lang]');
+      if (!opt) return;
+      if (langCurrent) langCurrent.textContent = opt.dataset.code;
+      langMenu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      opt.classList.add('active');
+      langMenu.setAttribute('hidden', '');
+    });
+    document.addEventListener('click', (e) => {
+      if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) langMenu.setAttribute('hidden', '');
+    });
+  }
+})();
+</script>
 </body>
 </html>
