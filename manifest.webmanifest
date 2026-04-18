@@ -1,0 +1,22 @@
+{
+  "name": "Yolki Pet — Longevidade começa aqui",
+  "short_name": "Yolki",
+  "description": "Micro-aulas diárias e monitoramento de saúde validado por veterinários. 2 minutos por dia para seu pet viver mais.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAFAF8",
+  "theme_color": "#00C2B7",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["lifestyle", "health", "pets"],
+  "icons": [
+    { "src": "yolki-logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "yolki-logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Planos", "url": "/#planos", "description": "Ver planos e preços" },
+    { "name": "FAQ",    "url": "/#faq",    "description": "Perguntas frequentes" }
+  ]
+}

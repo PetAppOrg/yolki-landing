@@ -4,9 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comparativo — Yolki Pet vs. ChatGPT vs. Google/YouTube</title>
+<link rel="icon" type="image/svg+xml" href="/yolki-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+(function() {
+  try {
+    var stored = localStorage.getItem('yolki_theme');
+    var theme = stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script>
+
 <style>
   :root {
     --primary: #00C2B7;
@@ -17,8 +29,28 @@
     --bg: #FAF9F6;
     --bg-alt: #F3F1EC;
     --text: #1A1A1A;
+    --text-primary: #1A1A1A;
     --text-muted: #6B6B6B;
     --border: #E5E2DC;
+    --surface-2: #FFFFFF;
+    --surface-3: #FFFFFF;
+    --border-subtle: rgba(0, 0, 0, 0.06);
+    --border-default: rgba(0, 0, 0, 0.10);
+    --gutter: clamp(16px, 4vw, 40px);
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0F1113;
+    --bg-alt: #16181B;
+    --text: #F5F5F4;
+    --text-primary: #F5F5F4;
+    --text-muted: #A8A8A6;
+    --white: #F5F5F4;
+    --surface-2: #16181B;
+    --surface-3: #1C1E22;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-default: rgba(255, 255, 255, 0.10);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
