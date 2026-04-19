@@ -84,6 +84,22 @@
     background: radial-gradient(ellipse at top, rgba(0,194,183,0.08) 0%, transparent 60%);
   }
 
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--primary); }
+  .back-link span { transition: transform 0.2s; }
+  .back-link:hover span { transform: translateX(-3px); }
+
   .hero h1 {
     font-weight: 800;
     font-size: clamp(36px, 5vw, 56px);
@@ -421,6 +437,9 @@
 <!-- HERO -->
 <section class="hero">
   <div class="container">
+    <a href="index.html#comparacao" class="back-link" aria-label="Voltar para a página inicial">
+      <span aria-hidden="true">←</span> Voltar
+    </a>
     <h1>Comparativo <span class="hl">completo</span></h1>
     <p>Veja dimensão por dimensão o que diferencia o Yolki Pet de ferramentas genéricas.</p>
   </div>
