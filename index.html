@@ -5027,14 +5027,13 @@
   /* JARS SECTION — Yolki vs. o resto (Matter.js) */
   /* ═══════════════════════════════════════════ */
   .jars-section {
-    padding: clamp(80px, 10vw, 140px) 0;
+    padding: clamp(32px, 5vw, 64px) 0;
     background: linear-gradient(180deg, #FAFAF9 0%, #F0F0EE 100%);
     position: relative;
     overflow: hidden;
-    min-height: 100vh;
   }
   @media (min-width: 900px) {
-    .jars-section { min-height: 120vh; }
+    .jars-section { min-height: 100vh; }
   }
   [data-theme="dark"] .jars-section {
     background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
@@ -5088,7 +5087,7 @@
   .jars-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 6px;
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
@@ -5125,7 +5124,7 @@
   .jars-section .jar-label.competitor { color: var(--text-muted); }
 
   .jars-section .jars-disclaimer {
-    margin-top: 32px;
+    margin-top: 20px;
     text-align: center;
     font-size: 11px;
     color: var(--text-muted);
@@ -5148,7 +5147,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    margin-top: 64px;
+    margin-top: 28px;
   }
 
   /* Privacy inline no final do compare — reforça diferencial */
