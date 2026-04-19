@@ -7895,7 +7895,9 @@ if (prefersReducedMotion) {
     if (section) section.classList.remove('previewing');
   }
 
+  let savedScrollY = null;
   function requestVideoFullscreen() {
+    savedScrollY = window.scrollY;
     const el = video;
     const fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen || el.webkitEnterFullscreen;
     if (fn) {
@@ -7922,11 +7924,18 @@ if (prefersReducedMotion) {
     });
   });
 
-  // ESC ou saída de fullscreen → pausa o vídeo
+  // ESC ou saída de fullscreen → pausa o vídeo e volta à posição da section-video
   function onFullscreenChange() {
     const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
     if (!fsEl) {
       if (!video.paused) video.pause();
+      if (savedScrollY !== null) {
+        const y = savedScrollY;
+        savedScrollY = null;
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: y, left: 0, behavior: 'instant' });
+        });
+      }
     }
   }
   document.addEventListener('fullscreenchange', onFullscreenChange);
