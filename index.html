@@ -3733,6 +3733,29 @@
   .section-app.is-showing-success .app-description {
     display: none;
   }
+  /* Blur restrito ao section-app (não afeta o resto da página) */
+  .section-app.is-showing-success::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(250, 250, 249, 0.5);
+    -webkit-backdrop-filter: blur(12px) saturate(0.85);
+    backdrop-filter: blur(12px) saturate(0.85);
+    pointer-events: none;
+    animation: successBackdropIn 0.35s ease-out both;
+  }
+  [data-theme="dark"] .section-app.is-showing-success::before {
+    background: rgba(15, 17, 19, 0.55);
+  }
+  @keyframes successBackdropIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .section-app.is-showing-success .section-container {
+    position: relative;
+    z-index: 2;
+  }
   [data-theme="dark"] .section-app { background: var(--surface-2); }
   @media (min-width: 900px) {
     .app-sticky-wrapper {
