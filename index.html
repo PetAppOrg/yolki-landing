@@ -240,7 +240,6 @@
   [data-theme="dark"] .cosmos-block-alt { background: var(--surface-2); }
   [data-theme="dark"] .section-audience { background: linear-gradient(180deg, var(--surface-1), var(--surface-2)); }
   [data-theme="dark"] .section-proof,
-  [data-theme="dark"] .section-founders,
   [data-theme="dark"] .section-screens,
   [data-theme="dark"] .section-compare,
   [data-theme="dark"] .section-pricing,
@@ -252,7 +251,6 @@
   /* Cards — elevated surface */
   [data-theme="dark"] .audience-card,
   [data-theme="dark"] .audience-quiz,
-  [data-theme="dark"] .founder-card,
   [data-theme="dark"] .pricing-card:not(.pricing-featured),
   [data-theme="dark"] .testimonial-card.testimonial-light,
   [data-theme="dark"] .privacy-card,
@@ -289,7 +287,6 @@
 
   /* Textos em cards */
   [data-theme="dark"] .audience-card h3,
-  [data-theme="dark"] .founder-card strong,
   [data-theme="dark"] .section-faq .faq-item summary,
   [data-theme="dark"] .cosmos-feature-label,
   [data-theme="dark"] .blog-card h3,
@@ -300,7 +297,6 @@
   [data-theme="dark"] .cosmos-subtitle,
   [data-theme="dark"] .cosmos-body-side,
   [data-theme="dark"] .blog-card p,
-  [data-theme="dark"] .founder-card span,
   [data-theme="dark"] .screen-card small,
   [data-theme="dark"] .testimonial-footer span,
   [data-theme="dark"] .plan-tagline,
@@ -1354,6 +1350,31 @@
     box-shadow: 0 10px 28px rgba(167, 111, 255, 0.38);
   }
 
+  .section-inline-cta {
+    padding: clamp(56px, 9vw, 96px) 0;
+    background: var(--bg);
+    text-align: center;
+  }
+  .section-inline-cta .section-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .inline-cta-lead {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: clamp(22px, 3.2vw, 30px);
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .inline-cta-note {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
   .hero-cta-secondary {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
@@ -2191,7 +2212,7 @@
   }
 
   /* ═══════════════════════════════════════════ */
-  /* SPRINT 3 — TRUST, SCREENSHOTS, FOUNDERS,   */
+  /* SPRINT 3 — TRUST, SCREENSHOTS,              */
   /* PRIVACY                                     */
   /* ═══════════════════════════════════════════ */
 
@@ -2360,73 +2381,6 @@
     font-size: 13px;
     color: var(--text-muted);
     font-style: italic;
-  }
-
-  /* FOUNDERS */
-  .section-founders {
-    padding: 120px 0;
-    background: var(--white);
-    position: relative;
-    z-index: 10;
-  }
-  .founders-header {
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto 56px;
-  }
-  .founders-header .section-subtitle {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .founders-grid {
-    display: flex;
-    justify-content: center;
-    gap: 48px;
-    flex-wrap: wrap;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .founder-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    max-width: 220px;
-  }
-  .founder-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-  .founder-initials {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 36px;
-    color: #fff;
-    letter-spacing: -1px;
-  }
-  .founder-initials-icon {
-    font-size: 48px;
-  }
-  .founder-card strong {
-    font-family: 'Poppins', sans-serif;
-    font-size: 17px;
-    font-weight: 800;
-    color: var(--text-primary);
-  }
-  .founder-card span {
-    font-family: 'Nunito', sans-serif;
-    font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 600;
-    line-height: 1.4;
   }
 
   /* PRIVACY BLOCK */
@@ -4938,8 +4892,6 @@
     .trust-sep { display: none; }
     .section-screens { padding: 72px 0; }
     .screens-grid { grid-template-columns: 1fr; max-width: 280px; gap: 24px; }
-    .section-founders { padding: 72px 0; }
-    .founders-grid { gap: 32px; }
     .section-privacy { padding: 32px 0 56px; }
     .privacy-card { flex-direction: column; text-align: center; gap: 14px; padding: 24px 20px; }
 
@@ -5876,6 +5828,17 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════ -->
+<!-- INLINE CTA — mid-page conversion point       -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section-inline-cta" aria-label="Entrar na lista de espera">
+  <div class="section-container reveal-on-scroll-up">
+    <p class="inline-cta-lead">Já faz sentido pra você?</p>
+    <a href="#download" class="hero-cta-primary" data-cta="inline-post-preview">Entrar na lista →</a>
+    <span class="inline-cta-note">Grátis · Sem cartão · Sem spam</span>
+  </div>
+</section>
+
 <!-- BLOG moved to /blog.html — hidden on home -->
 <section class="section-blog" id="conteudo" style="display:none;" aria-hidden="true">
   <div class="section-container reveal-on-scroll-up">
@@ -6510,6 +6473,79 @@
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
+<!-- TRUST BAR (Sprint 3)                         -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="trust-bar" role="complementary" aria-label="Selos de confiança">
+  <div class="trust-bar-inner">
+    <span class="trust-item">Conforme LGPD</span>
+    <span class="trust-sep" aria-hidden="true"></span>
+    <span class="trust-item">Conteúdo revisado</span>
+    <span class="trust-sep" aria-hidden="true"></span>
+    <span class="trust-item">Criptografia ponta-a-ponta</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: SOCIAL PROOF (moved up — Sprint 2)  -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section-proof" id="depoimentos">
+  <div class="testimonials-scroll-outer" id="testimonialsScrollOuter">
+    <div class="testimonials-scroll-sticky">
+      <div class="section-container" style="text-align:center;">
+        <h2 class="section-title">Tutores que <span class="hl">confiam</span> no Yolki.</h2>
+
+        <div class="testimonials-grid testimonials-grid-scroll" id="testimonialsScrollGrid">
+          <div class="testimonial-card testimonial-dark" data-testimonial-index="0">
+            <div class="testimonial-photo">
+              <div class="photo-placeholder">YM</div>
+            </div>
+            <div class="testimonial-body">
+              <p>"Sinto que finalmente entendo o que meu cachorro precisa. Isso muda tudo."</p>
+              <div class="testimonial-footer">
+                <strong>Yves Matos</strong>
+                <span>Cientista · Tutor de 1 cachorro</span>
+                <span class="author-location">São Paulo-SP</span>
+              </div>
+              <div class="testimonial-stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="testimonial-card testimonial-light" data-testimonial-index="1">
+            <div class="testimonial-photo">
+              <div class="photo-placeholder" style="background: var(--secondary);">AC</div>
+            </div>
+            <div class="testimonial-body">
+              <p>"Descobri coisas sobre a saúde do meu cachorro que eu nem imaginava. Agora tenho mais tranquilidade no dia a dia."</p>
+              <div class="testimonial-footer">
+                <strong>Ana Carolina</strong>
+                <span>Assistente de Cartório · Tutora de 1 cachorro</span>
+                <span class="author-location">Salvador-BA</span>
+              </div>
+              <div class="testimonial-stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="testimonial-card testimonial-light" data-testimonial-index="2">
+            <div class="testimonial-photo">
+              <div class="photo-placeholder" style="background: var(--accent);">OD</div>
+            </div>
+            <div class="testimonial-body">
+              <p>"Em duas semanas já mudei hábitos que nem sabia que estavam errados. O app me ensina sem eu perceber."</p>
+              <div class="testimonial-footer">
+                <strong>Olga Delfino</strong>
+                <span>Advogada · Tutora de 3 cachorros</span>
+                <span class="author-location">Uberlândia-MG</span>
+              </div>
+              <div class="testimonial-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="testimonial-disclaimer">*Relatos de participantes do beta fechado · 2026</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
 <!-- SECTION: PRICING / PLANOS                   -->
 <!-- ═══════════════════════════════════════════ -->
 <section class="section-pricing" id="planos">
@@ -6634,116 +6670,6 @@
           <summary>Qual a diferença real entre Solo e Família?</summary>
           <p>Solo é pra um tutor cuidando de até 3 pets. Família é pra casa toda cuidar junto — cada pessoa tem login próprio, todo mundo enxerga o calendário, lista de compras e quem fez o quê (quem deu o remédio, quem passeou).</p>
         </details>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════ -->
-<!-- TRUST BAR (Sprint 3)                         -->
-<!-- ═══════════════════════════════════════════ -->
-<div class="trust-bar" role="complementary" aria-label="Selos de confiança">
-  <div class="trust-bar-inner">
-    <span class="trust-item">Conforme LGPD</span>
-    <span class="trust-sep" aria-hidden="true"></span>
-    <span class="trust-item">Conteúdo revisado</span>
-    <span class="trust-sep" aria-hidden="true"></span>
-    <span class="trust-item">Criptografia ponta-a-ponta</span>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════ -->
-<!-- SECTION: SOCIAL PROOF (moved up — Sprint 2)  -->
-<!-- ═══════════════════════════════════════════ -->
-<section class="section-proof" id="depoimentos">
-  <div class="testimonials-scroll-outer" id="testimonialsScrollOuter">
-    <div class="testimonials-scroll-sticky">
-      <div class="section-container" style="text-align:center;">
-        <h2 class="section-title">Tutores que <span class="hl">confiam</span> no Yolki.</h2>
-
-        <div class="testimonials-grid testimonials-grid-scroll" id="testimonialsScrollGrid">
-          <div class="testimonial-card testimonial-dark" data-testimonial-index="0">
-            <div class="testimonial-photo">
-              <div class="photo-placeholder">YM</div>
-            </div>
-            <div class="testimonial-body">
-              <p>"Sinto que finalmente entendo o que meu cachorro precisa. Isso muda tudo."</p>
-              <div class="testimonial-footer">
-                <strong>Yves Matos</strong>
-                <span>Cientista · Tutor de 1 cachorro</span>
-                <span class="author-location">São Paulo-SP</span>
-              </div>
-              <div class="testimonial-stars">★★★★★</div>
-            </div>
-          </div>
-          <div class="testimonial-card testimonial-light" data-testimonial-index="1">
-            <div class="testimonial-photo">
-              <div class="photo-placeholder" style="background: var(--secondary);">AC</div>
-            </div>
-            <div class="testimonial-body">
-              <p>"Descobri coisas sobre a saúde do meu cachorro que eu nem imaginava. Agora tenho mais tranquilidade no dia a dia."</p>
-              <div class="testimonial-footer">
-                <strong>Ana Carolina</strong>
-                <span>Assistente de Cartório · Tutora de 1 cachorro</span>
-                <span class="author-location">Salvador-BA</span>
-              </div>
-              <div class="testimonial-stars">★★★★★</div>
-            </div>
-          </div>
-          <div class="testimonial-card testimonial-light" data-testimonial-index="2">
-            <div class="testimonial-photo">
-              <div class="photo-placeholder" style="background: var(--accent);">OD</div>
-            </div>
-            <div class="testimonial-body">
-              <p>"Em duas semanas já mudei hábitos que nem sabia que estavam errados. O app me ensina sem eu perceber."</p>
-              <div class="testimonial-footer">
-                <strong>Olga Delfino</strong>
-                <span>Advogada · Tutora de 3 cachorros</span>
-                <span class="author-location">Uberlândia-MG</span>
-              </div>
-              <div class="testimonial-stars">★★★★★</div>
-            </div>
-          </div>
-        </div>
-
-        <p class="testimonial-disclaimer">*Relatos de participantes do beta fechado · 2026</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════ -->
-<!-- SECTION: FOUNDERS / QUEM CONSTRÓI (Sprint 3) -->
-<!-- ═══════════════════════════════════════════ -->
-<section class="section-founders" id="founders">
-  <div class="section-container reveal-on-scroll-up">
-    <div class="founders-header">
-      <h2 class="section-title">Construído por tutores.<br><span class="hl">Validado por quem entende.</span></h2>
-      <p class="section-subtitle">Você está confiando seu pet a uma equipe. Conheça ela.</p>
-    </div>
-    <div class="founders-grid reveal-on-scroll-up">
-      <div class="founder-card">
-        <div class="founder-photo">
-          <span class="founder-initials">FK</span>
-        </div>
-        <strong>Franz Kunz</strong>
-        <span>Founder · Coflint OÜ<br>Tutor de pet</span>
-      </div>
-      <div class="founder-card">
-        <div class="founder-photo">
-          <span class="founder-initials founder-initials-icon"><svg width="56" height="56" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-  <circle cx="32" cy="32" r="28" fill="rgba(0,194,183,0.12)"/>
-  <path d="M20 18 V30 C20 36 26 40 30 40 C34 40 40 36 40 30 V18" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M16 18 H24" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M36 18 H44" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M30 40 V48" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="30" cy="51" r="4" fill="none" stroke="var(--primary)" stroke-width="3"/>
-  <circle cx="46" cy="28" r="3" fill="var(--accent)"/>
-  <path d="M46 31 V36" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
-</svg></span>
-        </div>
-        <strong>Conselho Veterinário</strong>
-        <span>Em formação<br>Revisão de todo o conteúdo</span>
       </div>
     </div>
   </div>
