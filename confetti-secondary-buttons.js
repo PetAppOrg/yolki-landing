@@ -65,12 +65,11 @@
 
   function resizeCanvas() {
     if (!canvas) return;
-    var dpr = window.devicePixelRatio || 1;
-    canvas.width = Math.floor(window.innerWidth * dpr);
-    canvas.height = Math.floor(window.innerHeight * dpr);
+    // Canvas 1:1 CSS pixels — sem dpr scaling, coords de clientX/Y batem direto
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
-    if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
   function burst(x, y) {
