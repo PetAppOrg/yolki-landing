@@ -3996,7 +3996,36 @@
   /* Success state */
   .waitlist-success {
     text-align: center;
-    padding: 32px 0;
+    padding: 32px 24px;
+    position: relative;
+    background: var(--surface-2);
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  }
+  [data-theme="dark"] .waitlist-success {
+    background: var(--surface-3);
+  }
+  .waitlist-success-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: transparent;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s, color 0.2s;
+  }
+  .waitlist-success-close:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text-primary);
+  }
+  [data-theme="dark"] .waitlist-success-close:hover {
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .success-icon {
@@ -4041,12 +4070,15 @@
   }
 
   .referral-box {
-    background: linear-gradient(135deg, rgba(0,194,183,0.08), rgba(167,111,255,0.1));
-    border: 1px solid rgba(167, 111, 255, 0.2);
+    background: #F5F4FF;
+    border: 1px solid rgba(167, 111, 255, 0.25);
     border-radius: 18px;
     padding: 20px;
     margin-top: 12px;
     text-align: left;
+  }
+  [data-theme="dark"] .referral-box {
+    background: rgba(167, 111, 255, 0.08);
   }
   .referral-box h4 {
     font-family: 'Poppins', sans-serif;
@@ -6357,6 +6389,7 @@
           <button type="submit" id="waitlistSubmit">Garantir minha vaga</button>
         </form>
         <div class="waitlist-success" id="waitlistSuccess" style="display:none;">
+          <button type="button" class="waitlist-success-close" id="waitlistSuccessClose" aria-label="Fechar">×</button>
           <div class="success-header">
             <div class="success-icon">✓</div>
             <h3>Você está dentro, <span id="successName">tutor(a)</span>! 🐾</h3>
@@ -7670,6 +7703,18 @@ if (prefersReducedMotion) {
   const shareWA = document.getElementById('shareWhatsapp');
   const shareX = document.getElementById('shareX');
   const shareEmail = document.getElementById('shareEmail');
+  const closeBtn = document.getElementById('waitlistSuccessClose');
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      success.style.display = 'none';
+      form.style.display = '';
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = 'Garantir minha vaga';
+      }
+    });
+  }
 
   function showError(msg) {
     errorBox.textContent = msg;
@@ -8447,7 +8492,7 @@ if (prefersReducedMotion) {
   </div>
 </div>
 
-<script src="confetti-secondary-buttons.js?v=4" defer></script>
+<script src="confetti-secondary-buttons.js?v=5" defer></script>
 
 </body>
 </html>

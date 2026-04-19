@@ -53,7 +53,10 @@
     '.hero-cta-primary',
     '.msc-btn',
     '.referral-copy',
-    '.corp-submit'
+    '.corp-submit',
+    '.waitlist-form button',
+    '.pricing-signup-form button',
+    '.exit-intent-form button'
   ].join(',');
 
   // ─── Canvas + loop ──────────────────────────────────────────────────────
