@@ -2209,20 +2209,18 @@
     margin: 40px auto 0;
     padding: 0 20px;
     font-family: 'Nunito', sans-serif;
-    font-size: 10px;
-    line-height: 1.45;
+    font-size: 12px;
+    line-height: 1.55;
     color: var(--text-muted);
-    opacity: 0.55;
     text-align: center;
     letter-spacing: 0.01em;
   }
-  [data-theme="dark"] .pricing-legal-disclaimer { opacity: 0.45; }
 
   .pricing-risk-free {
     text-align: center;
     font-family: 'Nunito', sans-serif;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.82);
+    color: #ffffff;
     margin: 28px auto 0;
     max-width: 720px;
     letter-spacing: 0.2px;
@@ -3015,7 +3013,11 @@
     font-size: 19px;
     line-height: 1.5;
     margin-bottom: 24px;
-    flex: 1;
+    min-height: 160px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 768px) {
+    .testimonial-body > p { min-height: 0; }
   }
 
   .testimonial-footer {
@@ -3056,6 +3058,7 @@
     color: var(--accent);
     font-size: 16px;
     letter-spacing: 2px;
+    margin-top: auto;
   }
 
   .testimonial-disclaimer {
@@ -4814,7 +4817,7 @@
   .site-footer .footer-col a:hover { color: var(--primary); }
   .site-footer .footer-desc { color: rgba(255, 255, 255, 0.58); }
   .site-footer .footer-trust-item { color: rgba(255, 255, 255, 0.85); }
-  .site-footer .footer-designed,
+  .site-footer .footer-designed { color: #ffffff; }
   .site-footer .footer-copy { color: rgba(255, 255, 255, 0.55); }
   .site-footer .footer-socials a {
     background: rgba(255, 255, 255, 0.08);
@@ -7993,6 +7996,8 @@ if (prefersReducedMotion) {
     '.section-title', '.cosmos-title', '.cosmos-title-side',
     '.blog-main-title', '.pricing-main-title', '.faq-main-title',
     '.compare-title', '.compare-subtitle',
+    '.pricing-faq-title', '.plan-name',
+    '.hero-headline h1',
   ];
 
   // Other text/cards: block fade + slide
