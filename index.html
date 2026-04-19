@@ -3259,7 +3259,7 @@
 
   /* Featured card — taller with mascot poking out */
   .pricing-featured {
-    border: 2px solid var(--primary);
+    border: 4px solid var(--primary);
     background: var(--surface-2);
   }
 
@@ -3284,8 +3284,11 @@
   .pricing-soon {
     background: #F0F0EE;
   }
-  .pricing-soon .plan-name {
+  .pricing-soon .plan-name,
+  .pricing-soon .price-value,
+  .pricing-soon .price-cents {
     color: var(--text-muted);
+    opacity: 0.7;
   }
   [data-theme="dark"] .pricing-soon {
     background: var(--surface-1);
