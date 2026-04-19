@@ -20,8 +20,8 @@
   // ─── Parâmetros ajustáveis ─────────────────────────────────────────────
   var GRAVITY         = 520;   // px/s²
   var LIFE_SECONDS    = 2.0;   // duração total da partícula
-  var REDIRECT_DELAY  = 1800;  // ms antes da ação original
-  var PARTICLE_COUNT  = 55;
+  var REDIRECT_DELAY  = 1500;  // ms antes da ação original
+  var PARTICLE_COUNT  = 110;
   var SPEED_MIN       = 380;   // px/s
   var SPEED_MAX       = 640;
   var CONE_DEG        = 270;   // abertura radial
