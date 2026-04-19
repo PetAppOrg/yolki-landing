@@ -3284,6 +3284,9 @@
   .pricing-soon {
     background: #F0F0EE;
   }
+  .pricing-soon .plan-name {
+    color: var(--text-muted);
+  }
   [data-theme="dark"] .pricing-soon {
     background: var(--surface-1);
   }
@@ -6653,7 +6656,7 @@
         <p class="plan-save"
            data-monthly="No anual, <strong class=&quot;plan-save-hero&quot;>economize R$ 60/ano</strong>"
            data-annual="<strong class=&quot;plan-save-hero&quot;>Economia de R$ 60/ano</strong><span class=&quot;plan-save-sub&quot;>Total R$ 178,80/ano</span>"><strong class="plan-save-hero">Economia de R$ 60/ano</strong><span class="plan-save-sub">Total R$ 178,80/ano</span></p>
-        <a href="#download" class="plan-cta plan-cta-primary" data-cta="plan-solo">
+        <a href="#download" class="plan-cta plan-cta-outline" data-cta="plan-solo">
           Quero Solo com −25% →
         </a>
       </div>
@@ -6679,7 +6682,7 @@
            data-monthly="No anual, <strong class=&quot;plan-save-hero&quot;>economize R$ 180/ano</strong>"
            data-annual="<strong class=&quot;plan-save-hero&quot;>Economia de R$ 180/ano</strong><span class=&quot;plan-save-sub&quot;>Total R$ 298,80/ano</span>"><strong class="plan-save-hero">Economia de R$ 180/ano</strong><span class="plan-save-sub">Total R$ 298,80/ano</span></p>
         <a href="#download" class="plan-cta plan-cta-outline" data-cta="plan-familia">
-          Entrar com a família toda →
+          Entrar com a família →
         </a>
       </div>
     </div>
@@ -7875,14 +7878,16 @@ if (prefersReducedMotion) {
   });
 })();
 
-// ─── FAQ ACCORDION (only one open at a time) ───
+// ─── FAQ ACCORDION (fecha os outros ANTES de abrir o novo, evitando flash) ───
 (function() {
   const items = document.querySelectorAll('.faq-item');
   items.forEach(item => {
-    item.addEventListener('toggle', () => {
-      if (item.open) {
+    const summary = item.querySelector('summary');
+    if (!summary) return;
+    summary.addEventListener('click', () => {
+      if (!item.open) {
         items.forEach(other => {
-          if (other !== item) other.open = false;
+          if (other !== item && other.open) other.open = false;
         });
       }
     });
