@@ -169,10 +169,10 @@ Pronto, trigger volta a funcionar.
 
 ### Returning visitor (já cadastrou)
 ```
-1. Page load, JS lê localStorage yolki_waitlist
-2. Se tem, renderiza success state imediatamente (offline)
-3. Em paralelo, chama get_waitlist_position(email) pra atualizar números
-4. Se a posição mudou (subiu por referrals), re-renderiza
+1. Page load mostra o form normalmente (sem persistência local)
+2. Se a pessoa reenviar, a RPC join_waitlist dedupa por email no servidor
+   e devolve a posição/referral_code atualizados
+3. Ranking e contagem de indicações vivem só no Supabase
 ```
 
 ---
@@ -248,12 +248,11 @@ E também no frontend (texto da success state): "você sobe 10 posições".
 - Confirmar que push foi aceito (`git log origin/main`)
 
 ### "Status de cadastro aparece errado para um usuário"
-Deleta manualmente o localStorage dele:
-```js
-localStorage.removeItem('yolki_waitlist');
-localStorage.removeItem('yolki_ref');
+A landing não guarda mais nada no localStorage sobre a waitlist — a posição vem direto da RPC `join_waitlist` a cada submit. Se o número estiver errado, a verdade está no banco:
+```sql
+SELECT * FROM waitlist WHERE email = 'email@exemplo.com';
 ```
-Ou em DevTools → Application → Local Storage.
+Se a pessoa tiver um código de referral preso no navegador (`yolki_ref`, setado via `?r=CODIGO`), limpe em DevTools → Application → Local Storage.
 
 ---
 
