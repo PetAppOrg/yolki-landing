@@ -34,15 +34,27 @@
   var SIZE_MAX        = 12;
   var PALETTE = ['#01BCB5', '#8F06CD', '#FDA600', '#5EB864', '#F9D84D', '#FF000B', '#4286CD'];
 
-  // Cores RGB consideradas "secondary" (formato do computed style)
-  var SECONDARY_RGB = {
-    'rgb(143, 6, 205)': 1,   // #8F06CD
-    'rgb(167, 111, 255)': 1  // #A76FFF (var --secondary atual do projeto)
-  };
+  // Cores consideradas "secondary" (computed style: rgb ou rgba)
+  function isSecondaryColor(bg) {
+    if (!bg) return false;
+    var n = bg.replace(/\s+/g, '').toLowerCase();
+    return (
+      n === 'rgb(143,6,205)' || n === 'rgba(143,6,205,1)' ||      // #8F06CD
+      n === 'rgb(167,111,255)' || n === 'rgba(167,111,255,1)'     // #A76FFF (--secondary)
+    );
+  }
 
-  // Classes diretamente tratadas como secondary
-  var SECONDARY_CLASS_SELECTORS =
-    '.btn-secondary, .bg-secondary, .plan-cta-secondary, .nav-download';
+  // Classes diretamente tratadas como secondary (belt-and-suspenders)
+  var SECONDARY_CLASS_SELECTORS = [
+    '.btn-secondary',
+    '.bg-secondary',
+    '.plan-cta-secondary',
+    '.nav-download',
+    '.hero-cta-primary',
+    '.msc-btn',
+    '.referral-copy',
+    '.corp-submit'
+  ].join(',');
 
   // ─── Canvas + loop ──────────────────────────────────────────────────────
   var canvas = null;
@@ -158,9 +170,11 @@
     if (btn.matches(SECONDARY_CLASS_SELECTORS)) return btn;
     // data-variant
     if (btn.matches('[data-variant="secondary"]')) return btn;
-    // computed bg-color
-    var bg = getComputedStyle(btn).backgroundColor;
-    if (SECONDARY_RGB[bg]) return btn;
+    // computed bg-color no próprio botão
+    if (isSecondaryColor(getComputedStyle(btn).backgroundColor)) return btn;
+    // também aceita se há background-image linear-gradient com #A76FFF ou #8F06CD
+    var bgImage = getComputedStyle(btn).backgroundImage || '';
+    if (/a76fff|#a76fff|167,\s*111,\s*255|143,\s*6,\s*205|8f06cd/i.test(bgImage)) return btn;
 
     return null;
   }
