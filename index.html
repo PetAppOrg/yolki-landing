@@ -3602,14 +3602,33 @@
   /* ═══════════════════════════════════════════ */
   /* APP DOWNLOAD + WAITLIST                      */
   /* ═══════════════════════════════════════════ */
+  .app-sticky-wrapper {
+    position: relative;
+    z-index: 10;
+  }
   .section-app {
-    padding: clamp(48px, 6vw, 72px) 0 120px;
+    padding: clamp(48px, 6vw, 72px) 0 clamp(64px, 8vw, 120px);
     background: var(--surface-2);
     position: relative;
     z-index: 10;
     overflow: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   [data-theme="dark"] .section-app { background: var(--surface-2); }
+  @media (min-width: 900px) {
+    .app-sticky-wrapper {
+      height: 160vh;
+    }
+    .section-app {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+  }
 
   .app-grid {
     display: grid;
@@ -6723,6 +6742,7 @@
 <!-- ═══════════════════════════════════════════ -->
 <!-- SECTION: CADASTRO + APP                     -->
 <!-- ═══════════════════════════════════════════ -->
+<div class="app-sticky-wrapper">
 <section class="section-app" id="download">
   <!-- Floating pet cards -->
   <div class="floating-cards-container" aria-hidden="true">
@@ -6793,6 +6813,7 @@
     </div>
   </div>
 </section>
+</div><!-- end app-sticky-wrapper -->
 
 <!-- ═══════════════════════════════════════════ -->
 <!-- Privacy movida pra após a seção Compare e microcópia no form -->
