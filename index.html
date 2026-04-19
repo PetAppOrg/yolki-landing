@@ -5048,7 +5048,7 @@
 
   .compare-heading {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
   }
 
   .compare-title {
@@ -5096,8 +5096,11 @@
     gap: 6px;
     max-width: 1100px;
     width: 100%;
-    margin: 0 auto;
+    margin: -80px auto 0;
     align-items: start;
+  }
+  @media (max-width: 900px) {
+    .jars-container { margin-top: 0; }
   }
   .jars-section .jar-col {
     display: flex;
@@ -5121,6 +5124,7 @@
   }
   .jars-section .jar-label {
     margin-top: 4px;
+    min-height: 72px;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 18px;
@@ -8254,7 +8258,7 @@ if (prefersReducedMotion) {
       text.setAttribute('text-anchor', 'middle');
       text.setAttribute('font-family', 'Nunito, sans-serif');
       text.setAttribute('font-size', '9');
-      text.setAttribute('font-weight', '700');
+      text.setAttribute('font-weight', pill.color ? '700' : '500');
       text.setAttribute('fill', '#ffffff');
       text.setAttribute('pointer-events', 'none');
       text.textContent = pill.text;
