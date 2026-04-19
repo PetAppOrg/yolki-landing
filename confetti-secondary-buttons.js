@@ -56,10 +56,10 @@
     canvas = document.createElement('canvas');
     canvas.setAttribute('aria-hidden', 'true');
     canvas.style.cssText =
-      'position:fixed;inset:0;pointer-events:none;z-index:9999;';
+      'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
     document.body.appendChild(canvas);
+    ctx = canvas.getContext('2d');          // ctx antes do primeiro resize
     resizeCanvas();
-    ctx = canvas.getContext('2d');
     window.addEventListener('resize', resizeCanvas, { passive: true });
   }
 
@@ -106,7 +106,7 @@
     var dragX = Math.pow(DRAG_X, dt);
     var dragY = Math.pow(DRAG_Y, dt);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
     for (var i = particles.length - 1; i >= 0; i--) {
       var p = particles[i];
@@ -143,7 +143,7 @@
       rafId = requestAnimationFrame(tick);
     } else {
       rafId = null;
-      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (ctx) ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     }
   }
 
