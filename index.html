@@ -17,7 +17,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="assets/video/video-cover.webp" fetchpriority="high">
 
 <!-- Theme early-init (evita flash) -->
 <script>
@@ -100,7 +99,7 @@
       "@type": "VideoObject",
       "name": "Como o Yolki Pet funciona",
       "description": "Demonstração rápida do app Yolki Pet: micro-aulas diárias, monitoramento de saúde e gamificação para longevidade pet.",
-      "thumbnailUrl": "https://yolki.pet/assets/video/video-cover.webp",
+      "thumbnailUrl": "https://yolki.pet/assets/brand/og-image.webp",
       "uploadDate": "2026-04-01",
       "contentUrl": "https://yolki.pet/assets/video/hero-video.mp4"
     },
@@ -1665,27 +1664,6 @@
     font-size: 16px;
   }
 
-  .video-cover-img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    min-height: 100%;
-    max-width: none;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    z-index: 1;
-    transition: opacity 0.3s ease;
-  }
-  .section-video.playing .video-cover-img {
-    opacity: 0;
-    pointer-events: none;
-  }
-
   .video-card video {
     width: 100%;
     height: 100%;
@@ -1693,15 +1671,6 @@
     object-position: center;
     position: relative;
     z-index: 2;
-  }
-  /* Hide poster's letterbox by making video transparent until it plays */
-  .section-video:not(.playing) .video-card video {
-    opacity: 0;
-    pointer-events: none;
-  }
-  .section-video.playing .video-card video {
-    opacity: 1;
-    transition: opacity 0.3s ease;
   }
 
   .video-overlay {
@@ -1722,8 +1691,6 @@
   }
 
   /* Hover-preview state: vídeo tocando em loop silencioso, overlay semi-transparente */
-  .section-video.previewing .video-card video { opacity: 1; transition: opacity 0.25s ease; }
-  .section-video.previewing .video-cover-img { opacity: 0; transition: opacity 0.25s ease; }
   .section-video.previewing .video-overlay { background: rgba(0,0,0,0.05); }
   .section-video.previewing .video-play-btn::after {
     content: 'Clique para ouvir';
@@ -5555,9 +5522,8 @@
 <!-- ═══════════════════════════════════════════ -->
 <section class="section-video" id="video-reveal">
   <div class="video-card" id="videoCard">
-    <img class="video-cover-img" src="assets/video/video-cover.webp" alt="" aria-hidden="true" decoding="async" fetchpriority="high">
-    <video id="heroVideo" playsinline preload="metadata" poster="assets/video/video-cover.webp">
-      <source src="assets/video/hero-video.mp4" type="video/mp4">
+    <video id="heroVideo" playsinline preload="auto">
+      <source src="assets/video/hero-video.mp4#t=0.1" type="video/mp4">
     </video>
     <div class="video-overlay" id="videoOverlay">
       <button class="video-play-btn" id="videoPlayBtn">

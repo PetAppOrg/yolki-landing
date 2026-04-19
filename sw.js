@@ -1,10 +1,9 @@
-const CACHE = 'yolki-v1';
+const CACHE = 'yolki-v2';
 const ASSETS = [
   '/',
   '/index.html',
   '/assets/brand/yolki-logo.svg',
   '/assets/brand/yolki-mascot.svg',
-  '/assets/video/video-cover.webp',
   '/manifest.webmanifest'
 ];
 
