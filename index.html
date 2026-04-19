@@ -5027,7 +5027,7 @@
   /* JARS SECTION — Yolki vs. o resto (Matter.js) */
   /* ═══════════════════════════════════════════ */
   .jars-section {
-    padding: clamp(32px, 5vw, 64px) 0 clamp(48px, 7vw, 96px);
+    padding: clamp(72px, 9vw, 120px) 0 clamp(48px, 7vw, 96px);
     background: linear-gradient(180deg, #FAFAF9 0%, #F0F0EE 100%);
     position: relative;
     overflow: hidden;
@@ -6093,7 +6093,7 @@
           </div>
           <div class="testimonial-card testimonial-light" data-testimonial-index="1">
             <div class="testimonial-photo">
-              <div class="photo-placeholder" style="background: var(--secondary);">AC</div>
+              <img src="assets/photos/ana-carolina.webp" alt="Ana Carolina" loading="lazy" style="object-position: 32% 22%;">
             </div>
             <div class="testimonial-body">
               <p>"Descobri coisas sobre a saúde do meu cachorro que eu nem imaginava. Agora tenho mais tranquilidade no dia a dia."</p>
@@ -8376,18 +8376,18 @@ if (prefersReducedMotion) {
     enableHover('pills-net');
   };
 
-  const jarsContainer = jarsSection.querySelector('.jars-container');
-  const target = jarsContainer || jarsSection;
+  const cta = jarsSection.querySelector('.compare-cta');
+  const target = cta || jarsSection;
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio >= 0.95) {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.99) {
         loadMatter()
           .then(() => window.__initJarsAnimation())
           .catch(err => console.warn('Matter.js failed to load:', err));
         obs.unobserve(target);
       }
     });
-  }, { threshold: [0.5, 0.8, 0.95, 1] });
+  }, { threshold: [0.5, 0.8, 1] });
   observer.observe(target);
 })();
 </script>
