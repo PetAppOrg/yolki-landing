@@ -1631,6 +1631,25 @@
     box-shadow: none !important;
   }
 
+  .video-caption {
+    margin-top: 14px;
+    text-align: center;
+    font-family: 'JetBrains Mono', 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0.75;
+  }
+  .video-caption .video-caption-play {
+    display: inline-block;
+    font-size: 10px;
+    transform: translateY(-1px);
+    margin: 0 2px;
+    color: var(--primary);
+  }
+
   .video-cover-img {
     position: absolute;
     top: 50%;
@@ -4916,8 +4935,8 @@
   }
 
   @keyframes scaleIn {
-    from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
   }
 
   /* ─── RESPONSIVE ─── */
@@ -5456,8 +5475,7 @@
 <!-- ═══════════════════════════════════════════ -->
 <section class="section-video" id="video-reveal">
   <div class="video-card" id="videoCard">
-    <img class="video-cover-img" src="assets/video/video-cover.webp" alt="" aria-hidden="true">
-    <video id="heroVideo" playsinline preload="none" poster="assets/video/video-cover.webp">
+    <video id="heroVideo" playsinline preload="none">
       <source src="assets/video/hero-video.mp4" type="video/mp4">
     </video>
     <div class="video-overlay" id="videoOverlay">
@@ -5468,6 +5486,7 @@
       </button>
     </div>
   </div>
+  <p class="video-caption">Um desejo do seu pet <span aria-hidden="true">·</span> <span class="video-caption-play" aria-hidden="true">▶</span> 60s</p>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
