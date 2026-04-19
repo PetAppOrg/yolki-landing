@@ -1378,6 +1378,14 @@
     font-family: 'Nunito', sans-serif;
     font-size: 13px;
     color: var(--text-muted);
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .inline-cta-note .wn-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
   }
 
   .hero-cta-secondary {
@@ -2140,17 +2148,42 @@
 
   /* Social proof contador na pricing */
   .pricing-social-proof {
-    text-align: center;
     font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.85);
-    margin: -40px auto 40px;
+    font-size: 15px;
+    color: var(--text-primary);
+    margin: -32px auto 40px;
     letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(94, 184, 100, 0.12);
+    border: 1px solid rgba(94, 184, 100, 0.28);
+    line-height: 1.2;
+    width: fit-content;
+  }
+  .pricing-social-proof::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 0 0 rgba(94, 184, 100, 0.6);
+    animation: pulseDot 2s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(94, 184, 100, 0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(94, 184, 100, 0); }
   }
   .pricing-social-proof .proof-count {
     font-family: 'Poppins', sans-serif;
     font-weight: 800;
-    color: #fff;
+    color: var(--success);
+    font-size: 17px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pricing-social-proof::before { animation: none; }
   }
 
   /* CTA nos cards de pricing */
@@ -3013,7 +3046,7 @@
     font-size: 19px;
     line-height: 1.5;
     margin-bottom: 24px;
-    min-height: 160px;
+    min-height: 230px;
     flex-shrink: 0;
   }
   @media (max-width: 768px) {
@@ -3370,7 +3403,7 @@
   }
 
   .plan-features-list span {
-    font-size: 15px;
+    font-size: 16px;
     color: var(--text-muted);
     line-height: 1.4;
   }
@@ -5792,7 +5825,11 @@
   <div class="section-container reveal-on-scroll-up">
     <p class="inline-cta-lead">Já faz sentido pra você?</p>
     <a href="#download" class="hero-cta-primary" data-cta="inline-post-preview">Entrar na lista →</a>
-    <span class="inline-cta-note">Grátis · Sem cartão · Sem spam</span>
+    <span class="inline-cta-note">
+      <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Grátis</span>
+      <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Sem cartão</span>
+      <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Sem spam</span>
+    </span>
   </div>
 </section>
 
