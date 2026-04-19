@@ -7895,7 +7895,15 @@ if (prefersReducedMotion) {
     if (section) section.classList.remove('previewing');
   }
 
-  // Click overlay → reinicia com áudio
+  function requestVideoFullscreen() {
+    const el = video;
+    const fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen || el.webkitEnterFullscreen;
+    if (fn) {
+      try { fn.call(el); } catch (_) {}
+    }
+  }
+
+  // Click overlay → reinicia com áudio + fullscreen
   overlay.addEventListener('click', () => {
     activated = true;
     previewing = false;
@@ -7908,10 +7916,21 @@ if (prefersReducedMotion) {
     video.play().then(() => {
       overlay.classList.add('hidden');
       if (section) section.classList.add('playing');
+      requestVideoFullscreen();
     }).catch(() => {
       overlay.classList.add('hidden');
     });
   });
+
+  // ESC ou saída de fullscreen → pausa o vídeo
+  function onFullscreenChange() {
+    const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+    if (!fsEl) {
+      if (!video.paused) video.pause();
+    }
+  }
+  document.addEventListener('fullscreenchange', onFullscreenChange);
+  document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 
   // Click no vídeo (já ativado) pausa
   video.addEventListener('click', () => {
