@@ -5027,7 +5027,7 @@
   /* JARS SECTION — Yolki vs. o resto (Matter.js) */
   /* ═══════════════════════════════════════════ */
   .jars-section {
-    padding: clamp(32px, 5vw, 64px) 0;
+    padding: clamp(32px, 5vw, 64px) 0 clamp(48px, 7vw, 96px);
     background: linear-gradient(180deg, #FAFAF9 0%, #F0F0EE 100%);
     position: relative;
     overflow: hidden;
@@ -5035,6 +5035,12 @@
   @media (min-width: 900px) {
     .jars-section { min-height: 100vh; }
   }
+
+  .jars-privacy-section {
+    padding: clamp(48px, 7vw, 96px) 0;
+    background: #F0F0EE;
+  }
+  [data-theme="dark"] .jars-privacy-section { background: var(--surface-2); }
   [data-theme="dark"] .jars-section {
     background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
   }
@@ -5103,6 +5109,11 @@
     max-width: 300px;
     position: relative;
   }
+  @media (min-width: 900px) {
+    .jars-section .jar-wrapper {
+      max-width: min(300px, calc((100vh - 440px) / 1.7));
+    }
+  }
   .jars-section .jar-wrapper svg {
     width: 100%;
     height: auto;
@@ -5153,7 +5164,7 @@
   /* Privacy inline no final do compare — reforça diferencial */
   .compare-privacy {
     max-width: 720px;
-    margin: 48px auto 0;
+    margin: 0 auto;
     padding: 20px 24px;
     display: flex;
     align-items: flex-start;
@@ -6018,8 +6029,12 @@
     <div class="compare-cta">
       <a class="compare-details-link" href="comparacao.html">Ver comparativo completo <span aria-hidden="true">→</span></a>
     </div>
+  </div>
+</section>
 
-    <!-- Privacy as final Yolki differential vs. the rest -->
+<!-- Privacy as final Yolki differential vs. the rest -->
+<section class="jars-privacy-section">
+  <div class="section-container">
     <div class="compare-privacy" id="privacidade">
       <div class="compare-privacy-badge">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
