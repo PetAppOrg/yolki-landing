@@ -342,8 +342,7 @@
     border: 1px solid var(--border-default);
   }
 
-  /* Compare pills/jars */
-  [data-theme="dark"] .compare-jar-gray { background: var(--surface-2); border-color: var(--border-subtle); }
+  /* Compare labels */
   [data-theme="dark"] .compare-label-gray { color: var(--text-muted); }
   [data-theme="dark"] .compare-label-yolki { color: var(--text-primary); }
 
@@ -465,7 +464,6 @@
     html { scroll-snap-type: y proximity; }
     .section-audience {
       scroll-snap-align: start;
-      scroll-margin-top: 72px;
     }
   }
   .audience-header { text-align: center; max-width: 640px; margin: 0 auto var(--space-block); }
@@ -1720,7 +1718,10 @@
     z-index: 10;
   }
   .section-audience { padding-bottom: 32px; }
-  #como-funciona { padding-top: 32px; padding-bottom: 48px; }
+  #como-funciona { padding-top: 32px; padding-bottom: 48px; scroll-margin-top: 100px; }
+  @media (max-width: 768px) {
+    #como-funciona { scroll-margin-top: 80px; }
+  }
 
   .cosmos-block-alt {
     background: var(--bg);
@@ -4979,9 +4980,7 @@
     .pricing-main-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
 
     /* Compare section */
-    .compare-jar { height: 340px; max-width: 100%; }
     .compare-label { font-size: 18px; }
-    .compare-pill { font-size: 13px; padding: 8px 14px; }
     .compare-details-link { font-size: 14px; padding: 12px 22px; }
 
     /* FAQ */
@@ -5011,50 +5010,27 @@
   @media (max-width: 480px) {
     .orbital-center { width: 70px; height: 70px; }
     .hero-headline h1 { font-size: 26px; }
-    .compare-jar { height: 300px; }
-    .compare-pill { font-size: 13px; padding: 6px 12px; }
     .compare-label { font-size: 16px; }
     .nav-logo img { height: 46px !important; }
     .nav-cta { padding: 0 14px; height: 40px; font-size: 13px; }
   }
 
   /* ═══════════════════════════════════════════ */
-  /* COMPARE SECTION                             */
+  /* COMPARE SECTION — Apothecary jars v4         */
   /* ═══════════════════════════════════════════ */
   .section-compare {
-    padding: 120px 0;
+    --c-yolki-teal: #01BCB5;
+    --c-yolki-purple: #8F06CD;
+    --c-yolki-amber: #FDA600;
+    --c-yolki-success: #5EB864;
+    --c-yolki-info: #4286CD;
+    --c-grey-1: #9CA3AF;
+    --c-grey-2: #6B7280;
+    --c-grey-3: #4B5563;
+    padding: clamp(80px, 10vw, 140px) 0;
     background: var(--bg);
     position: relative;
     overflow: hidden;
-  }
-  /* Blobs coloridos atrás dos jars — dão textura pro backdrop-filter refratar */
-  .section-compare::before,
-  .section-compare::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.55;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .section-compare::before {
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(0, 194, 183, 0.35), transparent 70%);
-    top: 15%; left: -100px;
-  }
-  .section-compare::after {
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(167, 111, 255, 0.28), transparent 70%);
-    bottom: 10%; right: -100px;
-  }
-  [data-theme="dark"] .section-compare::before {
-    background: radial-gradient(circle, rgba(0, 194, 183, 0.25), transparent 70%);
-    opacity: 0.8;
-  }
-  [data-theme="dark"] .section-compare::after {
-    background: radial-gradient(circle, rgba(167, 111, 255, 0.22), transparent 70%);
-    opacity: 0.7;
   }
   .section-compare > .section-container { position: relative; z-index: 1; }
 
@@ -5124,200 +5100,173 @@
   .compare-label-gray { color: #9a9a9a; }
 
   /* ─────────────────────────────────────────
-     TUBO DE ENSAIO — vidro realista v3
-     - Curvatura cilíndrica com highlights verticais fortes
-     - Bottom menos agressivo pra não clipar conteúdo
-     - Graduação com ticks maior/menor (real lab feel)
-     - Cap com bevel e sombra
+     APOTHECARY JARS — fotorealistas v4
+     SVG inline com defs únicas por jar
      ───────────────────────────────────────── */
-  .compare-jar {
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .compare-grid {
+    position: relative;
+    align-items: end;
+  }
+  .compare-col { position: relative; z-index: 1; }
+
+  /* Linha de chão unificada atrás dos 3 jars */
+  .compare-floor-line {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: 92px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.08) 12%,
+      rgba(0, 0, 0, 0.08) 88%,
+      transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  [data-theme="dark"] .compare-floor-line {
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 12%,
+      rgba(255, 255, 255, 0.08) 88%,
+      transparent 100%);
+  }
+
+  .jar {
     position: relative;
     width: 100%;
-    max-width: 240px;
-    height: 440px;
-    margin: 40px auto 0;
-    border-radius: 14px 14px 54px 54px / 14px 14px 44px 44px;
-    overflow: hidden;
-    background:
-      /* Bubbles decorativos */
-      radial-gradient(circle 10px at 26% 76%, rgba(255,255,255,0.82), rgba(255,255,255,0.5) 55%, transparent 62%),
-      radial-gradient(circle 6px at 62% 84%, rgba(255,255,255,0.7), rgba(255,255,255,0.4) 55%, transparent 65%),
-      radial-gradient(circle 4px at 48% 92%, rgba(255,255,255,0.85), rgba(255,255,255,0.5) 55%, transparent 65%),
-      radial-gradient(circle 3px at 74% 91%, rgba(255,255,255,0.65), rgba(255,255,255,0.3) 60%, transparent 70%),
-      /* Fundo suave sem linhas verticais */
-      linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%);
-    background-blend-mode: normal;
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
-    backdrop-filter: blur(16px) saturate(1.4);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
-    border: 1.5px solid rgba(255, 255, 255, 0.55);
-    box-shadow:
-      inset 0 2px 0 rgba(255, 255, 255, 0.95),
-      inset 0 -2px 8px rgba(0, 0, 0, 0.06),
-      0 18px 40px -6px rgba(20, 22, 28, 0.12),
-      0 40px 60px -20px rgba(20, 22, 28, 0.08);
+    margin: 0 auto;
+    display: block;
+  }
+  .jar-svg {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    overflow: visible;
+  }
+  .jar--gpt .jar-svg { filter: saturate(0.68); }
+  .jar--internet .jar-svg { filter: saturate(0.45) brightness(0.97); }
+
+  /* ─── IDLE ANIMATIONS (loops GPU-accelerated) ─── */
+  @keyframes jar-glow-pulse {
+    0%, 100% { opacity: 0.22; }
+    50% { opacity: 0.38; }
+  }
+  @keyframes pill-breathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+  @keyframes pill-tumble {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes pill-slow-drift {
+    0%, 100% { transform: rotate(var(--r0, 0deg)); }
+    50%      { transform: rotate(calc(var(--r0, 0deg) + 12deg)); }
+  }
+  @keyframes pill-bounce {
+    0%, 100% { transform: translateY(0); }
+    25%      { transform: translateY(-12px); }
+    50%      { transform: translateY(0); }
+    70%      { transform: translateY(-6px); }
+  }
+  @keyframes bubble-rise {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    15%  { opacity: 0.55; }
+    85%  { opacity: 0.4; }
+    100% { transform: translateY(-44px) translateX(var(--ax, 0)); opacity: 0; }
+  }
+  @keyframes dust-drift {
+    0%, 100% { transform: translate(0, 0); opacity: 0.18; }
+    50%      { transform: translate(var(--dx, 4px), var(--dy, -8px)); opacity: 0.32; }
   }
 
-  /* Tampa (stopper) com bevel 3D pronunciado */
-  .compare-jar::before {
-    content: '';
-    position: absolute;
-    top: -22px;
-    left: -10px;
-    right: -10px;
-    height: 40px;
-    background:
-      /* Highlight elíptico top (luz incidente forte) */
-      radial-gradient(ellipse 60% 55% at 35% 18%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.4) 40%, transparent 65%),
-      /* Sombra inferior curva (profundidade) */
-      radial-gradient(ellipse 90% 40% at 50% 100%, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.12) 50%, transparent 80%),
-      /* Cor base com gradiente 3-stop */
-      linear-gradient(180deg, #D5E9F4 0%, #9FC4DA 50%, #6E9AB5 100%);
-    border: 1px solid rgba(20,22,28,0.18);
-    border-radius: 20px 20px 10px 10px / 60% 60% 14px 14px;
-    z-index: 4;
-    box-shadow:
-      /* Inset highlight topo */
-      inset 0 2px 0 rgba(255,255,255,1),
-      /* Inset sombra baixa (lábio) */
-      inset 0 -3px 3px rgba(0,0,0,0.15),
-      /* Sombras externas (drop) */
-      0 1px 0 rgba(255,255,255,0.35),
-      0 6px 14px rgba(20,22,28,0.25),
-      0 14px 30px -8px rgba(20,22,28,0.2);
-  }
-
-  /* Sem graduação — barra cinza vertical removida */
-
-  /* Yolki: glow teal + líquido teal suave */
-  .compare-jar-yolki {
-    --jar-liquid: rgba(0, 194, 183, 0.32);
-    --jar-liquid-deep: rgba(0, 150, 143, 0.7);
-    box-shadow:
-      inset 0 2px 0 rgba(255, 255, 255, 0.95),
-      inset 0 -2px 8px rgba(0, 194, 183, 0.1),
-      0 18px 40px -6px rgba(0, 194, 183, 0.3),
-      0 40px 60px -20px rgba(0, 194, 183, 0.2);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-    padding: 24px 14px 14px; /* pílulas caem até o fundo */
-  }
-  .compare-jar-yolki .compare-pill { position: relative; z-index: 2; }
-
-  .compare-jar-gray {
-    --jar-liquid: rgba(150, 156, 170, 0.3);
-    --jar-liquid-deep: rgba(110, 116, 128, 0.55);
-  }
-
-  /* ───── DARK MODE ───── */
-  [data-theme="dark"] .compare-jar {
-    background:
-      radial-gradient(circle 10px at 26% 76%, rgba(255,255,255,0.3), rgba(255,255,255,0.18) 55%, transparent 62%),
-      radial-gradient(circle 6px at 62% 84%, rgba(255,255,255,0.24), rgba(255,255,255,0.14) 55%, transparent 65%),
-      radial-gradient(circle 4px at 48% 92%, rgba(255,255,255,0.32), rgba(255,255,255,0.18) 55%, transparent 65%),
-      radial-gradient(circle 3px at 74% 91%, rgba(255,255,255,0.22), rgba(255,255,255,0.1) 60%, transparent 70%),
-      linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow:
-      inset 0 2px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -2px 8px rgba(0, 0, 0, 0.35),
-      0 18px 40px -6px rgba(0, 0, 0, 0.5),
-      0 40px 60px -20px rgba(0, 0, 0, 0.4);
-  }
-  [data-theme="dark"] .compare-jar::before {
-    background:
-      linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%),
-      linear-gradient(180deg, #3D5F74 0%, #2A4557 65%, #1B3142 100%);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow:
-      inset 0 2px 0 rgba(255,255,255,0.22),
-      inset 0 -2px 0 rgba(0,0,0,0.3),
-      0 4px 12px rgba(0,0,0,0.5);
-  }
-  /* Sem graduação no dark mode também */
-  [data-theme="dark"] .compare-jar-yolki {
-    --jar-liquid: rgba(0, 194, 183, 0.34);
-    --jar-liquid-deep: rgba(0, 120, 112, 0.7);
-    box-shadow:
-      inset 0 2px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -2px 8px rgba(0, 194, 183, 0.12),
-      0 18px 40px -6px rgba(0, 194, 183, 0.32),
-      0 40px 60px -20px rgba(0, 0, 0, 0.45);
-  }
-  [data-theme="dark"] .compare-jar-gray {
-    --jar-liquid: rgba(100, 110, 125, 0.28);
-    --jar-liquid-deep: rgba(60, 70, 85, 0.5);
-  }
-
-  .compare-pill {
-    padding: 10px 18px;
-    border-radius: 50px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    white-space: nowrap;
-    background: var(--pill-bg, var(--primary));
-    color: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    opacity: 0;
-  }
-
-  .compare-pill-chaos {
-    position: absolute;
-    background: #bfbfbf;
-    color: #555;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  }
-
-  .compare-pill-chaos.physics-driven {
-    top: 0 !important;
-    left: 0 !important;
-    animation: none !important;
+  /* Animações aplicadas via classe no grupo SVG */
+  .jar-svg .ani-glow {
+    animation: jar-glow-pulse 5s ease-in-out infinite;
     transform-origin: center;
-    will-change: transform;
-    pointer-events: none;
-    -webkit-user-select: none;
-    user-select: none;
-    white-space: nowrap;
+  }
+  .jar-svg .ani-breathe {
+    animation: pill-breathe 3s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .jar-svg .ani-tumble {
+    animation: pill-tumble 3.4s linear infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .jar-svg .ani-drift {
+    animation: pill-slow-drift 5s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .jar-svg .ani-bounce {
+    animation: pill-bounce 2.5s ease-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .jar-svg .ani-bubble {
+    animation: bubble-rise 6s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .jar-svg .ani-dust {
+    animation: dust-drift 8s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+    transform-box: fill-box;
+    transform-origin: center;
   }
 
-  .compare-jar-gray { cursor: grab; }
-  .compare-jar-gray:active { cursor: grabbing; }
-
-  .section-compare.visible .compare-jar-yolki .compare-pill {
-    animation: pillFallYolki .7s cubic-bezier(.3,1.4,.5,1) var(--d, 0s) forwards;
+  /* ─── SCROLL-IN STAGGER ─── */
+  .jar-svg .pill-in { opacity: 0; }
+  .compare-grid.is-visible .jar-svg .pill-in {
+    animation: pill-drop-in 0.7s cubic-bezier(.3, 1.4, .5, 1) var(--d, 0s) forwards;
+  }
+  .compare-grid.is-visible .jar-svg .chaos-in {
+    animation: chaos-drop 0.9s cubic-bezier(0.5, 0, 0.75, 0) var(--d, 0s) forwards;
+  }
+  @keyframes pill-drop-in {
+    from { opacity: 0; transform: translateY(-60px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes chaos-drop {
+    0%   { opacity: 0; transform: translateY(-380px) rotate(0deg); }
+    20%  { opacity: 1; }
+    90%  { transform: translateY(6px) rotate(calc(var(--rf, 0deg) * 1.05)); }
+    100% { opacity: 1; transform: translateY(0) rotate(var(--rf, 0deg)); }
   }
 
-  .section-compare.visible .compare-pill-chaos {
-    animation: pillFallChaos 1.2s var(--d, 0s) forwards;
-  }
-
-  @keyframes pillFallYolki {
-    from { transform: translateY(-60px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  @keyframes pillFallChaos {
-    0% {
-      transform: translate(var(--ex, 0), -420px) rotate(0deg);
-      opacity: 0;
-      animation-timing-function: cubic-bezier(.55, .08, .68, .53);
+  /* ─── REDUCED MOTION ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .jar-svg .pill-in,
+    .jar-svg .chaos-in,
+    .jar-svg .ani-glow,
+    .jar-svg .ani-breathe,
+    .jar-svg .ani-tumble,
+    .jar-svg .ani-drift,
+    .jar-svg .ani-bounce,
+    .jar-svg .ani-bubble,
+    .jar-svg .ani-dust {
+      animation: none !important;
+      opacity: 1 !important;
     }
-    8% { opacity: 1; }
-    55% {
-      transform: translate(var(--ex, 0), -18px) rotate(calc(var(--rot, 0deg) * 0.25));
-      animation-timing-function: cubic-bezier(.4, 0, .5, 1);
-    }
-    85% {
-      transform: translate(0, 4px) rotate(calc(var(--rot, 0deg) * 0.95));
-      animation-timing-function: cubic-bezier(.4, 0, .5, 1);
-    }
-    100% {
-      transform: translate(0, 0) rotate(var(--rot, 0deg));
-      opacity: 1;
+    .jar-svg .pill-in,
+    .jar-svg .chaos-in {
+      transform: none !important;
     }
   }
 
@@ -5402,10 +5351,10 @@
   .compare-details-link span { transition: transform 0.25s; }
   .compare-details-link:hover span { transform: translateX(4px); }
 
-  @media (max-width: 768px) {
-    .compare-grid { grid-template-columns: 1fr; gap: 48px; }
-    .compare-jar { height: 380px; max-width: 300px; }
-    .section-compare { padding: 80px 0; }
+  @media (max-width: 900px) {
+    .compare-grid { grid-template-columns: 1fr; gap: 40px; }
+    .compare-floor-line { display: none; }
+    .jar-svg { max-width: 280px; }
   }
 
   /* ═══════════════════════════════════════════ */
@@ -5991,52 +5940,553 @@
     </div>
 
     <div class="compare-grid reveal-on-scroll-up">
-      <!-- YOLKI -->
-      <div class="compare-col">
-        <div class="compare-label compare-label-yolki">Yolki Pet</div>
-        <div class="compare-jar compare-jar-yolki">
-          <span class="compare-pill" style="--pill-bg:var(--primary);--d:6.3s">Sem fake news</span>
-          <span class="compare-pill" style="--pill-bg:var(--secondary);--d:5.4s">Resposta em segundos</span>
-          <span class="compare-pill" style="--pill-bg:var(--accent);--d:4.5s">24/7</span>
-          <span class="compare-pill" style="--pill-bg:var(--primary);--d:3.6s">Raça e idade específicas</span>
-          <span class="compare-pill" style="--pill-bg:var(--secondary);--d:2.7s">Lembretes de vacinas</span>
-          <span class="compare-pill" style="--pill-bg:var(--accent);--d:1.8s">Baseado em histórico</span>
-          <span class="compare-pill" style="--pill-bg:var(--primary);--d:0.9s">Personalizado</span>
-          <span class="compare-pill" style="--pill-bg:var(--secondary);--d:0s">Validado</span>
-        </div>
-      </div>
+      <div class="compare-floor-line" aria-hidden="true"></div>
 
-      <!-- CHATGPT -->
-      <div class="compare-col">
+      <!-- ═══ YOLKI — apothecary jar selado, com graduações e bolhas ═══ -->
+      <figure class="compare-col jar jar--yolki">
+        <figcaption class="sr-only">Frasco apothecary Yolki Pet selado, com graduações científicas laterais, oito pílulas coloridas empilhadas organizadamente e líquido teal efervescente na base — representa conteúdo validado, lotado e proativo.</figcaption>
+        <div class="compare-label compare-label-yolki">Yolki Pet</div>
+        <svg class="jar-svg" viewBox="0 0 320 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Frasco Yolki Pet com pílulas coloridas organizadas">
+          <defs>
+            <!-- L0 Glow ambiente teal -->
+            <radialGradient id="yk-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#01BCB5" stop-opacity="0.6"/>
+              <stop offset="55%" stop-color="#01BCB5" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="#01BCB5" stop-opacity="0"/>
+            </radialGradient>
+            <!-- L4 Body fill — 5 stops -->
+            <linearGradient id="yk-glass" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.55"/>
+              <stop offset="25%"  stop-color="#FFFFFF" stop-opacity="0.28"/>
+              <stop offset="60%"  stop-color="#EBF5F5" stop-opacity="0.32"/>
+              <stop offset="85%"  stop-color="#C8D7D7" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#B4C3C3" stop-opacity="0.6"/>
+            </linearGradient>
+            <!-- L3 Back inner shadow -->
+            <linearGradient id="yk-backwall" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.12"/>
+            </linearGradient>
+            <!-- L7 Rim inner shadow -->
+            <radialGradient id="yk-rim-shadow" cx="50%" cy="0%" r="55%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <!-- L8 Left highlight (CRITICAL) -->
+            <linearGradient id="yk-hl-left" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.15"/>
+            </linearGradient>
+            <!-- L9 Right short highlight -->
+            <linearGradient id="yk-hl-right" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+            <!-- L10 Specular -->
+            <radialGradient id="yk-specular" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </radialGradient>
+            <!-- Liquid teal efervescente -->
+            <linearGradient id="yk-liquid" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#01BCB5" stop-opacity="0.32"/>
+              <stop offset="100%" stop-color="#006B65" stop-opacity="0.62"/>
+            </linearGradient>
+            <!-- Cork cap -->
+            <linearGradient id="yk-cork" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#D4A574"/>
+              <stop offset="100%" stop-color="#A67C52"/>
+            </linearGradient>
+            <linearGradient id="yk-cork-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.42"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+            <!-- L13 Base thick -->
+            <radialGradient id="yk-base-thick" cx="50%" cy="100%" r="80%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.06"/>
+            </radialGradient>
+            <!-- Pill shine -->
+            <linearGradient id="yk-pill-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.3"/>
+              <stop offset="55%"  stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+            <!-- Filtros -->
+            <filter id="yk-blur-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="24"/>
+            </filter>
+            <filter id="yk-blur-shadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4"/>
+            </filter>
+            <filter id="yk-blur-specular" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="1.5"/>
+            </filter>
+            <filter id="yk-blur-reflection" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="1.2"/>
+            </filter>
+            <filter id="yk-paper">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/>
+              <feColorMatrix values="0 0 0 0 0.5  0 0 0 0 0.45  0 0 0 0 0.4  0 0 0 0.08 0"/>
+              <feComposite in2="SourceGraphic" operator="in"/>
+            </filter>
+            <!-- ClipPath body interior — contém pills, liquid, bubbles, label -->
+            <clipPath id="yk-clip-body">
+              <path d="M 107 92 L 213 92 L 213 138 C 238 143 272 159 285 181 C 291 280 291 380 285 478 C 280 508 270 531 256 536 L 64 536 C 50 531 40 508 35 478 C 29 380 29 280 35 181 C 48 159 82 143 107 138 Z"/>
+            </clipPath>
+          </defs>
+
+          <!-- L0: glow ambiente -->
+          <circle class="ani-glow" cx="160" cy="350" r="185" fill="url(#yk-glow)" filter="url(#yk-blur-glow)"/>
+
+          <!-- L1: floor reflection (espelho do frasco no balcão) -->
+          <g opacity="0.18" transform="translate(0 1080) scale(1 -1)" filter="url(#yk-blur-reflection)">
+            <path d="M 105 85 L 215 85 L 215 140 C 240 145 275 160 290 180 C 296 280 296 380 290 480 C 285 510 275 535 260 540 L 60 540 C 45 535 35 510 30 480 C 24 380 24 280 30 180 C 45 160 80 145 105 140 Z"
+                  fill="url(#yk-glass)"/>
+          </g>
+          <!-- Balcão spotlight (gradient radial claro) -->
+          <ellipse cx="160" cy="550" rx="140" ry="14" fill="rgba(255,255,255,0.35)" filter="url(#yk-blur-shadow)"/>
+
+          <!-- L2: contact shadow -->
+          <ellipse cx="160" cy="555" rx="118" ry="9" fill="rgba(0,0,0,0.28)" filter="url(#yk-blur-shadow)"/>
+
+          <!-- L4 + L5: body fill + outer wall stroke -->
+          <path d="M 105 85 L 215 85 L 215 140 C 240 145 275 160 290 180 C 296 280 296 380 290 480 C 285 510 275 535 260 540 L 60 540 C 45 535 35 510 30 480 C 24 380 24 280 30 180 C 45 160 80 145 105 140 Z"
+                fill="url(#yk-glass)" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+
+          <!-- Conteúdo interior (clipped pelo body) -->
+          <g clip-path="url(#yk-clip-body)">
+            <!-- L3: back wall shadow + L7: top rim shadow -->
+            <rect x="0" y="0" width="320" height="620" fill="url(#yk-backwall)"/>
+            <ellipse cx="160" cy="140" rx="85" ry="22" fill="url(#yk-rim-shadow)"/>
+
+            <!-- L12: graduations (left side) -->
+            <g opacity="0.55">
+              <line x1="38" y1="220" x2="50" y2="220" stroke="#01BCB5" stroke-width="1.2" stroke-linecap="round"/>
+              <text x="54" y="224" font-family="'Roboto Mono', monospace" font-size="8" fill="#01BCB5" letter-spacing="0.2">200</text>
+              <line x1="38" y1="290" x2="48" y2="290" stroke="#01BCB5" stroke-width="1" stroke-linecap="round"/>
+              <text x="52" y="294" font-family="'Roboto Mono', monospace" font-size="7.5" fill="#01BCB5" opacity="0.8">150</text>
+              <line x1="38" y1="360" x2="50" y2="360" stroke="#01BCB5" stroke-width="1.2" stroke-linecap="round"/>
+              <text x="54" y="364" font-family="'Roboto Mono', monospace" font-size="8" fill="#01BCB5">100</text>
+              <line x1="38" y1="430" x2="48" y2="430" stroke="#01BCB5" stroke-width="1" stroke-linecap="round"/>
+              <text x="52" y="434" font-family="'Roboto Mono', monospace" font-size="7.5" fill="#01BCB5" opacity="0.8">50</text>
+            </g>
+
+            <!-- Liquid teal na base + menisco -->
+            <rect x="28" y="478" width="264" height="62" fill="url(#yk-liquid)"/>
+            <line x1="28" y1="479" x2="292" y2="479" stroke="rgba(1,188,181,0.75)" stroke-width="0.9"/>
+            <line x1="54" y1="480.5" x2="170" y2="480.5" stroke="rgba(255,255,255,0.55)" stroke-width="0.6"/>
+
+            <!-- Bolhas efervescendo (loops com delays) -->
+            <g>
+              <circle class="ani-bubble" style="--d: 0s;   --ax: 2px"  cx="72"  cy="520" r="3.5" fill="rgba(1,188,181,0.55)"/>
+              <circle class="ani-bubble" style="--d: 1.5s; --ax: -3px" cx="128" cy="525" r="5"   fill="rgba(1,188,181,0.45)"/>
+              <circle class="ani-bubble" style="--d: 3s;   --ax: 4px"  cx="192" cy="518" r="3"   fill="rgba(1,188,181,0.6)"/>
+              <circle class="ani-bubble" style="--d: 4.5s; --ax: -2px" cx="242" cy="525" r="4"   fill="rgba(1,188,181,0.5)"/>
+              <circle class="ani-bubble" style="--d: 2.2s; --ax: 1px"  cx="160" cy="530" r="2.5" fill="rgba(1,188,181,0.7)"/>
+            </g>
+
+            <!-- L13: base thick (gradient escuro no fundo) -->
+            <rect x="28" y="525" width="264" height="15" fill="url(#yk-base-thick)"/>
+            <!-- L14: base refraction line -->
+            <line x1="46" y1="526" x2="274" y2="526" stroke="rgba(255,255,255,0.55)" stroke-width="0.8"/>
+
+            <!-- Pills empilhadas (bottom → top stagger) — tudo dentro do clip -->
+            <!-- Pill 1 bottom (amber) -->
+            <g class="pill-in" style="--d: 0s">
+              <rect x="74" y="418" width="172" height="26" rx="13" fill="#FDA600"/>
+              <rect x="74" y="418" width="172" height="26" rx="13" fill="url(#yk-pill-shine)"/>
+              <text x="160" y="435" text-anchor="middle" fill="#fff" font-family="Nunito, sans-serif" font-weight="800" font-size="10.5">Validado</text>
+            </g>
+            <!-- Pill 2 (teal) -->
+            <g class="pill-in" style="--d: 0.08s">
+              <rect x="78" y="390" width="172" height="26" rx="13" fill="#01BCB5"/>
+              <rect x="78" y="390" width="172" height="26" rx="13" fill="url(#yk-pill-shine)"/>
+              <text x="164" y="407" text-anchor="middle" fill="#fff" font-family="Nunito, sans-serif" font-weight="800" font-size="10.5">Personalizado</text>
+            </g>
+            <!-- Pill 3 (info blue) -->
+            <g class="pill-in" style="--d: 0.16s">
+              <rect x="70" y="362" width="172" height="26" rx="13" fill="#4286CD"/>
+              <rect x="70" y="362" width="172" height="26" rx="13" fill="url(#yk-pill-shine)"/>
+              <text x="156" y="379" text-anchor="middle" fill="#fff" font-family="Nunito, sans-serif" font-weight="800" font-size="10.5">Baseado em histórico</text>
+            </g>
+            <!-- Pill 4 (success) -->
+            <g class="pill-in" style="--d: 0.24s">
+              <rect x="74" y="334" width="172" height="26" rx="13" fill="#5EB864"/>
+              <rect x="74" y="334" width="172" height="26" rx="13" fill="url(#yk-pill-shine)"/>
+              <text x="160" y="351" text-anchor="middle" fill="#fff" font-family="Nunito, sans-serif" font-weight="800" font-size="10.5">Lembretes de vacinas</text>
+            </g>
+            <!-- Pill 5 (amber) -->
+            <g class="pill-in" style="--d: 0.32s">
+              <rect x="78" y="306" width="172" height="26" rx="13" fill="#FDA600"/>
+              <rect x="78" y="306" width="172" height="26" rx="13" fill="url(#yk-pill-shine)"/>
+              <text x="164" y="323" text-anchor="middle" fill="#fff" font-family="Nunito, sans-serif" font-weight="800" font-size="10.5">Raça e idade</text>
+            </g>
+            <!-- Pill 6 (purple) -->
+            <g class="pill-in" style="--d: 0.40s">
+              <rect x="70" y="278" width="172" height="26" rx="13" fill="#8F06CD"/>
+              <rect x="70" y="278" width="172" height="26" rx="13" fill="url(#yk-pill-shine)"/>
+              <text x="156" y="295" text-anchor="middle" fill="#fff" font-family="Nunito, sans-serif" font-weight="800" font-size="10.5">24/7</text>
+            </g>
+            <!-- Pill 7 (teal) -->
+            <g class="pill-in" style="--d: 0.48s">
+              <rect x="74" y="250" width="172" height="26" rx="13" fill="#01BCB5"/>
+              <rect x="74" y="250" width="172" height="26" rx="13" fill="url(#yk-pill-shine)"/>
+              <text x="160" y="267" text-anchor="middle" fill="#fff" font-family="Nunito, sans-serif" font-weight="800" font-size="10.5">Resposta em segundos</text>
+            </g>
+            <!-- Pill 8 top (purple + breathe) -->
+            <g class="pill-in" style="--d: 0.56s">
+              <g class="ani-breathe">
+                <rect x="78" y="222" width="172" height="26" rx="13" fill="#8F06CD"/>
+                <rect x="78" y="222" width="172" height="26" rx="13" fill="url(#yk-pill-shine)"/>
+                <text x="164" y="239" text-anchor="middle" fill="#fff" font-family="Nunito, sans-serif" font-weight="800" font-size="10.5">Sem fake news</text>
+              </g>
+            </g>
+
+            <!-- Label cream crisp (overlaid on pills) -->
+            <g>
+              <path d="M 72 372 Q 160 368 248 372 L 248 456 Q 160 460 72 456 Z"
+                    fill="#F5F4F0" stroke="rgba(0,0,0,0.1)" stroke-width="0.6"/>
+              <path d="M 72 372 Q 160 368 248 372 L 248 456 Q 160 460 72 456 Z"
+                    fill="rgba(100,90,80,0.04)" filter="url(#yk-paper)"/>
+              <text x="160" y="398" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="13.5" fill="#01BCB5">Yolki Pet</text>
+              <text x="160" y="416" text-anchor="middle" font-family="'Roboto Mono', monospace" font-size="8.5" fill="#6B6B6B" letter-spacing="0.3">Microlearning · Lote 2026</text>
+              <line x1="100" y1="426" x2="220" y2="426" stroke="rgba(0,0,0,0.08)" stroke-width="0.5"/>
+              <circle cx="160" cy="443" r="7" fill="#01BCB5"/>
+              <path d="M 156 443 L 159 446 L 164 440" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+          </g>
+
+          <!-- L6: wall thickness inner stroke (NOT clipped) -->
+          <path d="M 107 92 L 213 92 L 213 138 C 238 143 272 159 285 181 C 291 280 291 380 285 478 C 280 508 270 531 256 536 L 64 536 C 50 531 40 508 35 478 C 29 380 29 280 35 181 C 48 159 82 143 107 138 Z"
+                fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+
+          <!-- L8: left vertical highlight (CRITICAL — sells glass) -->
+          <path d="M 40 200 C 34 280 34 400 40 460 L 54 460 C 48 400 48 280 54 200 Z"
+                fill="url(#yk-hl-left)" opacity="0.35"/>
+          <!-- L9: right short highlight -->
+          <path d="M 280 196 C 282 230 282 280 280 320 L 288 320 C 290 280 290 230 288 196 Z"
+                fill="url(#yk-hl-right)" opacity="0.22"/>
+          <!-- L10: specular dot no shoulder esquerdo -->
+          <circle cx="58" cy="200" r="6" fill="url(#yk-specular)" filter="url(#yk-blur-specular)"/>
+
+          <!-- L11: rim ring no topo do neck (3D lip) -->
+          <ellipse cx="160" cy="88" rx="55" ry="5" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"/>
+          <ellipse cx="160" cy="90" rx="55" ry="4" fill="rgba(0,0,0,0.18)"/>
+
+          <!-- Cap de cortiça + collar teal LACRADO + check badge -->
+          <g>
+            <!-- Cork body -->
+            <rect x="108" y="32" width="104" height="46" rx="5" fill="url(#yk-cork)" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+            <rect x="108" y="32" width="104" height="15" rx="5" fill="url(#yk-cork-shine)"/>
+            <!-- Textura cortiça (pequenos dots) -->
+            <circle cx="128" cy="58" r="1" fill="rgba(0,0,0,0.25)"/>
+            <circle cx="146" cy="52" r="0.8" fill="rgba(0,0,0,0.22)"/>
+            <circle cx="165" cy="62" r="1.1" fill="rgba(0,0,0,0.2)"/>
+            <circle cx="184" cy="55" r="0.9" fill="rgba(0,0,0,0.24)"/>
+            <circle cx="198" cy="66" r="1" fill="rgba(0,0,0,0.22)"/>
+            <!-- Collar teal com LACRADO -->
+            <rect x="102" y="76" width="116" height="14" rx="3" fill="#01BCB5"/>
+            <rect x="102" y="76" width="116" height="5" rx="3" fill="rgba(255,255,255,0.25)"/>
+            <text x="160" y="86" text-anchor="middle" fill="#fff" font-family="'Roboto Mono', monospace" font-weight="600" font-size="7.5" letter-spacing="1.1">LACRADO · 2026</text>
+          </g>
+        </svg>
+      </figure>
+
+      <!-- ═══ ChatGPT — aberto, tampa caída, pills vazando ═══ -->
+      <figure class="compare-col jar jar--gpt">
+        <figcaption class="sr-only">Frasco ChatGPT: aberto, tampa tombada no chão ao lado, pílulas cinzas desorganizadas dentro e espalhadas pelo chão — representando respostas genéricas sem contexto do pet.</figcaption>
         <div class="compare-label compare-label-gray">
           <svg class="compare-logo" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.911 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.182a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.998-2.9 6.056 6.056 0 0 0-.748-7.073zm-9.022 12.608a4.476 4.476 0 0 1-2.876-1.04l.142-.08 4.778-2.759a.795.795 0 0 0 .393-.681v-6.737l2.02 1.169a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.495 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.758a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.677l5.814 3.354-2.02 1.169a.076.076 0 0 1-.071 0l-4.83-2.787a4.504 4.504 0 0 1-1.647-6.117zm16.597 3.855-5.833-3.387 2.015-1.164a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.677 8.104v-5.677a.79.79 0 0 0-.407-.667zm2.01-3.023-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.41 9.23V6.897a.066.066 0 0 1 .028-.062l4.83-2.786a4.5 4.5 0 0 1 6.68 4.66zM8.307 12.863l-2.02-1.164a.08.08 0 0 1-.038-.057V6.074a4.5 4.5 0 0 1 7.376-3.454l-.142.08L8.704 5.46a.795.795 0 0 0-.393.681zm1.098-2.365 2.602-1.5 2.607 1.5v3l-2.597 1.5-2.607-1.5z"/></svg>
           ChatGPT
         </div>
-        <div class="compare-jar compare-jar-gray">
-          <span class="compare-pill compare-pill-chaos" style="top:82%;left:5%;--rot:-8deg;--ex:105px;--d:0s">Sem contexto do pet</span>
-          <span class="compare-pill compare-pill-chaos" style="top:82%;left:55%;--rot:8deg;--ex:-50px;--d:1.2s">Pode inventar</span>
-          <span class="compare-pill compare-pill-chaos" style="top:65%;left:8%;--rot:-5deg;--ex:95px;--d:2.4s">Genérico demais</span>
-          <span class="compare-pill compare-pill-chaos" style="top:65%;left:50%;--rot:10deg;--ex:-35px;--d:3.6s">Sem histórico</span>
-          <span class="compare-pill compare-pill-chaos" style="top:48%;left:12%;--rot:-10deg;--ex:80px;--d:4.8s">Sem vet por trás</span>
-          <span class="compare-pill compare-pill-chaos" style="top:48%;left:50%;--rot:7deg;--ex:-35px;--d:6.0s">Sem urgência</span>
-        </div>
-      </div>
+        <svg class="jar-svg" viewBox="0 0 320 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Frasco ChatGPT aberto com pílulas cinzas desorganizadas">
+          <defs>
+            <radialGradient id="gpt-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#B8B8B8" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#B8B8B8" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="gpt-glass" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.5"/>
+              <stop offset="25%"  stop-color="#FFFFFF" stop-opacity="0.24"/>
+              <stop offset="60%"  stop-color="#EEEEEE" stop-opacity="0.28"/>
+              <stop offset="85%"  stop-color="#BEBEBE" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#A8A8A8" stop-opacity="0.55"/>
+            </linearGradient>
+            <linearGradient id="gpt-backwall" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.14"/>
+            </linearGradient>
+            <radialGradient id="gpt-rim-shadow" cx="50%" cy="0%" r="55%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <!-- Halo de luz entrando pelo topo aberto -->
+            <radialGradient id="gpt-halo" cx="50%" cy="0%" r="75%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="gpt-hl-left" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+            </linearGradient>
+            <linearGradient id="gpt-hl-right" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+            <radialGradient id="gpt-specular" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="gpt-dust" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#787878" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="#555555" stop-opacity="0.28"/>
+            </linearGradient>
+            <radialGradient id="gpt-base-thick" cx="50%" cy="100%" r="80%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.06"/>
+            </radialGradient>
+            <linearGradient id="gpt-cap-fallen" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#C8C8C8"/>
+              <stop offset="100%" stop-color="#7F7F7F"/>
+            </linearGradient>
+            <linearGradient id="gpt-pill-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.22"/>
+              <stop offset="60%"  stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="gpt-blur-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="24"/></filter>
+            <filter id="gpt-blur-shadow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+            <filter id="gpt-blur-specular" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.5"/></filter>
+            <filter id="gpt-blur-reflection" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2"/></filter>
+            <filter id="gpt-paper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.1 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+            <clipPath id="gpt-clip-body">
+              <path d="M 107 92 L 213 92 L 213 138 C 238 143 272 159 285 181 C 291 280 291 380 285 478 C 280 508 270 531 256 536 L 64 536 C 50 531 40 508 35 478 C 29 380 29 280 35 181 C 48 159 82 143 107 138 Z"/>
+            </clipPath>
+          </defs>
 
-      <!-- YOUTUBE + INTERNET -->
-      <div class="compare-col">
+          <!-- L0: glow -->
+          <circle class="ani-glow" cx="160" cy="350" r="155" fill="url(#gpt-glow)" filter="url(#gpt-blur-glow)"/>
+          <!-- L1: floor reflection -->
+          <g opacity="0.14" transform="translate(0 1080) scale(1 -1)" filter="url(#gpt-blur-reflection)">
+            <path d="M 105 85 L 215 85 L 215 140 C 240 145 275 160 290 180 C 296 280 296 380 290 480 C 285 510 275 535 260 540 L 60 540 C 45 535 35 510 30 480 C 24 380 24 280 30 180 C 45 160 80 145 105 140 Z"
+                  fill="url(#gpt-glass)"/>
+          </g>
+          <ellipse cx="160" cy="550" rx="135" ry="12" fill="rgba(255,255,255,0.25)" filter="url(#gpt-blur-shadow)"/>
+          <!-- L2: contact shadow -->
+          <ellipse cx="160" cy="555" rx="118" ry="9" fill="rgba(0,0,0,0.26)" filter="url(#gpt-blur-shadow)"/>
+
+          <!-- L4+L5: body fill + outer stroke (SEM cap — aberto) -->
+          <path d="M 105 85 L 215 85 L 215 140 C 240 145 275 160 290 180 C 296 280 296 380 290 480 C 285 510 275 535 260 540 L 60 540 C 45 535 35 510 30 480 C 24 380 24 280 30 180 C 45 160 80 145 105 140 Z"
+                fill="url(#gpt-glass)" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+
+          <!-- Conteúdo interno (clipped) -->
+          <g clip-path="url(#gpt-clip-body)">
+            <rect x="0" y="0" width="320" height="620" fill="url(#gpt-backwall)"/>
+            <ellipse cx="160" cy="140" rx="85" ry="22" fill="url(#gpt-rim-shadow)"/>
+            <!-- Halo de luz entrando pelo topo aberto -->
+            <ellipse cx="160" cy="90" rx="60" ry="80" fill="url(#gpt-halo)"/>
+
+            <!-- Dust residue na base (não líquido) -->
+            <rect x="28" y="510" width="264" height="14" fill="url(#gpt-dust)"/>
+            <!-- Base thick escuro -->
+            <rect x="28" y="525" width="264" height="15" fill="url(#gpt-base-thick)"/>
+
+            <!-- CHAOS HOST — JS injeta pills randomizadas aqui -->
+            <g class="chaos-host" data-jar="gpt" data-pills-count="6"></g>
+          </g>
+
+          <!-- L6: inner stroke -->
+          <path d="M 107 92 L 213 92 L 213 138 C 238 143 272 159 285 181 C 291 280 291 380 285 478 C 280 508 270 531 256 536 L 64 536 C 50 531 40 508 35 478 C 29 380 29 280 35 181 C 48 159 82 143 107 138 Z"
+                fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <!-- L8: left highlight -->
+          <path d="M 40 200 C 34 280 34 400 40 460 L 54 460 C 48 400 48 280 54 200 Z"
+                fill="url(#gpt-hl-left)" opacity="0.3"/>
+          <!-- L9: right short -->
+          <path d="M 280 196 C 282 230 282 280 280 320 L 288 320 C 290 280 290 230 288 196 Z"
+                fill="url(#gpt-hl-right)" opacity="0.18"/>
+          <!-- L10: specular dot -->
+          <circle cx="58" cy="200" r="5" fill="url(#gpt-specular)" filter="url(#gpt-blur-specular)"/>
+
+          <!-- L11: rim ring exposto (topo aberto) -->
+          <ellipse cx="160" cy="88" rx="55" ry="5.5" fill="rgba(0,0,0,0.32)"/>
+          <ellipse cx="160" cy="85" rx="55" ry="4.5" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+          <ellipse cx="160" cy="91" rx="53" ry="3.5" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="0.8"/>
+
+          <!-- Cap tombado no chão ao lado do jar (fora do frasco — é uma tampa, não pílula) -->
+          <g transform="translate(260 555) rotate(65)">
+            <rect x="-42" y="-11" width="84" height="24" rx="4" fill="url(#gpt-cap-fallen)" stroke="rgba(0,0,0,0.28)" stroke-width="0.7"/>
+            <rect x="-42" y="-11" width="84" height="10" rx="4" fill="rgba(255,255,255,0.3)"/>
+            <rect x="-36" y="1" width="72" height="3" rx="1.5" fill="rgba(0,0,0,0.15)"/>
+          </g>
+
+          <!-- Label skewed -3° com corner peeling — renderizado ON TOP pra ser visível -->
+          <g transform="rotate(-3 160 415)" clip-path="url(#gpt-clip-body)">
+            <!-- Shadow atrás do canto dobrado -->
+            <path d="M 236 368 L 250 366 L 244 384 Z" fill="rgba(0,0,0,0.1)" filter="url(#gpt-blur-specular)"/>
+            <path d="M 80 365 Q 158 362 236 368 L 236 445 Q 160 449 80 443 Z"
+                  fill="#F0ECE0" stroke="rgba(0,0,0,0.08)" stroke-width="0.5"/>
+            <path d="M 80 365 Q 158 362 236 368 L 236 445 Q 160 449 80 443 Z"
+                  fill="rgba(100,90,80,0.04)" filter="url(#gpt-paper)"/>
+            <!-- Canto superior direito enrolando -->
+            <path d="M 236 368 L 250 366 L 244 384 L 234 378 Z" fill="#E5E0D0" stroke="rgba(0,0,0,0.12)" stroke-width="0.4"/>
+            <text x="158" y="392" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="13.5" fill="#6B6B6B">ChatGPT</text>
+            <text x="158" y="410" text-anchor="middle" font-family="'Roboto Mono', monospace" font-size="8" fill="#999">Genérico · Sem lote</text>
+            <text x="158" y="432" text-anchor="middle" font-family="'Roboto Mono', monospace" font-size="8" fill="#BBB" font-style="italic">? ? ?</text>
+          </g>
+        </svg>
+      </figure>
+
+      <!-- ═══ Internet — tampa rachada, caos no chão ═══ -->
+      <figure class="compare-col jar jar--internet">
+        <figcaption class="sr-only">Frasco Internet: tampa rachada no chão, rótulo rasgado, pílulas cinzas amontoadas em desordem pelo chão — representando informação desatualizada, sem fonte e conflitante.</figcaption>
         <div class="compare-label compare-label-gray">
           <svg class="compare-logo" width="28" height="22" viewBox="0 0 28 22" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="27" height="21" rx="5" fill="#FF0000"/><polygon points="11,6.5 11,15.5 18,11" fill="#fff"/></svg>
           YouTube + Internet
         </div>
-        <div class="compare-jar compare-jar-gray">
-          <span class="compare-pill compare-pill-chaos" style="top:82%;left:5%;--rot:-7deg;--ex:105px;--d:0s">Horas pesquisando</span>
-          <span class="compare-pill compare-pill-chaos" style="top:82%;left:55%;--rot:9deg;--ex:-50px;--d:1.2s">Fontes duvidosas</span>
-          <span class="compare-pill compare-pill-chaos" style="top:65%;left:8%;--rot:-11deg;--ex:95px;--d:2.4s">Info conflitante</span>
-          <span class="compare-pill compare-pill-chaos" style="top:65%;left:50%;--rot:5deg;--ex:-35px;--d:3.6s">Conselhos perigosos</span>
-          <span class="compare-pill compare-pill-chaos" style="top:48%;left:10%;--rot:-9deg;--ex:90px;--d:4.8s">Ads por todo lado</span>
-          <span class="compare-pill compare-pill-chaos" style="top:48%;left:52%;--rot:11deg;--ex:-40px;--d:6.0s">Desatualizado</span>
-        </div>
-      </div>
+        <svg class="jar-svg" viewBox="0 0 320 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Frasco Internet com tampa rachada e pílulas cinzas espalhadas no chão">
+          <defs>
+            <radialGradient id="in-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#909090" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#909090" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="in-glass" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.45"/>
+              <stop offset="25%"  stop-color="#FFFFFF" stop-opacity="0.2"/>
+              <stop offset="60%"  stop-color="#E0E0E0" stop-opacity="0.26"/>
+              <stop offset="85%"  stop-color="#B4B4B4" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#9A9A9A" stop-opacity="0.58"/>
+            </linearGradient>
+            <linearGradient id="in-backwall" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.18"/>
+            </linearGradient>
+            <radialGradient id="in-rim-shadow" cx="50%" cy="0%" r="55%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="in-hl-left" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.72"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.08"/>
+            </linearGradient>
+            <linearGradient id="in-hl-right" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+            <radialGradient id="in-specular" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.75"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="in-cap" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#B0B0B0"/>
+              <stop offset="100%" stop-color="#666666"/>
+            </linearGradient>
+            <radialGradient id="in-base-thick" cx="50%" cy="100%" r="80%">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.08"/>
+            </radialGradient>
+            <linearGradient id="in-pill-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.18"/>
+              <stop offset="60%"  stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="in-blur-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="24"/></filter>
+            <filter id="in-blur-shadow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+            <filter id="in-blur-specular" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.5"/></filter>
+            <filter id="in-blur-reflection" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2"/></filter>
+            <filter id="in-grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.14 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+            <filter id="in-paper"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.45  0 0 0 0 0.4  0 0 0 0 0.35  0 0 0 0.15 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+            <clipPath id="in-clip-body">
+              <path d="M 107 92 L 213 92 L 213 138 C 238 143 272 159 285 181 C 291 280 291 380 285 478 C 280 508 270 531 256 536 L 64 536 C 50 531 40 508 35 478 C 29 380 29 280 35 181 C 48 159 82 143 107 138 Z"/>
+            </clipPath>
+          </defs>
+
+          <!-- L0: glow -->
+          <circle class="ani-glow" cx="160" cy="350" r="140" fill="url(#in-glow)" filter="url(#in-blur-glow)"/>
+          <!-- L1: floor reflection -->
+          <g opacity="0.12" transform="translate(0 1080) scale(1 -1)" filter="url(#in-blur-reflection)">
+            <path d="M 105 85 L 215 85 L 215 140 C 240 145 275 160 290 180 C 296 280 296 380 290 480 C 285 510 275 535 260 540 L 60 540 C 45 535 35 510 30 540 C 24 380 24 280 30 180 C 45 160 80 145 105 140 Z"
+                  fill="url(#in-glass)"/>
+          </g>
+          <ellipse cx="160" cy="550" rx="130" ry="10" fill="rgba(255,255,255,0.2)" filter="url(#in-blur-shadow)"/>
+          <!-- L2: contact shadow -->
+          <ellipse cx="160" cy="555" rx="118" ry="9" fill="rgba(0,0,0,0.26)" filter="url(#in-blur-shadow)"/>
+
+          <!-- L4+L5: body fill + stroke -->
+          <path d="M 105 85 L 215 85 L 215 140 C 240 145 275 160 290 180 C 296 280 296 380 290 480 C 285 510 275 535 260 540 L 60 540 C 45 535 35 510 30 480 C 24 380 24 280 30 180 C 45 160 80 145 105 140 Z"
+                fill="url(#in-glass)" stroke="rgba(255,255,255,0.75)" stroke-width="1.5"/>
+
+          <!-- Conteúdo interno (clipped) -->
+          <g clip-path="url(#in-clip-body)">
+            <rect x="0" y="0" width="320" height="620" fill="url(#in-backwall)"/>
+            <ellipse cx="160" cy="140" rx="85" ry="24" fill="url(#in-rim-shadow)"/>
+
+            <!-- Grain overlay (ambiente sujo/abandonado) -->
+            <rect x="0" y="100" width="320" height="450" fill="#808080" opacity="0.09" filter="url(#in-grain)"/>
+
+            <!-- Base thick escuro -->
+            <rect x="28" y="520" width="264" height="20" fill="url(#in-base-thick)"/>
+
+            <!-- Partículas de poeira flutuando dentro do frasco -->
+            <g>
+              <circle class="ani-dust" style="--d:0s;   --dx: 5px;  --dy:-6px"  cx="80"  cy="260" r="1.8" fill="#A0A0A0"/>
+              <circle class="ani-dust" style="--d:1s;   --dx:-4px;  --dy:-8px"  cx="140" cy="200" r="1.5" fill="#888888"/>
+              <circle class="ani-dust" style="--d:2.5s; --dx: 6px;  --dy:-4px"  cx="220" cy="280" r="2"   fill="#B0B0B0"/>
+              <circle class="ani-dust" style="--d:4s;   --dx:-3px;  --dy:-10px" cx="100" cy="340" r="1.6" fill="#909090"/>
+              <circle class="ani-dust" style="--d:3s;   --dx: 4px;  --dy:-5px"  cx="200" cy="400" r="1.4" fill="#9A9A9A"/>
+              <circle class="ani-dust" style="--d:1.5s; --dx:-5px;  --dy:-7px"  cx="170" cy="300" r="1.7" fill="#A8A8A8"/>
+              <circle class="ani-dust" style="--d:5s;   --dx: 3px;  --dy:-9px"  cx="250" cy="220" r="1.3" fill="#8E8E8E"/>
+              <circle class="ani-dust" style="--d:2s;   --dx:-6px;  --dy:-4px"  cx="60"  cy="380" r="1.5" fill="#A2A2A2"/>
+            </g>
+
+            <!-- CHAOS HOST — JS injeta pills randomizadas aqui -->
+            <g class="chaos-host" data-jar="in" data-pills-count="7"></g>
+          </g>
+
+          <!-- L6: inner stroke -->
+          <path d="M 107 92 L 213 92 L 213 138 C 238 143 272 159 285 181 C 291 280 291 380 285 478 C 280 508 270 531 256 536 L 64 536 C 50 531 40 508 35 478 C 29 380 29 280 35 181 C 48 159 82 143 107 138 Z"
+                fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <!-- L8: left highlight -->
+          <path d="M 40 200 C 34 280 34 400 40 460 L 54 460 C 48 400 48 280 54 200 Z"
+                fill="url(#in-hl-left)" opacity="0.26"/>
+          <!-- L9: right short -->
+          <path d="M 280 196 C 282 230 282 280 280 320 L 288 320 C 290 280 290 230 288 196 Z"
+                fill="url(#in-hl-right)" opacity="0.14"/>
+          <!-- L10: specular dot -->
+          <circle cx="58" cy="200" r="4.5" fill="url(#in-specular)" filter="url(#in-blur-specular)"/>
+
+          <!-- L11: rim ring exposto + mofo sutil -->
+          <ellipse cx="160" cy="88" rx="55" ry="5.5" fill="rgba(0,0,0,0.35)"/>
+          <ellipse cx="160" cy="85" rx="55" ry="4.5" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+          <ellipse cx="160" cy="91" rx="53" ry="3.5" fill="none" stroke="rgba(60,40,30,0.5)" stroke-width="0.9"/>
+          <!-- Mofo na borda -->
+          <path d="M 120 88 Q 125 85 130 88 Q 133 91 128 92" fill="rgba(70,55,40,0.4)"/>
+          <path d="M 188 90 Q 195 87 200 91 Q 198 93 193 93" fill="rgba(70,55,40,0.35)"/>
+
+          <!-- Cap rachado tombado no chão à esquerda -->
+          <g transform="translate(60 555) rotate(-110)">
+            <!-- Polígono com chip faltando -->
+            <path d="M -42 -11 L 28 -11 L 32 -4 L 42 -11 L 42 13 L -42 13 Z"
+                  fill="url(#in-cap)" stroke="rgba(0,0,0,0.32)" stroke-width="0.7"/>
+            <rect x="-42" y="-11" width="84" height="10" rx="4" fill="rgba(255,255,255,0.22)"/>
+            <!-- Crack lines visíveis -->
+            <path d="M -30 -6 L -10 8 L -20 12" stroke="rgba(0,0,0,0.65)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <path d="M 8 -8 L 18 0 L 6 12" stroke="rgba(0,0,0,0.65)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <path d="M -5 -10 L 2 2" stroke="rgba(0,0,0,0.5)" stroke-width="1" fill="none"/>
+          </g>
+
+          <!-- Label rasgada rotacionada (clipada pelo body pra não escapar) -->
+          <g transform="rotate(5 160 415)" clip-path="url(#in-clip-body)">
+            <path d="M 78 362 Q 160 358 242 362 L 242 410 L 226 424 L 204 414 L 182 428 L 160 418 L 138 426 L 116 416 L 94 422 L 78 408 Z"
+                  fill="#E8E0CE" stroke="rgba(0,0,0,0.15)" stroke-width="0.6"/>
+            <path d="M 78 362 Q 160 358 242 362 L 242 410 L 226 424 L 204 414 L 182 428 L 160 418 L 138 426 L 116 416 L 94 422 L 78 408 Z"
+                  fill="rgba(120,95,70,0.14)" filter="url(#in-paper)"/>
+            <!-- Stains -->
+            <ellipse cx="205" cy="390" rx="20" ry="7" fill="rgba(145,110,70,0.28)"/>
+            <ellipse cx="110" cy="398" rx="14" ry="5" fill="rgba(130,95,60,0.22)"/>
+            <ellipse cx="170" cy="405" rx="8" ry="3" fill="rgba(155,120,80,0.3)"/>
+            <text x="160" y="386" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="13" fill="#5A5A5A">Internet</text>
+            <text x="160" y="402" text-anchor="middle" font-family="'Roboto Mono', monospace" font-size="7.5" fill="#888">Sem rótulo · Sem fonte</text>
+          </g>
+        </svg>
+      </figure>
     </div>
 
     <div class="compare-cta">
@@ -8201,112 +8651,151 @@ if (prefersReducedMotion) {
   });
 })();
 
-// ─── COMPARE SECTION: Yolki CSS pills + Matter.js physics for chaos jars ───
+// ─── COMPARE SECTION: scroll-in + randomização chaos pills ───
 (function() {
-  const section = document.querySelector('.section-compare');
-  if (!section) return;
-  let started = false;
+  const grid = document.querySelector('.section-compare .compare-grid');
+  if (!grid) return;
 
-  const observer = new IntersectionObserver((entries) => {
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  // Seed única por reload → caos muda a cada carregamento
+  const seed = Date.now();
+
+  // RNG seedable (mulberry32)
+  function mulberry32(s) {
+    return function() {
+      s |= 0; s = s + 0x6D2B79F5 | 0;
+      let t = Math.imul(s ^ s >>> 15, 1 | s);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  // Conteúdo das pills por jar
+  const CHAOS_PILLS = {
+    gpt: [
+      { text: 'Sem urgência',    fill: '#6B7280' },
+      { text: 'Sem vet por trás', fill: '#9CA3AF' },
+      { text: 'Sem histórico',   fill: '#6B7280' },
+      { text: 'Sem contexto',    fill: '#9CA3AF' },
+      { text: 'Genérico demais', fill: '#6B7280' },
+      { text: 'Pode inventar',   fill: '#9CA3AF' },
+    ],
+    in: [
+      { text: 'Desatualizado',     fill: '#6B7280' },
+      { text: 'Ads por todo lado', fill: '#9CA3AF' },
+      { text: 'Conselhos perigosos', fill: '#6B7280' },
+      { text: 'Info conflitante',  fill: '#9CA3AF' },
+      { text: 'Fontes duvidosas',  fill: '#6B7280' },
+      { text: 'Clickbait',         fill: '#9CA3AF' },
+      { text: 'Horas pesquisando', fill: '#6B7280' },
+    ],
+  };
+
+  // Gera posições dentro do bounding box interno do jar, com empilhamento progressivo
+  function generateChaosLayout(jarKey, rng) {
+    const pills = CHAOS_PILLS[jarKey];
+    // Body interior bounds (relativo ao viewBox 0 0 320 620)
+    const bounds = { xMin: 75, xMax: 245, yMin: 210, yMax: 500 };
+    const count = pills.length;
+    const results = [];
+
+    pills.forEach((p, i) => {
+      // 40% bottom (rot suave), 35% mid (rot médio), 25% top (rot violento)
+      const norm = i / count;
+      let yBase, yRange, rotMax;
+      if (norm < 0.4)      { yBase = 420; yRange = 70;  rotMax = 30; }
+      else if (norm < 0.75){ yBase = 330; yRange = 70;  rotMax = 55; }
+      else                 { yBase = 220; yRange = 70;  rotMax = 80; }
+
+      // Jitter x, y, rotation
+      const x = bounds.xMin + rng() * (bounds.xMax - bounds.xMin);
+      const y = yBase + rng() * yRange;
+      const r = (rng() - 0.5) * 2 * rotMax;
+
+      results.push({ x, y, r, text: p.text, fill: p.fill, delay: 0.04 + i * 0.05 });
+    });
+
+    // Ordem de queda: mais baixas pousam primeiro (topo cai por último, como se fosse empilhando)
+    results.sort((a, b) => b.y - a.y);
+    results.forEach((p, i) => { p.delay = 0.04 + i * 0.045; });
+
+    return results;
+  }
+
+  function renderChaosPills(host) {
+    const jarKey = host.dataset.jar;
+    const rng = mulberry32(seed + jarKey.charCodeAt(0) * 1009);
+    const layout = generateChaosLayout(jarKey, rng);
+    const total = layout.length;
+
+    // Classe de idle para 1-2 pills especiais
+    const specialBounceIdx = jarKey === 'gpt' ? total - 1 : -1;
+    const specialTumbleIdx = jarKey === 'in'  ? total - 1 : -1;
+    const specialDriftIdx  = jarKey === 'in'  ? 0         : -1;
+
+    layout.forEach((p, i) => {
+      const pillW = p.text.length > 14 ? 120 : 108;
+      const pillH = 22;
+      const g = document.createElementNS(SVG_NS, 'g');
+      g.setAttribute('class', 'chaos-in');
+      g.setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${p.r.toFixed(1)})`);
+      g.style.setProperty('--d', `${p.delay.toFixed(2)}s`);
+      g.style.setProperty('--rf', `${p.r.toFixed(1)}deg`);
+
+      const inner = document.createElementNS(SVG_NS, 'g');
+      if (i === specialBounceIdx) inner.setAttribute('class', 'ani-bounce');
+      else if (i === specialTumbleIdx) inner.setAttribute('class', 'ani-tumble');
+      else if (i === specialDriftIdx) {
+        inner.setAttribute('class', 'ani-drift');
+        inner.style.setProperty('--r0', `${p.r.toFixed(1)}deg`);
+      }
+
+      const rect = document.createElementNS(SVG_NS, 'rect');
+      rect.setAttribute('x', -pillW / 2);
+      rect.setAttribute('y', -pillH / 2);
+      rect.setAttribute('width', pillW);
+      rect.setAttribute('height', pillH);
+      rect.setAttribute('rx', pillH / 2);
+      rect.setAttribute('fill', p.fill);
+      inner.appendChild(rect);
+
+      const shine = document.createElementNS(SVG_NS, 'rect');
+      shine.setAttribute('x', -pillW / 2);
+      shine.setAttribute('y', -pillH / 2);
+      shine.setAttribute('width', pillW);
+      shine.setAttribute('height', pillH / 2);
+      shine.setAttribute('rx', pillH / 2);
+      shine.setAttribute('fill', 'rgba(255,255,255,0.18)');
+      inner.appendChild(shine);
+
+      const text = document.createElementNS(SVG_NS, 'text');
+      text.setAttribute('x', 0);
+      text.setAttribute('y', 4);
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('fill', '#fff');
+      text.setAttribute('font-family', 'Nunito, sans-serif');
+      text.setAttribute('font-weight', '800');
+      text.setAttribute('font-size', p.text.length > 14 ? '9' : '10');
+      text.textContent = p.text;
+      inner.appendChild(text);
+
+      g.appendChild(inner);
+      host.appendChild(g);
+    });
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((e) => {
-      if (e.isIntersecting && !started) {
-        started = true;
-        section.classList.add('visible');
-        observer.unobserve(section);
-
-        // Kill CSS animation on chaos pills so physics can control them
-        document.querySelectorAll('.compare-pill-chaos').forEach(p => {
-          p.classList.add('physics-driven');
-        });
-
-        loadMatter(() => {
-          document.querySelectorAll('.compare-jar-gray').forEach(initJarPhysics);
-        }, () => {
-          // On load failure, fall back to CSS animation
-          document.querySelectorAll('.compare-pill-chaos.physics-driven').forEach(p => {
-            p.classList.remove('physics-driven');
-          });
-        });
+      if (e.isIntersecting) {
+        // Popula pills caóticas antes de disparar a animação
+        document.querySelectorAll('.section-compare .chaos-host').forEach(renderChaosPills);
+        grid.classList.add('is-visible');
+        obs.unobserve(grid);
       }
     });
-  }, { threshold: 0.65 });  // só dispara quando a seção está ~quase toda visível
-  observer.observe(section);
+  }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
 
-  function loadMatter(onLoad, onError) {
-    if (window.Matter) { onLoad(); return; }
-    const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js';
-    s.onload = onLoad;
-    s.onerror = onError;
-    document.head.appendChild(s);
-  }
-
-  function initJarPhysics(jar) {
-    const { Engine, World, Bodies, Runner, Events, Mouse, MouseConstraint } = Matter;
-    const engine = Engine.create();
-    engine.world.gravity.y = 1;
-    engine.positionIterations = 10;
-
-    const w = jar.clientWidth;
-    const h = jar.clientHeight;
-    const wallT = 60;
-
-    World.add(engine.world, [
-      Bodies.rectangle(w/2, h + wallT/2 - 4, w + wallT*2, wallT, { isStatic: true, friction: 0.1, restitution: 0.3 }),
-      Bodies.rectangle(-wallT/2 + 4, h/2, wallT, h*3, { isStatic: true, friction: 0.1, restitution: 0.3 }),
-      Bodies.rectangle(w + wallT/2 - 4, h/2, wallT, h*3, { isStatic: true, friction: 0.1, restitution: 0.3 }),
-    ]);
-
-    const pills = Array.from(jar.querySelectorAll('.compare-pill-chaos'));
-    const items = [];
-    const dropXs = [0.3, 0.65, 0.25, 0.55, 0.4, 0.7];
-
-    pills.forEach((pill, i) => {
-      const pw = pill.offsetWidth;
-      const ph = pill.offsetHeight;
-      const delayMs = i * 500;
-
-      setTimeout(() => {
-        const dropX = dropXs[i % dropXs.length] * w + (Math.random() - 0.5) * 20;
-        const dropY = -100 - Math.random() * 40;
-        const body = Bodies.rectangle(dropX, dropY, pw, ph, {
-          chamfer: { radius: ph/2 },
-          restitution: 0.5,
-          friction: 0.1,
-          frictionAir: 0.01,
-          density: 0.01,
-          angle: (Math.random() - 0.5) * 0.5,
-          angularVelocity: (Math.random() - 0.5) * 0.05,
-        });
-        World.add(engine.world, body);
-        pill.style.transform = `translate(${body.position.x - pw/2}px, ${body.position.y - ph/2}px) rotate(${body.angle}rad)`;
-        pill.style.opacity = '1';
-        items.push({ body, pill, pw, ph });
-      }, delayMs);
-    });
-
-    // Drag interaction — pills remain grabbable after settling
-    const mouse = Mouse.create(jar);
-    const mouseConstraint = MouseConstraint.create(engine, {
-      mouse,
-      constraint: { stiffness: 0.2, render: { visible: false } },
-    });
-    World.add(engine.world, mouseConstraint);
-    // Don't hijack page scroll wheel
-    jar.removeEventListener('wheel', mouse.mousewheel);
-    jar.removeEventListener('DOMMouseScroll', mouse.mousewheel);
-
-    // Runner + DOM sync via afterUpdate (runs right after each physics step)
-    const runner = Runner.create();
-    Runner.run(runner, engine);
-
-    Events.on(engine, 'afterUpdate', () => {
-      for (let i = 0; i < items.length; i++) {
-        const { body, pill, pw, ph } = items[i];
-        pill.style.transform = `translate(${body.position.x - pw/2}px, ${body.position.y - ph/2}px) rotate(${body.angle}rad)`;
-      }
-    });
-  }
+  observer.observe(grid);
 })();
 </script>
 

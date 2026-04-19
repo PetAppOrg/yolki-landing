@@ -55,6 +55,14 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+  }
+  @media (max-width: 768px) {
+    html { scroll-padding-top: 80px; }
+  }
+
   body {
     font-family: 'Poppins', sans-serif;
     color: var(--text);

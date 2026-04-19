@@ -41,7 +41,10 @@
     --surface-3: #1C1E22;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; background: var(--bg); }
+  html { scroll-behavior: smooth; background: var(--bg); scroll-padding-top: 100px; }
+  @media (max-width: 768px) {
+    html { scroll-padding-top: 80px; }
+  }
   body {
     font-family: 'Nunito', sans-serif;
     background: var(--bg);
