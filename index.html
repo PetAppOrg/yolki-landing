@@ -5041,6 +5041,12 @@
     background: #F0F0EE;
   }
   [data-theme="dark"] .jars-privacy-section { background: var(--surface-2); }
+  .jars-privacy-section .trust-bar {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin-top: 28px;
+  }
   [data-theme="dark"] .jars-section {
     background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
   }
@@ -5183,8 +5189,8 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(0, 194, 183, 0.12);
-    color: var(--primary);
+    background: rgba(94, 184, 100, 0.14);
+    color: var(--success);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -5197,7 +5203,7 @@
     display: block;
     margin-bottom: 4px;
   }
-  .compare-privacy-body strong em { font-style: italic; color: var(--primary); font-weight: 700; }
+  .compare-privacy-body strong em { font-style: italic; color: var(--error); font-weight: 700; }
   .compare-privacy-body p {
     font-family: 'Nunito', sans-serif;
     font-size: 14px;
@@ -5206,7 +5212,7 @@
     margin: 0;
   }
   .compare-privacy-body a {
-    color: var(--primary);
+    color: var(--success);
     text-decoration: none;
     font-weight: 600;
     white-space: nowrap;
@@ -6036,7 +6042,7 @@
   </div>
 </section>
 
-<!-- Privacy as final Yolki differential vs. the rest -->
+<!-- Privacy + Trust signals -->
 <section class="jars-privacy-section">
   <div class="section-container">
     <div class="compare-privacy" id="privacidade">
@@ -6048,21 +6054,18 @@
         <p>Yolki não vende, não treina IA pra terceiros e não compartilha com anunciantes. Tudo sob LGPD, criptografado, e você exporta ou apaga quando quiser. <a href="/privacidade.html">Ver política completa →</a></p>
       </div>
     </div>
+
+    <div class="trust-bar" role="complementary" aria-label="Selos de confiança">
+      <div class="trust-bar-inner">
+        <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Conforme LGPD</span>
+        <span class="trust-sep" aria-hidden="true"></span>
+        <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Conteúdo revisado</span>
+        <span class="trust-sep" aria-hidden="true"></span>
+        <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Criptografia ponta-a-ponta</span>
+      </div>
+    </div>
   </div>
 </section>
-
-<!-- ═══════════════════════════════════════════ -->
-<!-- TRUST BAR (Sprint 3)                         -->
-<!-- ═══════════════════════════════════════════ -->
-<div class="trust-bar" role="complementary" aria-label="Selos de confiança">
-  <div class="trust-bar-inner">
-    <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Conforme LGPD</span>
-    <span class="trust-sep" aria-hidden="true"></span>
-    <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Conteúdo revisado</span>
-    <span class="trust-sep" aria-hidden="true"></span>
-    <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Criptografia ponta-a-ponta</span>
-  </div>
-</div>
 
 <!-- ═══════════════════════════════════════════ -->
 <!-- SECTION: SOCIAL PROOF (moved up — Sprint 2)  -->
