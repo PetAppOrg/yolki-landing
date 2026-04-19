@@ -1259,7 +1259,7 @@
     font-size: 13px;
     font-weight: 500;
     padding: 10px 20px;
-    border: 1.5px solid #D8D8D5;
+    border: 1px solid #D8D8D5;
     border-radius: 50px;
     color: var(--text-primary);
     background: var(--white);
@@ -1647,7 +1647,7 @@
     font-size: 13px;
     transform: translateY(-1px);
     margin: 0 1px 0 2px;
-    color: var(--text-primary);
+    color: inherit;
   }
   .video-caption .video-caption-duration {
     text-transform: lowercase;
@@ -1740,7 +1740,7 @@
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 2px solid rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.25);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -2171,7 +2171,7 @@
   .plan-cta-primary {
     background: var(--primary);
     color: #fff;
-    border: 2px solid var(--primary);
+    border: 1px solid var(--primary);
     box-shadow: 0 6px 20px rgba(0, 194, 183, 0.25);
   }
   .plan-cta-primary:hover {
@@ -2181,7 +2181,7 @@
   .plan-cta-secondary {
     background: var(--secondary);
     color: #fff;
-    border: 2px solid var(--secondary);
+    border: 1px solid var(--secondary);
     box-shadow: 0 6px 20px rgba(167, 111, 255, 0.25);
   }
   .plan-cta-secondary:hover {
@@ -2191,7 +2191,7 @@
   .plan-cta-outline {
     background: transparent;
     color: var(--text-primary);
-    border: 2px solid var(--border-default);
+    border: 1px solid var(--border-default);
   }
   .plan-cta-outline:hover {
     border-color: var(--primary);
@@ -2204,6 +2204,20 @@
   }
 
   /* Microcopy de remoção de risco */
+  .pricing-legal-disclaimer {
+    max-width: 720px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 10px;
+    line-height: 1.45;
+    color: var(--text-muted);
+    opacity: 0.55;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+  [data-theme="dark"] .pricing-legal-disclaimer { opacity: 0.45; }
+
   .pricing-risk-free {
     text-align: center;
     font-family: 'Nunito', sans-serif;
@@ -2510,7 +2524,7 @@
   /* ─── SCROLL-FLIP (como-funciona) ─── */
   .cosmos-flip-outer {
     position: relative;
-    height: 180vh;
+    height: 260vh;
   }
   .cosmos-flip-sticky {
     position: sticky;
@@ -3459,7 +3473,7 @@
     font-weight: 500;
     font-size: 14px;
     padding: 11px 22px;
-    border: 1.5px solid var(--primary);
+    border: 1px solid var(--primary);
     border-radius: 999px;
     color: var(--primary);
     text-decoration: none;
@@ -3674,6 +3688,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .section-app.is-showing-success {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+  .section-app.is-showing-success .section-title,
+  .section-app.is-showing-success .app-description {
+    display: none;
   }
   [data-theme="dark"] .section-app { background: var(--surface-2); }
   @media (min-width: 900px) {
@@ -3962,10 +3984,19 @@
   .waitlist-note {
     font-size: 14px;
     color: var(--text-muted);
-    opacity: 0.6;
+    opacity: 0.75;
     margin-top: 12px;
     margin-bottom: 32px;
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+  .waitlist-note .wn-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
 
   .app-bottom-row {
@@ -5738,76 +5769,13 @@
     </div>
     <div class="screens-grid reveal-on-scroll-up">
       <div class="phone-mockup reveal">
-        <div class="phone-screen screen-home">
-          <div class="screen-content">
-            <div class="screen-title">Olá, Franz 👋</div>
-            <div class="screen-card">
-              <small>Pet ativo</small>
-              <strong>Luna · Golden · 3 anos</strong>
-            </div>
-            <div class="screen-card">
-              <small>Score de saúde</small>
-              <div class="screen-metric">87</div>
-            </div>
-            <div class="screen-card">
-              <small>Streak</small>
-              <strong>🔥 12 dias</strong>
-            </div>
-            <div class="screen-tabs">
-              <span class="screen-tab active"></span>
-              <span class="screen-tab"></span>
-              <span class="screen-tab"></span>
-            </div>
-          </div>
-        </div>
+        <div class="phone-screen screen-home"></div>
       </div>
       <div class="phone-mockup reveal">
-        <div class="phone-screen screen-lesson">
-          <div class="screen-content">
-            <div class="screen-title">Micro-aula #7</div>
-            <div class="screen-card">
-              <small>Tempo · 3 min</small>
-              <strong>Sinais precoces de problemas cardíacos</strong>
-            </div>
-            <div class="screen-card">
-              <small>Revisado por</small>
-              <strong>🩺 Dra. Ana Santos · CRMV-SP</strong>
-            </div>
-            <div class="screen-card">
-              <small>Recompensa</small>
-              <div class="screen-metric">+15 Yolks</div>
-            </div>
-            <div class="screen-tabs">
-              <span class="screen-tab"></span>
-              <span class="screen-tab active"></span>
-              <span class="screen-tab"></span>
-            </div>
-          </div>
-        </div>
+        <div class="phone-screen screen-lesson"></div>
       </div>
       <div class="phone-mockup reveal">
-        <div class="phone-screen screen-progress">
-          <div class="screen-content">
-            <div class="screen-title">Progresso</div>
-            <div class="screen-card">
-              <small>Esta semana</small>
-              <div class="screen-metric">+8%</div>
-            </div>
-            <div class="screen-card">
-              <small>Módulos concluídos</small>
-              <strong>24 / 60</strong>
-            </div>
-            <div class="screen-card">
-              <small>Ranking tutores</small>
-              <strong>🏆 Top 12%</strong>
-            </div>
-            <div class="screen-tabs">
-              <span class="screen-tab"></span>
-              <span class="screen-tab"></span>
-              <span class="screen-tab active"></span>
-            </div>
-          </div>
-        </div>
+        <div class="phone-screen screen-progress"></div>
       </div>
     </div>
     <p class="screens-disclaimer">* Previews conceituais — a versão final pode variar</p>
@@ -6212,7 +6180,7 @@
           <span class="price-currency">R$</span><span class="price-value">0</span>
           <span class="price-period">para sempre</span>
         </div>
-        <a href="#download" class="plan-cta plan-cta-secondary" data-cta="plan-gratis">
+        <a href="#download" class="plan-cta plan-cta-primary" data-cta="plan-gratis" data-variant="secondary">
           Entrar grátis na lista →
         </a>
       </div>
@@ -6280,6 +6248,10 @@
         Falar com a gente →
       </a>
     </div>
+
+    <p class="pricing-legal-disclaimer">
+      * Valores e condições exibidos são indicativos e referentes ao período pré-lançamento. Podem ser ajustados a qualquer momento antes do lançamento oficial, sem prévio aviso e sem obrigação contratual. A oferta definitiva será comunicada no ato da assinatura.
+    </p>
 
     <div class="pricing-faq">
       <h3 class="pricing-faq-title">Respostas comuns sobre os planos</h3>
@@ -6397,7 +6369,7 @@
           </div>
           <div class="referral-box">
             <h4>Quer subir na fila?</h4>
-            <p class="referral-desc">A cada amigo que entrar pelo seu link: você sobe <strong>10 posições</strong> e ganha <strong>1 mês extra de Solo</strong> no lançamento. <strong>Top 100</strong> = Solo vitalício.</p>
+            <p class="referral-desc">A cada amigo que entrar pelo seu link você sobe <strong>3 posições</strong> no ranking. Vamos lançar em blocos de 100 inscritos — o <strong>Top 10 de cada lançamento</strong> ganha <strong>1 mês de Solo grátis</strong>.</p>
             <div class="referral-link-row">
               <input type="text" class="referral-link" id="referralLink" readonly aria-label="Seu link de convite">
               <button type="button" class="referral-copy" id="referralCopy" aria-label="Copiar link"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
@@ -6407,15 +6379,14 @@
               <a href="#" class="referral-share" id="shareX" target="_blank" rel="noopener">𝕏 Compartilhar</a>
               <a href="#" class="referral-share" id="shareEmail"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</a>
             </div>
-            <div class="referral-meta">
-              <span>Seus convites: <strong id="successReferrals">0</strong></span>
-              <span class="referral-meta-sep">·</span>
-              <span>Próxima recompensa: <strong>1 convite</strong></span>
-            </div>
           </div>
         </div>
         <div class="waitlist-error" id="waitlistError" role="alert"></div>
-        <p class="waitlist-note">Gratuito · Sem cartão · Sem spam</p>
+        <p class="waitlist-note">
+          <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Gratuito</span>
+          <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Sem cartão</span>
+          <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Sem spam</span>
+        </p>
         <p class="waitlist-privacy">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           Dados protegidos por LGPD · <a href="/privacidade.html">seus dados nunca são produto</a>
@@ -7697,7 +7668,6 @@ if (prefersReducedMotion) {
 
   const nameEl = document.getElementById('successName');
   const posEl = document.getElementById('successPosition');
-  const refEl = document.getElementById('successReferrals');
   const linkInput = document.getElementById('referralLink');
   const copyBtn = document.getElementById('referralCopy');
   const shareWA = document.getElementById('shareWhatsapp');
@@ -7709,6 +7679,8 @@ if (prefersReducedMotion) {
     closeBtn.addEventListener('click', function() {
       success.style.display = 'none';
       form.style.display = '';
+      const appSection = document.querySelector('.section-app');
+      if (appSection) appSection.classList.remove('is-showing-success');
       if (submit) {
         submit.disabled = false;
         submit.textContent = 'Garantir minha vaga';
@@ -7731,7 +7703,6 @@ if (prefersReducedMotion) {
     const firstName = (result.name || '').split(' ')[0] || 'tutor(a)';
     nameEl.textContent = firstName;
     posEl.textContent = '#' + result.position;
-    refEl.textContent = result.referrals_count || 0;
 
     const link = buildReferralLink(result.referral_code);
     linkInput.value = link;
@@ -7743,6 +7714,8 @@ if (prefersReducedMotion) {
 
     form.style.display = 'none';
     success.style.display = 'block';
+    const appSection = document.querySelector('.section-app');
+    if (appSection) appSection.classList.add('is-showing-success');
 
     // Persist for returning visitors
     try {
