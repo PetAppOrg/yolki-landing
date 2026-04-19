@@ -459,6 +459,15 @@
     padding: var(--space-section) 0;
     background: linear-gradient(180deg, var(--bg), #fff);
   }
+
+  /* Pause/linger suave ao entrar na seção "Feito pra quem cuida" */
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+    html { scroll-snap-type: y proximity; }
+    .section-audience {
+      scroll-snap-align: start;
+      scroll-margin-top: 72px;
+    }
+  }
   .audience-header { text-align: center; max-width: 640px; margin: 0 auto var(--space-block); }
   .audience-header .section-title,
   .audience-header .section-subtitle {
@@ -1329,7 +1338,7 @@
     background: var(--secondary);
     color: var(--white);
     font-family: 'Poppins', sans-serif;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 16px;
     padding: 0 32px;
     height: 56px;
@@ -1348,7 +1357,7 @@
 
   .hero-cta-secondary {
     font-family: 'Poppins', sans-serif;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 15px;
     color: var(--text-primary);
     text-decoration: none;
@@ -5551,7 +5560,7 @@
   <div class="hero-headline">
     <h1>
       Seu pet vive mais.
-      <span class="highlight">Começa com 2 min<br>do seu dia.</span>
+      <span class="highlight">Começa com 3 min<br>do seu dia.</span>
     </h1>
     <p class="hero-sub">
       Micro-aulas diárias e prevenção de saúde.<br>
@@ -5562,10 +5571,12 @@
   <!-- CTAs (separate block) -->
   <div class="hero-cta-group">
     <a href="#download" class="hero-cta-primary" data-cta="hero-primary">
-      Garantir minha vaga grátis →
+      <span>Garantir minha vaga grátis</span>
+      <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
     </a>
     <a href="#video-reveal" class="hero-cta-secondary" data-cta="hero-secondary">
-      Ver como funciona ↓
+      <span>Ver como funciona</span>
+      <svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12l7 7 7-7"/></svg>
     </a>
   </div>
 
@@ -5865,7 +5876,7 @@
           <div class="screen-content">
             <div class="screen-title">Micro-aula #7</div>
             <div class="screen-card">
-              <small>Tempo · 2 min</small>
+              <small>Tempo · 3 min</small>
               <strong>Sinais precoces de problemas cardíacos</strong>
             </div>
             <div class="screen-card">

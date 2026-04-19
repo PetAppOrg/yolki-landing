@@ -1,7 +1,7 @@
 {
   "name": "Yolki Pet — Longevidade começa aqui",
   "short_name": "Yolki",
-  "description": "Micro-aulas diárias e monitoramento de saúde validado por veterinários. 2 minutos por dia para seu pet viver mais.",
+  "description": "Micro-aulas diárias e monitoramento de saúde validado por veterinários. 3 minutos por dia para seu pet viver mais.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
