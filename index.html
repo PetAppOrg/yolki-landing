@@ -3280,6 +3280,29 @@
     box-shadow: 0 4px 14px rgba(0, 194, 183, 0.3);
   }
 
+  /* Planos "em breve" — menos destacados, fundo cinza claro */
+  .pricing-soon {
+    background: #F0F0EE;
+  }
+  [data-theme="dark"] .pricing-soon {
+    background: var(--surface-1);
+  }
+  .pricing-soon-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #B8B8B8;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
   .plan-name {
     font-family: 'Poppins', sans-serif;
     font-weight: 800;
@@ -6584,8 +6607,9 @@
     </div>
 
     <div class="pricing-grid reveal-on-scroll-up">
-      <!-- FREE -->
-      <div class="pricing-card">
+      <!-- FREE — featured/recommended -->
+      <div class="pricing-card pricing-featured">
+        <span class="pricing-recommended-badge">Recomendado</span>
         <h3 class="plan-name">Grátis</h3>
         <p class="plan-tagline">Pra começar sem compromisso.</p>
         <div class="plan-features-list">
@@ -6603,14 +6627,14 @@
           <strong class="plan-save-hero">&nbsp;</strong>
           <span class="plan-save-sub">&nbsp;</span>
         </p>
-        <a href="#download" class="plan-cta plan-cta-outline" data-cta="plan-gratis">
+        <a href="#download" class="plan-cta plan-cta-primary" data-cta="plan-gratis">
           Entrar grátis na lista →
         </a>
       </div>
 
-      <!-- SOLO — featured -->
-      <div class="pricing-card pricing-featured">
-        <span class="pricing-recommended-badge">Recomendado</span>
+      <!-- SOLO — em breve -->
+      <div class="pricing-card pricing-soon">
+        <span class="pricing-soon-badge">Em breve</span>
         <h3 class="plan-name">Solo</h3>
         <p class="plan-tagline">Pra quem cuida a sério.</p>
         <div class="plan-features-list">
@@ -6634,8 +6658,9 @@
         </a>
       </div>
 
-      <!-- FAMÍLIA -->
-      <div class="pricing-card">
+      <!-- FAMÍLIA — em breve -->
+      <div class="pricing-card pricing-soon">
+        <span class="pricing-soon-badge">Em breve</span>
         <h3 class="plan-name">Família</h3>
         <p class="plan-tagline">Cuidando de todos numa conta só.</p>
         <div class="plan-features-list">
@@ -6672,7 +6697,7 @@
     </div>
 
     <div class="pricing-faq">
-      <h3 class="pricing-faq-title">Dúvidas comuns sobre os planos</h3>
+      <h3 class="pricing-faq-title">Respostas comuns sobre os planos</h3>
       <div class="pricing-faq-list">
         <details class="faq-item">
           <summary>O preço Early Bird é vitalício mesmo?</summary>
