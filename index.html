@@ -7889,6 +7889,42 @@ if (prefersReducedMotion) {
   });
 })();
 
+// ─── PRICING FAQ: reserva altura máxima pra evitar reflow ao abrir/fechar ───
+(function() {
+  const list = document.querySelector('.pricing-faq-list');
+  if (!list) return;
+  const items = list.querySelectorAll('details.faq-item');
+  if (!items.length) return;
+
+  function measureMinHeight() {
+    const states = Array.from(items).map(d => d.open);
+    items.forEach(d => { d.open = false; });
+    let max = 0;
+    items.forEach(d => {
+      d.open = true;
+      if (list.offsetHeight > max) max = list.offsetHeight;
+      d.open = false;
+    });
+    items.forEach((d, i) => { d.open = states[i]; });
+    list.style.minHeight = max + 'px';
+  }
+
+  if (document.readyState === 'complete') {
+    measureMinHeight();
+  } else {
+    window.addEventListener('load', measureMinHeight);
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      list.style.minHeight = '';
+      measureMinHeight();
+    }, 150);
+  });
+})();
+
 // ─── COUNTDOWN TO JUNE 1, 2026 (flip-digit) ───
 (function() {
   const launchDate = new Date('2026-06-01T00:00:00-03:00').getTime();
