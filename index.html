@@ -1571,7 +1571,7 @@
     justify-content: center;
     height: 100vh;
     height: 100dvh;
-    margin-top: -100vh; /* pull up into the sticky wrapper space */
+    margin-top: -100dvh; /* pull up into the sticky wrapper space */
     transition: background 0.4s ease;
   }
 
@@ -2897,18 +2897,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    margin-bottom: 64px;
-  }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 56px;
-    margin-bottom: 32px;
+    margin: 56px auto 32px;
     max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .testimonial-card {
@@ -3085,20 +3075,6 @@
     margin: 0 auto;
   }
 
-  .pricing-card {
-    position: relative;
-    border-radius: 20px;
-    padding: 36px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    transition: transform 0.3s;
-  }
-
-  .pricing-card:hover {
-    transform: translateY(-4px);
-  }
-
   /* Variants */
   .pricing-light {
     background: var(--white);
@@ -3269,6 +3245,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
     position: relative;
     transition: transform 0.3s, box-shadow 0.3s;
   }
@@ -4224,7 +4201,8 @@
     background: #fff;
     border-radius: 24px;
     padding: 44px 40px 36px;
-    max-width: 460px;
+    max-width: clamp(280px, 90vw, 460px);
+    width: 100%;
     width: 100%;
     text-align: center;
     box-shadow: 0 24px 56px rgba(0, 0, 0, 0.22);
@@ -4523,7 +4501,7 @@
     border-radius: var(--radius-xl);
     width: 100%;
     max-width: 560px;
-    max-height: calc(100vh - 48px);
+    max-height: calc(100dvh - 48px);
     overflow-y: auto;
     padding: 40px 36px 32px;
     box-shadow: var(--shadow-modal);
@@ -5017,19 +4995,15 @@
     .section-container { padding: 0 20px; }
     .section-proof, .section-pricing, .section-cta, .section-app, .section-faq { padding: 80px 0; }
     .cosmos-block { padding: 72px 0; }
-    .testimonials-grid, .pricing-grid, .blog-grid { grid-template-columns: 1fr; }
+    .testimonials-grid, .blog-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
     .pricing-card-featured { transform: scale(1); }
     .pricing-card-featured:hover { transform: translateY(-4px); }
-    .pricing-grid { max-width: 400px; }
     .pricing-signup-form { flex-direction: column; }
-    /* .pricing-main-title override consolidated below */
-    .testimonials-grid { grid-template-columns: 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
     .app-grid { grid-template-columns: 1fr; text-align: center; }
     .app-left { max-width: 100%; }
     .app-store-buttons { justify-content: center; }
     .app-countdown { justify-content: center; }
-    .testimonials-grid { grid-template-columns: 1fr; }
     .proof-stats { flex-direction: column; gap: 32px; }
     .cta-box { padding: 48px 28px; border-radius: 24px; }
     .section-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
@@ -5084,7 +5058,7 @@
     overflow: hidden;
   }
   @media (min-width: 900px) {
-    .jars-section { min-height: 100vh; }
+    .jars-section { min-height: 100dvh; }
   }
 
   .jars-privacy-section {
@@ -5208,7 +5182,10 @@
   }
 
   @media (max-width: 768px) {
-    .jars-container { grid-template-columns: 1fr; gap: 40px; max-width: 320px; }
+    .jars-container { grid-template-columns: 1fr; gap: 40px; max-width: min(320px, calc(100% - 40px)); }
+  }
+  @media (max-width: 480px) {
+    .jars-section .jar-label { min-height: 48px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
