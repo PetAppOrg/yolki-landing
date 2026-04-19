@@ -7732,28 +7732,6 @@ if (prefersReducedMotion) {
     success.style.display = 'block';
     const appSection = document.querySelector('.section-app');
     if (appSection) appSection.classList.add('is-showing-success');
-
-    // Persist for returning visitors
-    try {
-      localStorage.setItem('yolki_waitlist', JSON.stringify({
-        name: result.name,
-        email: result.email || null,
-        position: result.position,
-        referral_code: result.referral_code,
-        referrals_count: result.referrals_count,
-      }));
-    } catch (_) {}
-  }
-
-  async function refreshFromCache(cached) {
-    if (!window.sbClient || !cached.email) return cached;
-    try {
-      const { data: fresh } = await window.sbClient.rpc('get_waitlist_position', { p_email: cached.email });
-      if (fresh && fresh.found) {
-        return { ...cached, ...fresh };
-      }
-    } catch (_) {}
-    return cached;
   }
 
   // Copy to clipboard
@@ -7819,17 +7797,6 @@ if (prefersReducedMotion) {
     }
   });
 
-  // Restore success state if user already signed up + refresh from server
-  (async function() {
-    try {
-      const cached = JSON.parse(localStorage.getItem('yolki_waitlist') || 'null');
-      if (cached && cached.referral_code) {
-        renderSuccess(cached);
-        const fresh = await refreshFromCache(cached);
-        if (fresh && fresh.referral_code) renderSuccess(fresh);
-      }
-    } catch (_) {}
-  })();
 })();
 
 // ─── VIDEO: auto-preview mudo após 3s na viewport; click para ouvir ───
