@@ -806,9 +806,11 @@
     justify-content: center;
     width: 38px;
     height: 38px;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
     color: var(--text-primary);
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 999px;
     cursor: pointer;
     transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
@@ -821,8 +823,9 @@
   [data-theme="dark"] .nav-theme .nav-theme-sun { display: none; }
   [data-theme="dark"] .nav-theme .nav-theme-moon { display: inline-block; }
   [data-theme="dark"] .nav-theme {
+    background: #272727;
     color: var(--text-primary);
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.06);
   }
   [data-theme="dark"] .nav-theme:hover { background: rgba(255, 255, 255, 0.05); }
 
@@ -929,8 +932,10 @@
     height: 38px;
     box-sizing: border-box;
     border-radius: 999px;
-    background: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -949,8 +954,9 @@
   }
   .lang-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
   [data-theme="dark"] .lang-btn {
+    background: #272727;
     color: var(--text-primary);
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.06);
   }
   [data-theme="dark"] .lang-btn:hover { background: rgba(255, 255, 255, 0.05); }
 
@@ -5037,7 +5043,7 @@
 
   .compare-heading {
     text-align: center;
-    margin-bottom: 64px;
+    margin-bottom: 32px;
   }
 
   .compare-title {
@@ -5082,7 +5088,7 @@
   .jars-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 12px;
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
@@ -5104,7 +5110,7 @@
     overflow: visible;
   }
   .jars-section .jar-label {
-    margin-top: 8px;
+    margin-top: 4px;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 18px;
@@ -5115,7 +5121,7 @@
     gap: 6px;
   }
   .jars-section .jar-label.yolki { color: var(--primary); font-weight: 700; }
-  .jars-section .jar-label.yolki img { height: 36px; width: auto; display: block; }
+  .jars-section .jar-label.yolki img { height: 72px; width: auto; display: block; }
   .jars-section .jar-label.competitor { color: var(--text-muted); }
 
   .jars-section .jars-disclaimer {
@@ -5207,7 +5213,7 @@
     text-decoration: none;
     padding: 14px 28px;
     border-radius: 50px;
-    border: 2px solid var(--primary);
+    border: 1px solid var(--primary);
     transition: all 0.25s;
   }
 
@@ -6032,11 +6038,11 @@
 <!-- ═══════════════════════════════════════════ -->
 <div class="trust-bar" role="complementary" aria-label="Selos de confiança">
   <div class="trust-bar-inner">
-    <span class="trust-item">Conforme LGPD</span>
+    <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Conforme LGPD</span>
     <span class="trust-sep" aria-hidden="true"></span>
-    <span class="trust-item">Conteúdo revisado</span>
+    <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Conteúdo revisado</span>
     <span class="trust-sep" aria-hidden="true"></span>
-    <span class="trust-item">Criptografia ponta-a-ponta</span>
+    <span class="trust-item"><svg class="trust-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Criptografia ponta-a-ponta</span>
   </div>
 </div>
 
