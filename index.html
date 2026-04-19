@@ -89,7 +89,7 @@
       "operatingSystem": "iOS, Android",
       "offers": [
         { "@type": "Offer", "name": "Grátis", "price": "0", "priceCurrency": "BRL", "availability": "https://schema.org/PreOrder" },
-        { "@type": "Offer", "name": "Individual", "priceCurrency": "BRL", "availability": "https://schema.org/PreOrder" }
+        { "@type": "Offer", "name": "Solo", "priceCurrency": "BRL", "availability": "https://schema.org/PreOrder" }
       ]
     },
     {
@@ -2076,6 +2076,107 @@
   }
   [data-theme="dark"] .plan-save-hero {
     background: rgba(94, 184, 100, 0.16);
+  }
+
+  /* Social proof contador na pricing */
+  .pricing-social-proof {
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: -40px auto 40px;
+    letter-spacing: 0.2px;
+  }
+  .pricing-social-proof .proof-count {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  /* CTA nos cards de pricing */
+  .plan-cta {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: transform 0.15s, background 0.2s, box-shadow 0.2s, color 0.2s;
+    letter-spacing: 0.2px;
+  }
+  .plan-cta-primary {
+    background: var(--primary);
+    color: #fff;
+    border: 2px solid var(--primary);
+    box-shadow: 0 6px 20px rgba(0, 194, 183, 0.25);
+  }
+  .plan-cta-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(0, 194, 183, 0.35);
+  }
+  .plan-cta-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--border-default);
+  }
+  .plan-cta-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+  }
+  [data-theme="dark"] .plan-cta-outline {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+
+  /* Microcopy de remoção de risco */
+  .pricing-risk-free {
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.82);
+    margin: 28px auto 0;
+    max-width: 720px;
+    letter-spacing: 0.2px;
+  }
+
+  /* FAQ de pricing (dentro da seção roxa) */
+  .pricing-faq {
+    max-width: 800px;
+    margin: 64px auto 0;
+  }
+  .pricing-faq-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: clamp(22px, 2.8vw, 30px);
+    text-align: center;
+    color: #fff;
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+  .pricing-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pricing-faq .faq-item {
+    background: #fff;
+    color: var(--text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .pricing-faq .faq-item summary { color: var(--text-primary); }
+  .pricing-faq .faq-item p { color: var(--text-muted); font-size: 16px; }
+  .pricing-faq .faq-item summary::after { color: var(--text-muted); }
+  .pricing-faq .faq-item[open] summary { color: var(--primary); }
+  .pricing-faq .faq-item[open] summary::after { color: var(--primary); }
+  [data-theme="dark"] .pricing-faq .faq-item {
+    background: var(--surface-3);
+    color: var(--text-primary);
+    border-color: var(--border-default);
   }
 
   /* ═══════════════════════════════════════════ */
@@ -5606,7 +5707,7 @@
       <div class="quiz-result" id="quizResult" hidden>
         <span class="quiz-eyebrow">Resultado</span>
         <h3 id="quizResultTitle">Yolki foi desenhado <span class="hl">exatamente pra isso</span>.</h3>
-        <p id="quizResultCopy">A gente monta uma trilha personalizada baseada no perfil do seu pet. Você entra na lista, cria o perfil dele no onboarding e começa com 3 meses do Individual grátis.</p>
+        <p id="quizResultCopy">A gente monta uma trilha personalizada baseada no perfil do seu pet. Você entra na lista, cria o perfil dele no onboarding e começa com 3 meses do Solo grátis.</p>
         <div class="quiz-cta">
           <a href="#download" class="hero-cta-primary" data-cta="quiz-result">Garantir minha vaga →</a>
           <button type="button" class="quiz-restart" id="quizRestart">Refazer quiz</button>
@@ -5950,7 +6051,8 @@
 <section class="section-pricing" id="planos">
   <div class="section-container reveal-on-scroll-up">
     <h2 class="pricing-main-title">Planos que crescem<br><span class="hl">com o seu pet</span></h2>
-    <p class="pricing-lead">Lançamento <strong>grátis pra todos</strong>. Pro e Família chegam logo em seguida — quem está na lista garante <strong>preço Early Bird vitalício</strong>.</p>
+    <p class="pricing-lead">Lançamento <strong>grátis pra todos</strong>. Solo e Família chegam logo em seguida — quem está na lista garante <strong>preço Early Bird vitalício</strong>.</p>
+    <p class="pricing-social-proof"><span class="proof-count">+247</span> tutores já na lista</p>
 
     <!-- Billing toggle: Anual por default -->
     <div class="billing-toggle-wrap">
@@ -5967,10 +6069,10 @@
         <h3 class="plan-name">Grátis</h3>
         <p class="plan-tagline">Pra começar sem compromisso.</p>
         <div class="plan-features-list">
-          <span><em class="hl-num">1</em> perfil de tutor</span>
-          <span><em class="hl-num">1</em> perfil de pet</span>
-          <span><em class="hl-num">1</em> discovery por dia</span>
-          <span>Gamificação básica</span>
+          <span>Cuidados pra <em class="hl-num">1</em> pet</span>
+          <span><em class="hl-num">1</em> dica personalizada por dia</span>
+          <span>Desafios pra criar rotina com ele</span>
+          <span>Histórico dos últimos <em class="hl-num">30</em> dias</span>
         </div>
         <span class="price-strike" aria-hidden="true">&nbsp;</span>
         <div class="plan-price">
@@ -5981,19 +6083,23 @@
           <strong class="plan-save-hero">&nbsp;</strong>
           <span class="plan-save-sub">&nbsp;</span>
         </p>
+        <a href="#download" class="plan-cta plan-cta-outline" data-cta="plan-gratis">
+          Entrar grátis na lista →
+        </a>
       </div>
 
-      <!-- PRO — featured -->
+      <!-- SOLO — featured -->
       <div class="pricing-card pricing-featured">
         <span class="pricing-recommended-badge">Recomendado</span>
-        <h3 class="plan-name">Individual</h3>
+        <h3 class="plan-name">Solo</h3>
         <p class="plan-tagline">Pra quem cuida a sério.</p>
         <div class="plan-features-list">
           <span class="plan-features-intro">Tudo do Grátis, mais:</span>
-          <span><em class="hl-num">3</em> perfis de pets</span>
-          <span><em class="hl-num">3</em> discoveries por dia</span>
-          <span>Hub de estatísticas</span>
-          <span>Lembretes inteligentes</span>
+          <span>Cuidados pra até <em class="hl-num">3</em> pets</span>
+          <span><em class="hl-num">3</em> dicas personalizadas por dia</span>
+          <span>Evolução da saúde do seu pet</span>
+          <span>Lembretes de vacina, vermífugo e remédios</span>
+          <span>Histórico completo, sem limite</span>
         </div>
         <span class="price-strike">R$ 19,90 / mês</span>
         <div class="plan-price">
@@ -6003,6 +6109,9 @@
         <p class="plan-save"
            data-monthly="No anual, <strong class=&quot;plan-save-hero&quot;>economize R$ 60/ano</strong>"
            data-annual="<strong class=&quot;plan-save-hero&quot;>Economia de R$ 60/ano</strong><span class=&quot;plan-save-sub&quot;>Total R$ 178,80/ano</span>"><strong class="plan-save-hero">Economia de R$ 60/ano</strong><span class="plan-save-sub">Total R$ 178,80/ano</span></p>
+        <a href="#download" class="plan-cta plan-cta-primary" data-cta="plan-solo">
+          Quero Solo com −25% →
+        </a>
       </div>
 
       <!-- FAMÍLIA -->
@@ -6010,10 +6119,11 @@
         <h3 class="plan-name">Família</h3>
         <p class="plan-tagline">Cuidando de todos numa conta só.</p>
         <div class="plan-features-list">
-          <span class="plan-features-intro">Tudo do Individual, mais:</span>
-          <span><em class="hl-num">5</em> perfis de tutor</span>
-          <span><em class="hl-num">10</em> perfis de pet</span>
-          <span>Suporte prioritário</span>
+          <span class="plan-features-intro">Tudo do Solo, mais:</span>
+          <span>Conta compartilhada com login próprio pra cada tutor</span>
+          <span>Calendário da casa: vacinas, banho, vet</span>
+          <span>Check-in de cuidados: quem deu remédio, quem passeou</span>
+          <span>Lista de compras compartilhada: ração, petiscos, remédios</span>
         </div>
         <span class="price-strike">R$ 39,90 / mês</span>
         <div class="plan-price">
@@ -6023,8 +6133,13 @@
         <p class="plan-save"
            data-monthly="No anual, <strong class=&quot;plan-save-hero&quot;>economize R$ 180/ano</strong>"
            data-annual="<strong class=&quot;plan-save-hero&quot;>Economia de R$ 180/ano</strong><span class=&quot;plan-save-sub&quot;>Total R$ 298,80/ano</span>"><strong class="plan-save-hero">Economia de R$ 180/ano</strong><span class="plan-save-sub">Total R$ 298,80/ano</span></p>
+        <a href="#download" class="plan-cta plan-cta-outline" data-cta="plan-familia">
+          Entrar com a família toda →
+        </a>
       </div>
     </div>
+
+    <p class="pricing-risk-free">Cancele quando quiser · Sem cartão pra começar · Troque de plano a qualquer momento</p>
 
     <div class="pricing-corp-cta">
       <div class="pricing-corp-cta-text">
@@ -6034,6 +6149,28 @@
       <a href="#" class="pricing-corp-cta-btn" id="corpModalOpen" data-cta="corp-modal">
         Falar com a gente →
       </a>
+    </div>
+
+    <div class="pricing-faq">
+      <h3 class="pricing-faq-title">Dúvidas comuns sobre os planos</h3>
+      <div class="pricing-faq-list">
+        <details class="faq-item">
+          <summary>O preço Early Bird é vitalício mesmo?</summary>
+          <p>Sim. Quem entra na lista antes do lançamento trava o preço Early Bird pra sempre, enquanto mantiver a assinatura ativa. Reajustes futuros não se aplicam a você.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Preciso cadastrar cartão agora?</summary>
+          <p>Não. Você entra na lista com só email. O cartão só é pedido quando o Solo ou Família forem lançados — e você decide se continua no Grátis ou assina.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Posso cancelar ou trocar de plano depois?</summary>
+          <p>A qualquer momento, direto no app. Sem multa, sem fidelidade. Se cancelar, você volta pro Grátis e mantém o que já cadastrou do seu pet.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Qual a diferença real entre Solo e Família?</summary>
+          <p>Solo é pra um tutor cuidando de até 3 pets. Família é pra casa toda cuidar junto — cada pessoa tem login próprio, todo mundo enxerga o calendário, lista de compras e quem fez o quê (quem deu o remédio, quem passeou).</p>
+        </details>
+      </div>
     </div>
   </div>
 </section>
@@ -6238,7 +6375,7 @@
           </div>
           <div class="referral-box">
             <h4>Quer subir na fila?</h4>
-            <p class="referral-desc">A cada amigo que entrar pelo seu link: você sobe <strong>10 posições</strong> e ganha <strong>1 mês extra de Pro</strong> no lançamento. <strong>Top 100</strong> = Pro vitalício.</p>
+            <p class="referral-desc">A cada amigo que entrar pelo seu link: você sobe <strong>10 posições</strong> e ganha <strong>1 mês extra de Solo</strong> no lançamento. <strong>Top 100</strong> = Solo vitalício.</p>
             <div class="referral-link-row">
               <input type="text" class="referral-link" id="referralLink" readonly aria-label="Seu link de convite">
               <button type="button" class="referral-copy" id="referralCopy" aria-label="Copiar link"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
@@ -6974,7 +7111,7 @@ if (prefersReducedMotion) {
     }[tempo] || '';
 
     const pieces = [knowLine, doubtLine, timeLine].filter(Boolean).join(', ');
-    copyEl.textContent = `${pieces}. Entra na lista agora — lançamento grátis e preço Early Bird vitalício no Individual.`;
+    copyEl.textContent = `${pieces}. Entra na lista agora — lançamento grátis e preço Early Bird vitalício no Solo.`;
 
     steps.forEach(s => { s.hidden = true; });
     result.hidden = false;
@@ -7043,10 +7180,14 @@ if (prefersReducedMotion) {
 
 // ─── REAL-TIME WAITLIST COUNTER ───
 (function() {
-  const el = document.getElementById('proofCount');
-  if (!el || !window.sbClient) return;
+  const els = document.querySelectorAll('.proof-count');
+  if (!els.length || !window.sbClient) return;
 
   let current = 247;
+  function render(value) {
+    const formatted = '+' + value.toLocaleString('pt-BR');
+    els.forEach((el) => { el.textContent = formatted; });
+  }
   function animate(target) {
     const start = current;
     const delta = target - start;
@@ -7056,14 +7197,14 @@ if (prefersReducedMotion) {
     const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
       current = target;
-      el.textContent = '+' + current.toLocaleString('pt-BR');
+      render(current);
       return;
     }
     function tick(t) {
       const p = Math.min(1, (t - t0) / dur);
       const eased = 1 - Math.pow(1 - p, 3);
       const value = Math.round(start + delta * eased);
-      el.textContent = '+' + value.toLocaleString('pt-BR');
+      render(value);
       if (p < 1) requestAnimationFrame(tick);
       else current = target;
     }
