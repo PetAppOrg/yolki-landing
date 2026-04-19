@@ -1635,7 +1635,7 @@
     margin-top: 14px;
     text-align: center;
     font-family: 'JetBrains Mono', 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1644,10 +1644,14 @@
   }
   .video-caption .video-caption-play {
     display: inline-block;
-    font-size: 10px;
+    font-size: 13px;
     transform: translateY(-1px);
-    margin: 0 2px;
-    color: var(--primary);
+    margin: 0 1px 0 2px;
+    color: var(--text-primary);
+  }
+  .video-caption .video-caption-duration {
+    text-transform: lowercase;
+    font-size: 16px;
   }
 
   .video-cover-img {
@@ -5486,7 +5490,7 @@
       </button>
     </div>
   </div>
-  <p class="video-caption">Um desejo do seu pet <span aria-hidden="true">·</span> <span class="video-caption-play" aria-hidden="true">▶</span> 60s</p>
+  <p class="video-caption">Um desejo do seu pet <span aria-hidden="true">·</span> <span class="video-caption-play" aria-hidden="true">▶</span><span class="video-caption-duration">60s</span></p>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
