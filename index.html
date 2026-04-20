@@ -2087,11 +2087,22 @@
   @media (max-width: 768px) {
     .features-scroll-outer { height: auto; }
     .features-scroll-sticky { position: static; height: auto; display: block; padding: 48px 0; }
-    .cosmos-features-grid-scroll .cosmos-feature,
-    .cosmos-features-grid-scroll .cosmos-feature-label {
-      transform: none;
+    /* Fix 7 — entrada alternada (esq/dir/esq) no mobile via IntersectionObserver */
+    .cosmos-features-grid-scroll .cosmos-feature {
+      opacity: 0;
+      will-change: transform, opacity;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+    }
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="0"] { transform: translateX(-40px); }
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="1"] { transform: translateX(40px); }
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="2"] { transform: translateX(-40px); }
+    .cosmos-features-grid-scroll .cosmos-feature.in-view {
+      transform: translateX(0);
       opacity: 1;
     }
+    .cosmos-features-grid-scroll .cosmos-feature-label { transform: none; opacity: 1; }
+    /* Mesma largura dos cards acima (cosmos-collage / audience) */
+    .cosmos-features-grid { max-width: 340px !important; }
   }
   @media (prefers-reduced-motion: reduce) {
     .features-scroll-outer { height: auto; }
@@ -7889,8 +7900,23 @@ if (prefersReducedMotion) {
 
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = matchMedia('(max-width: 768px)').matches;
-  if (prefersReduced || isMobile) {
+  if (prefersReduced) {
     grid.classList.add('card2-in', 'card3-in');
+    return;
+  }
+  // Mobile: entrada alternada (esq/dir/esq) via IntersectionObserver
+  if (isMobile) {
+    grid.classList.add('card2-in', 'card3-in');
+    const cards = grid.querySelectorAll('.cosmos-feature');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('in-view');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+    cards.forEach(c => io.observe(c));
     return;
   }
 
