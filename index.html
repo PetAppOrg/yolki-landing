@@ -1001,53 +1001,74 @@
     .nav-download { display: none; }
   }
 
-  /* DRAWER */
-  .nav-drawer { position: fixed; inset: 0; z-index: 250; }
-  .nav-drawer[hidden] { display: none !important; pointer-events: none !important; visibility: hidden !important; }
-  .nav-drawer-overlay {
-    position: absolute; inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+  /* MOBILE MENU — reescrito do zero, iOS Safari friendly */
+  .yk-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .yk-menu.is-open {
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .yk-menu__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
-    animation: fadeIn 0.2s ease;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    cursor: pointer;
   }
-  .nav-drawer-panel {
-    position: absolute; top: 0; right: 0; bottom: 0;
-    width: min(340px, 85vw);
-    background: var(--surface-2);
-    box-shadow: -12px 0 40px rgba(0,0,0,0.18);
-    padding: 72px 28px 28px;
+  .yk-menu.is-open .yk-menu__backdrop { opacity: 1; }
+  .yk-menu__panel {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: min(320px, 85vw);
+    background: #fff;
+    padding: 68px 24px 24px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    animation: drawerIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    gap: 6px;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: -12px 0 40px rgba(0,0,0,0.18);
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
   }
-  [data-theme="dark"] .nav-drawer-panel { background: #16181B; }
-  @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-  .nav-drawer-close {
-    position: absolute; top: 12px; right: 12px;
-    width: 48px; height: 48px;
-    border: 0;
-    background: rgba(0, 0, 0, 0.04);
+  [data-theme="dark"] .yk-menu__panel { background: #16181B; }
+  .yk-menu.is-open .yk-menu__panel { transform: translateX(0); }
+  .yk-menu__close {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 44px; height: 44px;
+    padding: 0;
+    background: rgba(0,0,0,0.06);
     color: var(--text-primary);
+    border: 0;
     border-radius: 50%;
     cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center;
-    z-index: 20;
-    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
-  .nav-drawer-close > * { pointer-events: none; }
-  .nav-drawer-panel { z-index: 2; }
-  .nav-drawer-overlay { z-index: 1; }
-  .nav-drawer-close:active { background: rgba(0,0,0,0.12); }
-  .nav-drawer-close:hover { background: rgba(0,0,0,0.08); }
-  [data-theme="dark"] .nav-drawer-close:hover { background: rgba(255,255,255,0.06); }
-  .nav-drawer-menu {
-    display: flex; flex-direction: column; gap: 4px;
+  .yk-menu__close:active { background: rgba(0,0,0,0.14); }
+  [data-theme="dark"] .yk-menu__close { background: rgba(255,255,255,0.08); }
+  [data-theme="dark"] .yk-menu__close:active { background: rgba(255,255,255,0.14); }
+  /* SVG dentro do botão não captura clique → garante e.target = botão */
+  .yk-menu__close > * { pointer-events: none; }
+  .yk-menu__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 8px;
   }
-  .nav-drawer-menu a {
+  .yk-menu__nav a {
     font-family: 'Poppins', sans-serif;
     font-size: 17px;
     font-weight: 500;
@@ -1055,12 +1076,18 @@
     text-decoration: none;
     padding: 14px 12px;
     border-radius: 10px;
-    transition: background 0.15s ease, color 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
-  .nav-drawer-menu a:hover,
-  .nav-drawer-menu a:focus-visible { background: rgba(0,0,0,0.04); color: var(--primary); }
-  [data-theme="dark"] .nav-drawer-menu a:hover,
-  [data-theme="dark"] .nav-drawer-menu a:focus-visible { background: rgba(255,255,255,0.06); }
+  .yk-menu__nav a:active {
+    background: rgba(0,0,0,0.05);
+    color: var(--primary);
+  }
+  [data-theme="dark"] .yk-menu__nav a:active { background: rgba(255,255,255,0.08); }
+  body.yk-menu-open {
+    overflow: hidden;
+    touch-action: none;
+  }
 
   .lang-picker { position: relative; }
 
@@ -6381,26 +6408,29 @@
     <a class="nav-download" href="#download" data-cta="nav-discover">
       <span class="nav-download-label">Descobrir</span>
     </a>
-    <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer">
+    <button type="button" class="nav-hamburger" id="ykHamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="ykMenu"
+      onclick="var m=document.getElementById('ykMenu');m.classList.add('is-open');m.setAttribute('aria-hidden','false');this.setAttribute('aria-expanded','true');document.body.classList.add('yk-menu-open');">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
 </nav>
 
-<!-- MOBILE NAV DRAWER -->
-<div class="nav-drawer" id="navDrawer" hidden>
-  <div class="nav-drawer-overlay" data-nav-drawer-close aria-label="Fechar menu"></div>
-  <aside class="nav-drawer-panel" role="dialog" aria-label="Menu principal">
-    <button type="button" class="nav-drawer-close" data-nav-drawer-close aria-label="Fechar menu" onclick="if(window.__closeNavDrawer)window.__closeNavDrawer();">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+<!-- MOBILE MENU (reescrito do zero) -->
+<div class="yk-menu" id="ykMenu" aria-hidden="true">
+  <div class="yk-menu__backdrop" id="ykMenuBackdrop" aria-label="Fechar menu"
+    onclick="var m=document.getElementById('ykMenu');m.classList.remove('is-open');m.setAttribute('aria-hidden','true');var h=document.getElementById('ykHamburger');if(h)h.setAttribute('aria-expanded','false');document.body.classList.remove('yk-menu-open');"></div>
+  <aside class="yk-menu__panel" role="dialog" aria-modal="true" aria-label="Menu principal">
+    <button type="button" id="ykMenuClose" class="yk-menu__close" aria-label="Fechar menu"
+      onclick="var m=document.getElementById('ykMenu');m.classList.remove('is-open');m.setAttribute('aria-hidden','true');var h=document.getElementById('ykHamburger');if(h)h.setAttribute('aria-expanded','false');document.body.classList.remove('yk-menu-open');">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
     </button>
-    <nav class="nav-drawer-menu" aria-label="Navegação principal">
-      <a href="#como-funciona" data-nav-drawer-link>Como funciona</a>
-      <a href="#comparacao" data-nav-drawer-link>Comparativo</a>
-      <a href="#planos" data-nav-drawer-link>Planos</a>
-      <a href="#depoimentos" data-nav-drawer-link>Tutores</a>
-      <a href="./reflexoes.html" data-nav-drawer-link>Reflexões</a>
-      <a href="#faq" data-nav-drawer-link>Respostas</a>
+    <nav class="yk-menu__nav" aria-label="Navegação principal">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#comparacao">Comparativo</a>
+      <a href="#planos">Planos</a>
+      <a href="#depoimentos">Tutores</a>
+      <a href="./reflexoes.html">Reflexões</a>
+      <a href="#faq">Respostas</a>
     </nav>
   </aside>
 </div>
@@ -8224,64 +8254,29 @@ if (prefersReducedMotion) {
   io.observe(footer);
 })();
 
-// ─── MOBILE NAV DRAWER (capture-phase + global — imune a qualquer interferência) ───
+// ─── MOBILE MENU — função global + handlers mínimos (lógica principal via inline onclick) ───
 (function() {
-  function getDrawer() { return document.getElementById('navDrawer'); }
-  function getHamb()   { return document.getElementById('navHamburger'); }
+  function menu() { return document.getElementById('ykMenu'); }
+  function hamb() { return document.getElementById('ykHamburger'); }
 
-  function openDrawer() {
-    const d = getDrawer(); if (!d) return;
-    d.hidden = false; d.removeAttribute('hidden');
-    const h = getHamb(); if (h) h.setAttribute('aria-expanded', 'true');
-  }
-  function closeDrawer() {
-    const d = getDrawer(); if (!d) return;
-    d.hidden = true; d.setAttribute('hidden', '');
-    const h = getHamb(); if (h) h.setAttribute('aria-expanded', 'false');
-  }
+  window.ykCloseMenu = function() {
+    var m = menu(); if (!m) return;
+    m.classList.remove('is-open');
+    m.setAttribute('aria-hidden', 'true');
+    var h = hamb(); if (h) h.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('yk-menu-open');
+  };
 
-  window.__closeNavDrawer = closeDrawer;
-  window.__openNavDrawer  = openDrawer;
-
-  // Capture phase = roda ANTES de qualquer outro listener (confetti, etc.)
-  function handleNav(e) {
-    if (!e.target || !e.target.closest) return;
-    // X ou overlay → fecha
-    if (e.target.closest('[data-nav-drawer-close]')) {
-      e.preventDefault();
-      e.stopPropagation();
-      closeDrawer();
-      return;
-    }
-    // Link do menu → fecha + deixa navegar
-    if (e.target.closest('[data-nav-drawer-link]')) {
-      closeDrawer();
-      return;
-    }
-    // Hamburger → abre
-    if (e.target.closest('#navHamburger')) {
-      e.preventDefault();
-      e.stopPropagation();
-      openDrawer();
-      return;
-    }
-  }
-  // click cobre desktop; touchend cobre iOS Safari (dead-zone em alguns casos)
-  window.addEventListener('click', handleNav, true);
-  window.addEventListener('touchend', handleNav, { capture: true, passive: false });
-
-  // Fechar ao tocar fora do painel (reforço além do overlay com data-attr)
-  window.addEventListener('click', (e) => {
-    const d = getDrawer();
-    if (!d || d.hidden) return;
-    if (!e.target.closest('.nav-drawer-panel') && !e.target.closest('#navHamburger')) {
-      closeDrawer();
-    }
+  // Fecha ao clicar em link
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest && e.target.closest('.yk-menu__nav a');
+    if (a) window.ykCloseMenu();
   });
 
-  document.addEventListener('keydown', (e) => {
-    const d = getDrawer();
-    if (e.key === 'Escape' && d && !d.hidden) closeDrawer();
+  // Escape
+  document.addEventListener('keydown', function(e) {
+    var m = menu();
+    if (e.key === 'Escape' && m && m.classList.contains('is-open')) window.ykCloseMenu();
   });
 })();
 
