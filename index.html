@@ -1391,7 +1391,7 @@
 
   .hero-cta-secondary {
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 15px;
     color: var(--text-primary);
     text-decoration: none;
@@ -4369,6 +4369,11 @@
     justify-content: center;
     padding: 20px;
   }
+  .exit-intent-modal:not(.visible) {
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+  }
   .exit-intent-modal.visible { display: flex; animation: fadeIn .25s ease-out; }
 
   .exit-intent-overlay {
@@ -4990,7 +4995,36 @@
   [data-theme="dark"] .corp-tab.active { background: var(--surface-4); color: var(--text-primary); }
 
   .corp-form { display: flex; flex-direction: column; gap: 14px; }
+  .corp-fields { display: flex; flex-direction: column; gap: 14px; }
   .corp-field { display: flex; flex-direction: column; gap: 6px; }
+  .corp-field textarea {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    color: var(--text-primary);
+    resize: vertical;
+    min-height: 72px;
+  }
+  .corp-field textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+  .corp-opt {
+    font-weight: 400 !important;
+    color: var(--text-muted) !important;
+    font-size: 12px !important;
+  }
+  .corp-trust {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin: 4px 0 0;
+    text-align: center;
+  }
   .corp-field span {
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
@@ -5353,7 +5387,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 24px 0;
+    padding: 24px 0 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     flex-wrap: wrap;
   }
@@ -5395,8 +5429,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 20px 0 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0 0 0;
     flex-wrap: wrap;
   }
   .footer-socials { display: flex; gap: 8px; }
@@ -6932,60 +6965,71 @@
     </div>
 
     <form class="corp-form" id="corpForm" data-mode="rh">
-      <!-- Campos comuns -->
-      <label class="corp-field">
-        <span>Seu nome</span>
-        <input type="text" name="name" placeholder="Ex: Maria Souza" required autocomplete="name" inputmode="text">
-      </label>
-
-      <!-- Modo RH -->
+      <!-- MODE A — Sou do RH -->
       <div class="corp-fields corp-fields-rh">
         <label class="corp-field">
+          <span>Seu nome</span>
+          <input type="text" name="name_rh" placeholder="Ex: Maria Souza" required autocomplete="name" inputmode="text">
+        </label>
+        <label class="corp-field">
           <span>Email corporativo</span>
-          <input type="email" name="email" placeholder="nome@empresa.com.br" autocomplete="email" inputmode="email">
+          <input type="email" name="email" placeholder="maria@empresa.com.br" required autocomplete="email" inputmode="email">
         </label>
         <label class="corp-field">
           <span>Empresa</span>
-          <input type="text" name="company" placeholder="Ex: Coflint Tecnologia" autocomplete="organization">
+          <input type="text" name="company" placeholder="Nome da sua empresa" required autocomplete="organization">
         </label>
         <label class="corp-field">
           <span>Tamanho do time</span>
-          <select name="team_size">
-            <option value="" disabled selected>Selecione o tamanho</option>
-            <option value="1-49">Até 50 colaboradores</option>
-            <option value="50-199">50 a 200 colaboradores</option>
-            <option value="200-999">200 a 1.000 colaboradores</option>
-            <option value="1000+">Mais de 1.000 colaboradores</option>
+          <select name="team_size" required>
+            <option value="" disabled selected>Selecione o tamanho do time</option>
+            <option value="1-10">1–10 colaboradores</option>
+            <option value="11-50">11–50 colaboradores</option>
+            <option value="51-200">51–200 colaboradores</option>
+            <option value="201-1000">201–1.000 colaboradores</option>
+            <option value="1000+">+1.000 colaboradores</option>
           </select>
+        </label>
+        <label class="corp-field">
+          <span>Mensagem <span class="corp-opt">(opcional)</span></span>
+          <textarea name="message" rows="3" placeholder="Conte brevemente o que você procura (opcional)" maxlength="500"></textarea>
         </label>
       </div>
 
-      <!-- Modo funcionário -->
+      <!-- MODE B — Indico pro meu RH -->
       <div class="corp-fields corp-fields-funcionario" hidden>
         <label class="corp-field">
+          <span>Seu nome</span>
+          <input type="text" name="name_emp" placeholder="Ex: Maria Souza" required autocomplete="name" inputmode="text" disabled>
+        </label>
+        <label class="corp-field">
           <span>Empresa onde você trabalha</span>
-          <input type="text" name="company_emp" placeholder="Ex: Coflint Tecnologia" autocomplete="organization">
+          <input type="text" name="company_emp" placeholder="Nome da empresa" required autocomplete="organization" disabled>
         </label>
         <label class="corp-field">
           <span>Email do RH</span>
-          <input type="email" name="rh_email" placeholder="rh@empresa.com.br" autocomplete="off" inputmode="email">
+          <input type="email" name="rh_email" placeholder="rh@empresa.com.br" required autocomplete="off" inputmode="email" disabled>
         </label>
-        <label class="corp-field corp-field-hint">
-          <span>Como a gente aborda o RH?</span>
-          <select name="intro_type">
-            <option value="cold" selected>Pode mandar direto, prefiro ficar anônimo</option>
-            <option value="warm">Mencione que fui eu que indiquei</option>
+        <label class="corp-field">
+          <span>Como prefere que abordemos?</span>
+          <select name="intro_type" required disabled>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option value="mention">Pode mencionar meu nome</option>
+            <option value="anonymous">Prefiro ficar anônimo</option>
+            <option value="talk_first">Quero falar com o RH antes</option>
           </select>
         </label>
       </div>
 
+      <p class="corp-trust">Seus dados são usados apenas para responder sobre benefícios pet. Sem spam.</p>
+
       <button type="submit" class="corp-submit" data-cta="corp-submit">
-        <span class="corp-submit-default">Enviar</span>
+        <span class="corp-submit-default">Quero conhecer</span>
         <span class="corp-submit-loading" hidden>Enviando…</span>
       </button>
 
       <p class="corp-disclaimer">
-        Respondemos em até 1 dia útil com um material focado em benefícios pet — dados tratados conforme LGPD.
+        Você recebe um material completo sobre benefícios pet — casos, dados e como implementar. Respondemos assim que possível. Dados tratados conforme a LGPD.
       </p>
     </form>
 
@@ -6996,7 +7040,7 @@
         </svg>
       </div>
       <h3>Chegou. 🐾</h3>
-      <p id="corpSuccessCopy">Vamos mandar um material em até 1 dia útil no email informado, com proposta de plano corporativo e integração com benefícios do seu RH.</p>
+      <p id="corpSuccessCopy">Vamos preparar um material completo sobre benefícios pet — casos, dados e como implementar — e te enviar no email informado assim que possível.</p>
       <button type="button" class="corp-success-close" data-close-corp>Fechar</button>
     </div>
   </div>
@@ -7939,8 +7983,18 @@ if (prefersReducedMotion) {
       t.classList.toggle('active', match);
       t.setAttribute('aria-selected', match ? 'true' : 'false');
     });
-    if (fieldsRh) fieldsRh.hidden = mode !== 'rh';
-    if (fieldsEmp) fieldsEmp.hidden = mode !== 'funcionario';
+    const isRh = mode === 'rh';
+    if (fieldsRh) {
+      fieldsRh.hidden = !isRh;
+      fieldsRh.querySelectorAll('input, select, textarea').forEach(el => { el.disabled = !isRh; });
+    }
+    if (fieldsEmp) {
+      fieldsEmp.hidden = isRh;
+      fieldsEmp.querySelectorAll('input, select, textarea').forEach(el => { el.disabled = isRh; });
+    }
+    if (submitDefault) {
+      submitDefault.textContent = isRh ? 'Quero conhecer' : 'Enviar indicação';
+    }
   }
 
   openBtn.addEventListener('click', (e) => { e.preventDefault(); open(); });
@@ -7973,12 +8027,14 @@ if (prefersReducedMotion) {
     } catch (_) { /* tabela pode não existir ainda — segue fluxo */ }
 
     // Fallback: sempre abrir email pré-preenchido em nova aba (redundante + garante recebimento)
+    const senderName = data.name_rh || data.name_emp || '';
     const subject = mode === 'rh'
-      ? `Plano corporativo — ${data.company || data.name}`
-      : `Indicação pro meu RH — ${data.company_emp || data.name}`;
+      ? `Plano corporativo — ${data.company || senderName}`
+      : `Indicação pro meu RH — ${data.company_emp || senderName}`;
+    const introMap = { mention: 'pode mencionar meu nome', anonymous: 'prefere ficar anônimo', talk_first: 'quer falar com o RH antes' };
     const body = mode === 'rh'
-      ? `Olá, tenho interesse em avaliar Yolki como benefício pet corporativo.\n\nNome: ${data.name || ''}\nEmpresa: ${data.company || ''}\nEmail: ${data.email || ''}\nTamanho do time: ${data.team_size || ''}`
-      : `Olá, gostaria de indicar Yolki como benefício pet pra empresa onde trabalho.\n\nNome: ${data.name || ''}\nEmpresa: ${data.company_emp || ''}\nEmail do RH: ${data.rh_email || ''}\nAbordagem: ${data.intro_type === 'warm' ? 'mencionar a indicação' : 'cold outreach'}`;
+      ? `Olá, tenho interesse em avaliar Yolki como benefício pet corporativo.\n\nNome: ${senderName}\nEmpresa: ${data.company || ''}\nEmail: ${data.email || ''}\nTamanho do time: ${data.team_size || ''}\n\nMensagem: ${data.message || '(sem mensagem)'}`
+      : `Olá, gostaria de indicar Yolki como benefício pet pra empresa onde trabalho.\n\nNome: ${senderName}\nEmpresa: ${data.company_emp || ''}\nEmail do RH: ${data.rh_email || ''}\nAbordagem: ${introMap[data.intro_type] || 'não especificado'}`;
     const mailto = 'mailto:hello@yolki.pet?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
     // Dispara mailto em background (não intrusivo)
@@ -7995,8 +8051,8 @@ if (prefersReducedMotion) {
     submitLoading.hidden = true;
     if (successCopy) {
       successCopy.textContent = mode === 'rh'
-        ? 'Vamos te mandar um material em até 1 dia útil no email informado, com proposta de plano corporativo sob medida.'
-        : 'Ótima indicação! Vamos entrar em contato com o RH da ' + (data.company_emp || 'sua empresa') + ' e mencionar sua recomendação (se você autorizou).';
+        ? 'Vamos preparar um material completo sobre benefícios pet — casos, dados e como implementar — e te enviar no email informado assim que possível.'
+        : 'Ótima indicação! Vamos entrar em contato com o RH da ' + (data.company_emp || 'sua empresa') + ' assim que possível, respeitando o que você escolheu sobre como ser mencionado.';
     }
     form.hidden = true;
     success.hidden = false;
@@ -8249,18 +8305,26 @@ if (prefersReducedMotion) {
   let currentUserEmail = null;
   const INVITE_MSG_MAX = 280;
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function() {
-      success.style.display = 'none';
-      form.style.display = '';
-      const appSection = document.querySelector('.section-app');
-      if (appSection) appSection.classList.remove('is-showing-success');
-      if (submit) {
-        submit.disabled = false;
-        submit.textContent = 'Garantir minha vaga';
-      }
-    });
+  function closeWaitlistSuccess() {
+    success.style.display = 'none';
+    form.style.display = '';
+    const appSection = document.querySelector('.section-app');
+    if (appSection) appSection.classList.remove('is-showing-success');
+    if (submit) {
+      submit.disabled = false;
+      submit.textContent = 'Garantir minha vaga';
+    }
   }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeWaitlistSuccess);
+  }
+  // Defensive: event delegation fallback caso o listener direto se perca
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && e.target.closest('#waitlistSuccessClose')) {
+      closeWaitlistSuccess();
+    }
+  });
 
   function showError(msg) {
     errorBox.textContent = msg;
