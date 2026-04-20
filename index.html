@@ -8215,20 +8215,16 @@ if (prefersReducedMotion) {
     document.body.classList.remove('yk-menu-open');
   };
 
-  // Fecha ao clicar em link
-  document.addEventListener('click', function(e) {
-    var a = e.target.closest && e.target.closest('.yk-menu__nav a');
-    if (a) window.ykCloseMenu();
-  });
-
-  // Listener para botão de fechar
-  var closeBtn = document.getElementById('ykMenuClose');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function(e) {
-      e.preventDefault();
+  // Delegação universal: fecha em click no X, backdrop ou link do menu
+  function handleMenuClose(e) {
+    if (!e.target || !e.target.closest) return;
+    if (e.target.closest('.yk-menu__close, .yk-menu__backdrop, .yk-menu__nav a')) {
       window.ykCloseMenu();
-    });
+    }
   }
+  document.addEventListener('click', handleMenuClose);
+  // Backup pointerup: iOS Safari às vezes cancela click antes do bubble
+  document.addEventListener('pointerup', handleMenuClose, { passive: true });
 
   // Escape
   document.addEventListener('keydown', function(e) {
