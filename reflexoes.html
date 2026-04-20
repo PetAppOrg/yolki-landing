@@ -72,8 +72,11 @@
   nav > .nav-center-wrap { justify-self: center; }
   nav > .nav-right { justify-self: end; }
   .nav-center-wrap { display: inline-flex; align-items: center; gap: 10px; }
+  .nav-logo { display: flex; align-items: baseline; gap: 6px; text-decoration: none; }
   .nav-logo-img { height: clamp(54px, 6.8vw, 82px); width: auto; display: block; }
-  [data-theme="dark"] .nav-logo-img { filter: brightness(0) invert(1); }
+  img.logo-dark { display: none; }
+  [data-theme="dark"] img.logo-light { display: none; }
+  [data-theme="dark"] img.logo-dark { display: block; filter: brightness(0) invert(1); }
 
   .nav-theme {
     display: inline-flex; align-items: center; justify-content: center;
@@ -103,6 +106,11 @@
     border-radius: 50px; transition: all 0.2s; white-space: nowrap;
   }
   .nav-center-menu a:hover { background: rgba(0,0,0,0.06); }
+  .nav-center-menu a.is-active { color: var(--primary); font-weight: 400; }
+  .nav-center-menu a.is-active::after {
+    content: ''; display: block; height: 2px; width: 60%;
+    margin: 3px auto 0; background: var(--primary); border-radius: 2px;
+  }
   [data-theme="dark"] .nav-center-menu {
     background: #272727; border-color: rgba(255,255,255,0.06);
     box-shadow: 0 4px 24px rgba(0,0,0,0.35);
@@ -113,13 +121,16 @@
 
   .lang-picker { position: relative; }
   .lang-btn {
-    width: 38px; height: 38px; padding: 0;
+    height: 38px; padding: 0 12px 0 14px;
     background: transparent; border: 1px solid rgba(0,0,0,0.12); border-radius: 999px;
     cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px; min-width: 56px;
     font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500;
     letter-spacing: 0.04em; color: var(--text-primary);
     transition: background 0.2s, border-color 0.2s, transform 0.15s;
   }
+  .lang-btn .lang-chevron { flex-shrink: 0; transition: transform 0.15s ease; }
+  .lang-btn[aria-expanded="true"] .lang-chevron { transform: rotate(180deg); }
   .lang-btn:hover { border-color: var(--primary); transform: translateY(-1px); }
   [data-theme="dark"] .lang-btn { border-color: rgba(255,255,255,0.15); }
   .lang-menu {
@@ -147,16 +158,16 @@
   [data-theme="dark"] .lang-menu button { color: var(--text-primary); }
 
   .nav-download {
-    font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 14px;
-    height: 50px; padding: 0 20px;
-    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px;
+    height: 44px; padding: 0 22px;
+    display: inline-flex; align-items: center;
     box-sizing: border-box; background: var(--secondary); color: #fff;
     border: 1px solid transparent; border-radius: 999px; cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.25s ease;
+    transition: background 150ms ease, transform 150ms ease;
     text-decoration: none; line-height: 1; white-space: nowrap;
   }
-  .nav-download:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(167,111,255,0.35); }
-  [data-theme="dark"] .nav-download { background: #fff; color: #000; }
+  .nav-download:hover { background: #8F06CD; transform: translateY(-1px); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
   .ic { display: inline-block; vertical-align: -0.175em; flex-shrink: 0; }
 
   /* Back to home */
@@ -331,33 +342,36 @@
 
 <nav id="siteNav">
   <a class="nav-logo" href="index.html">
-    <img src="assets/brand/yolki-logo.svg" alt="Yolki Pet" class="nav-logo-img" width="245" height="171">
+    <img src="assets/brand/yolki-logo.png" alt="Yolki Pet" class="nav-logo-img logo-light" width="490" height="350">
+    <img src="assets/brand/yolki-logo.svg" alt="" aria-hidden="true" class="nav-logo-img logo-dark" width="245" height="171">
   </a>
   <div class="nav-center-wrap">
-    <button type="button" class="nav-theme" id="navTheme" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+    <button type="button" class="nav-theme js-theme-toggle" id="navTheme" aria-label="Alternar tema claro/escuro" title="Alternar tema">
       <svg class="ic nav-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
       <svg class="ic nav-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
     <div class="nav-center-menu" role="navigation" aria-label="Navegação principal">
       <a href="index.html#como-funciona">Como funciona</a>
-      <a href="index.html#depoimentos">Tutores</a>
+      <a href="index.html#comparacao">Comparativo</a>
       <a href="index.html#planos">Planos</a>
-      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#depoimentos">Tutores</a>
+      <a href="./reflexoes.html" class="is-active" aria-current="page">Reflexões</a>
+      <a href="index.html#faq">Respostas</a>
     </div>
+  </div>
+  <div class="nav-right">
     <div class="lang-picker">
-      <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="menu" aria-expanded="false">
         <span class="lang-code" id="langCurrent">PT</span>
+        <svg class="lang-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="lang-menu" id="langMenu" hidden role="menu">
         <button type="button" data-lang="en" data-code="EN" role="menuitem"><span class="lang-code">EN</span> English</button>
         <button type="button" data-lang="pt" data-code="PT" role="menuitem" class="active"><span class="lang-code">PT</span> Português</button>
       </div>
     </div>
-  </div>
-  <div class="nav-right">
-    <a class="nav-download" href="index.html#download" data-cta="nav-download" aria-label="Baixar o app">
-      <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
-      <span class="nav-download-label">Baixar</span>
+    <a class="nav-download" href="index.html#download" data-cta="nav-discover">
+      <span class="nav-download-label">Descobrir</span>
     </a>
   </div>
 </nav>
@@ -447,8 +461,13 @@
   if (langBtn && langMenu) {
     langBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (langMenu.hasAttribute('hidden')) langMenu.removeAttribute('hidden');
-      else langMenu.setAttribute('hidden', '');
+      if (langMenu.hasAttribute('hidden')) {
+        langMenu.removeAttribute('hidden');
+        langBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        langMenu.setAttribute('hidden', '');
+        langBtn.setAttribute('aria-expanded', 'false');
+      }
     });
     langMenu.addEventListener('click', (e) => {
       const opt = e.target.closest('button[data-lang]');
@@ -457,9 +476,13 @@
       langMenu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
       opt.classList.add('active');
       langMenu.setAttribute('hidden', '');
+      langBtn.setAttribute('aria-expanded', 'false');
     });
     document.addEventListener('click', (e) => {
-      if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) langMenu.setAttribute('hidden', '');
+      if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+        langMenu.setAttribute('hidden', '');
+        langBtn.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 })();

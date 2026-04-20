@@ -2141,6 +2141,20 @@
   }
 
   /* Social proof contador na pricing */
+  .pricing-social-proof-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 0;
+  }
+  .pricing-social-proof-wrap .orbit-proof-line.yw-social {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+  .pricing-social-proof-wrap .yw-av {
+    width: 30px; height: 30px; font-size: 12px;
+    margin-left: -8px;
+  }
+  .pricing-social-proof-wrap .yw-av:first-child { margin-left: 0; }
   .pricing-social-proof {
     font-family: 'Nunito', sans-serif;
     font-size: 15px;
@@ -2244,6 +2258,11 @@
   }
 
   .pricing-risk-free {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 22px;
     text-align: center;
     font-family: 'Nunito', sans-serif;
     font-size: 14px;
@@ -2251,6 +2270,15 @@
     margin: 28px auto 0;
     max-width: 720px;
     letter-spacing: 0.2px;
+  }
+  .pricing-risk-free .prf-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pricing-risk-free .prf-check {
+    color: #5EB864;
+    flex-shrink: 0;
   }
 
   /* FAQ de pricing (dentro da seção roxa) */
@@ -6613,7 +6641,16 @@
   <div class="section-container reveal-on-scroll-up">
     <h2 class="pricing-main-title">Planos que crescem<br><span class="hl">com o seu pet</span></h2>
     <p class="pricing-lead">Lançamento <strong>grátis pra todos</strong>. Solo e Família chegam logo em seguida — quem está na lista garante <strong>preço Early Bird vitalício</strong>.</p>
-    <p class="pricing-social-proof"><span class="proof-count">+247</span> tutores já na lista</p>
+    <div class="pricing-social-proof-wrap">
+      <div class="orbit-proof-line yw-social" role="group" aria-label="247 tutores na lista de espera">
+        <div class="yw-avatars" aria-hidden="true">
+          <span class="yw-av" style="background:#01BCB5">M</span>
+          <span class="yw-av" style="background:#FDA600">J</span>
+          <span class="yw-av" style="background:#8F06CD">R</span>
+        </div>
+        <p class="yw-text"><span class="proof-count yw-count">+247</span> tutores na lista de espera</p>
+      </div>
+    </div>
 
     <!-- Billing toggle: Anual por default -->
     <div class="billing-toggle-wrap">
@@ -6697,7 +6734,11 @@
       </div>
     </div>
 
-    <p class="pricing-risk-free">Cancele quando quiser · Sem cartão pra começar · Troque de plano a qualquer momento</p>
+    <p class="pricing-risk-free">
+      <span class="prf-item"><svg class="prf-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Cancele quando quiser</span>
+      <span class="prf-item"><svg class="prf-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Sem cartão pra começar</span>
+      <span class="prf-item"><svg class="prf-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Troque de plano a qualquer momento</span>
+    </p>
 
     <div class="pricing-corp-cta">
       <div class="pricing-corp-cta-text">
