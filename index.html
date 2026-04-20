@@ -5796,6 +5796,19 @@
     .section-container { padding: 0 20px; }
     .section-proof, .section-pricing, .section-cta, .section-app, .section-faq { padding: 80px 0; }
     .cosmos-block { padding: 72px 0; }
+    /* Fix 2 — espaçamento uniforme entre header e título de cada seção no mobile.
+       Mantém padding-bottom original; força apenas o top para eliminar saltos visuais. */
+    .section-audience,
+    .section-video,
+    .section-screens,
+    .section-proof,
+    .section-pricing,
+    .section-app,
+    .section-faq,
+    .section-blog,
+    .jars-section,
+    .cosmos-block { padding-top: 72px; }
+    .section-title { margin-top: 0; }
     .blog-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; max-width: 360px; gap: 32px; padding-top: 16px; }
     .pricing-card { padding: 28px 22px 24px !important; border-radius: 18px; gap: 14px; }
