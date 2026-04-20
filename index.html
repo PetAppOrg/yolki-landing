@@ -1433,21 +1433,40 @@
     color: var(--secondary);
     font-weight: 800;
   }
-  .orbit-proof-countdown {
-    color: #2C2C2C;
-    font-weight: 500;
-  }
-  .orbit-proof-countdown strong {
-    color: #040404;
-    font-weight: 800;
-  }
   [data-theme="dark"] .orbit-proof-line {
     background: rgba(22, 24, 27, 0.82);
     border-color: rgba(255, 255, 255, 0.08);
     color: var(--text-primary);
   }
-  [data-theme="dark"] .orbit-proof-countdown { color: var(--text-muted); }
-  [data-theme="dark"] .orbit-proof-countdown strong { color: var(--text-primary); }
+
+  /* Social proof pill — avatares + contagem */
+  .yw-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    color: #171717;
+  }
+  .yw-avatars { display: inline-flex; }
+  .yw-av {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-left: -10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+  }
+  .yw-av:first-child { margin-left: 0; }
+  .yw-text { margin: 0; }
+  .yw-count {
+    color: #8F06CD;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+  }
+  [data-theme="dark"] .yw-social { color: var(--text-primary); }
+  [data-theme="dark"] .yw-av { border-color: rgba(255,255,255,0.15); }
 
   @keyframes proofPulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(94, 184, 100, 0.5); }
@@ -3779,11 +3798,6 @@
   .countdown-item span.flip {
     animation: digit-flip 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .orbit-proof-countdown strong.flip {
-    animation: digit-flip 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    display: inline-block;
-    transform-origin: 50% 100%;
-  }
   @keyframes digit-flip {
     0%   { transform: rotateX(0deg);   filter: blur(0); }
     40%  { transform: rotateX(-90deg); filter: blur(1px); }
@@ -5617,8 +5631,14 @@
         <img src="assets/brand/yolki-mascot.svg" alt="Yolki — seu companheiro de longevidade pet" width="91" height="82">
       </div>
       <div class="orbit-proof" role="status" aria-live="polite">
-        <span class="orbit-proof-line orbit-proof-tutors"><span class="proof-count" id="proofCount">+247</span> tutores já na lista</span>
-        <span class="orbit-proof-line orbit-proof-countdown">Lançamento em <strong id="heroCdDays">--</strong>d <strong id="heroCdHours">--</strong>h</span>
+        <div class="orbit-proof-line orbit-proof-tutors yw-social" role="group" aria-label="247 tutores na lista de espera">
+          <div class="yw-avatars" aria-hidden="true">
+            <span class="yw-av" style="background:#01BCB5">M</span>
+            <span class="yw-av" style="background:#FDA600">J</span>
+            <span class="yw-av" style="background:#8F06CD">R</span>
+          </div>
+          <p class="yw-text"><span class="proof-count yw-count" id="proofCount">+247</span> tutores na lista de espera</p>
+        </div>
       </div>
     </div>
   </div>
@@ -7649,9 +7669,7 @@ if (prefersReducedMotion) {
   const hours = document.getElementById('cdHours');
   const mins = document.getElementById('cdMins');
   const secs = document.getElementById('cdSecs');
-  const heroDays = document.getElementById('heroCdDays');
-  const heroHours = document.getElementById('heroCdHours');
-  if (!days && !heroDays) return;
+  if (!days) return;
 
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -7676,8 +7694,6 @@ if (prefersReducedMotion) {
     setDigit(hours, String(h).padStart(2, '0'));
     setDigit(mins,  String(m).padStart(2, '0'));
     setDigit(secs,  String(s).padStart(2, '0'));
-    setDigit(heroDays,  String(d));
-    setDigit(heroHours, String(h).padStart(2, '0'));
   }
   update();
   setInterval(update, 1000);
