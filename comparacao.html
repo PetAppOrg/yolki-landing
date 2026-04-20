@@ -283,6 +283,33 @@
     .hero { padding: 56px 0 32px; }
   }
 
+  /* Mobile: scroll horizontal do table + menor padding */
+  @media (max-width: 768px) {
+    body { padding-top: 76px; }
+    .hero { padding: 32px 0 24px; }
+    .hero h1 { font-size: clamp(28px, 7vw, 36px); }
+    .hero p { font-size: 14px; padding: 0 16px; }
+    .compare-wrap { padding-bottom: 60px; }
+    .compare-card {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 18px;
+    }
+    .compare-table { min-width: 520px; }
+    .compare-table thead th { padding: 12px 8px; font-size: 12px; }
+    .compare-table tbody td { padding: 12px 8px; font-size: 12px; }
+    .compare-table tbody td:first-child { font-size: 12px; padding-left: 14px; }
+    .cell-text { font-size: 12px; }
+    .cell-sub { font-size: 10px; margin-top: 2px; }
+    .sym { width: 22px; height: 22px; font-size: 11px; }
+    .legend { flex-wrap: wrap; gap: 10px 16px; font-size: 12px; padding: 0 16px; }
+    .bottom-cta { padding: 40px 16px 24px; }
+    .btn-primary { padding: 13px 28px; font-size: 14px; width: 100%; max-width: 340px; }
+    .footnote { font-size: 11px; padding: 0 16px 40px; }
+    .container { padding: 0 14px; }
+    .page-back { padding: 14px 16px 0; }
+  }
+
   /* ═══════════════════════════════════════════ */
   /* NAV — copiado do index.html pra manter parity */
   /* ═══════════════════════════════════════════ */
