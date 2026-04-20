@@ -826,7 +826,7 @@
   }
   [data-theme="dark"] .nav-theme:hover { background: rgba(255, 255, 255, 0.05); }
 
-  /* Discover CTA — primary teal */
+  /* Discover CTA — secondary (roxo) */
   .nav-download {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
@@ -836,7 +836,7 @@
     display: inline-flex;
     align-items: center;
     box-sizing: border-box;
-    background: #01BCB5;
+    background: var(--secondary);
     color: #fff;
     border: 1px solid transparent;
     border-radius: 999px;
@@ -847,7 +847,7 @@
     white-space: nowrap;
   }
   .nav-download:hover {
-    background: #00A8A2;
+    background: #8F06CD;
     transform: translateY(-1px);
   }
   .nav-download:focus-visible {
@@ -2351,10 +2351,25 @@
   }
   .screens-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    max-width: 900px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px;
+    max-width: 760px;
     margin: 0 auto;
+    align-items: center;
+    justify-items: center;
+  }
+  .phone-shot {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 24px 60px rgba(0, 0, 0, 0.18)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.08));
+    transition: transform 0.4s ease;
+  }
+  .phone-shot:hover { transform: translateY(-6px); }
+  @media (prefers-reduced-motion: reduce) {
+    .phone-shot { transition: none; }
+    .phone-shot:hover { transform: none; }
   }
   .phone-mockup {
     position: relative;
@@ -6188,15 +6203,8 @@
       <p class="section-subtitle">Veja o Yolki em ação.</p>
     </div>
     <div class="screens-grid reveal-on-scroll-up">
-      <div class="phone-mockup reveal">
-        <div class="phone-screen screen-home"></div>
-      </div>
-      <div class="phone-mockup reveal">
-        <div class="phone-screen screen-lesson"></div>
-      </div>
-      <div class="phone-mockup reveal">
-        <div class="phone-screen screen-progress"></div>
-      </div>
+      <img class="phone-shot reveal" src="assets/app/preview-splash.webp" alt="Tela de abertura do app Yolki Pet" loading="lazy">
+      <img class="phone-shot reveal" src="assets/app/preview-home.webp" alt="Tela inicial do app Yolki Pet com conteúdo de atividades" loading="lazy">
     </div>
     <p class="screens-disclaimer">* Previews conceituais — a versão final pode variar</p>
   </div>
@@ -8792,7 +8800,7 @@ if (prefersReducedMotion) {
     '.app-left', '.app-right',
     '.app-description', '.waitlist-note',
     '.testimonial-disclaimer',
-    '.phone-mockup',
+    '.phone-shot',
   ];
 
   // Parents whose direct children should stagger
