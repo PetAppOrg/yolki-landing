@@ -1056,6 +1056,8 @@
     justify-content: center;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    z-index: 2; /* garante hit-test acima do .yk-menu__nav (bug Safari flex) */
+    isolation: isolate;
   }
   .yk-menu__close:active { background: rgba(0,0,0,0.14); }
   [data-theme="dark"] .yk-menu__close { background: rgba(255,255,255,0.08); }
