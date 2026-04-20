@@ -691,14 +691,22 @@
     background: transparent;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    transition: background 0.3s ease, backdrop-filter 0.3s ease, padding 0.3s ease, border-bottom-color 0.3s ease;
+    transition: background 200ms ease, backdrop-filter 200ms ease, border-bottom-color 200ms ease;
     border-bottom: 1px solid transparent;
     animation: fadeIn 0.8s ease-out 0.2s both;
   }
 
   nav.nav--scrolled {
-    padding-block: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom-color: var(--border-subtle);
+  }
+  [data-theme="dark"] nav.nav--scrolled {
+    background: rgba(26, 26, 26, 0.8);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    nav { transition: none; }
   }
 
   .nav-progress {
@@ -821,52 +829,43 @@
   }
   [data-theme="dark"] .nav-theme:hover { background: rgba(255, 255, 255, 0.05); }
 
-  /* Download CTA — bright: secondary (roxo) · dark: branco com texto preto */
+  /* Discover CTA — primary teal */
   .nav-download {
     font-family: 'Poppins', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
-    height: 50px;
-    padding: 0 20px;
+    height: 44px;
+    padding: 0 22px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
     box-sizing: border-box;
-    background: var(--secondary);
+    background: #01BCB5;
     color: #fff;
     border: 1px solid transparent;
     border-radius: 999px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease;
+    transition: background 150ms ease, transform 150ms ease;
     text-decoration: none;
     line-height: 1;
     white-space: nowrap;
   }
   .nav-download:hover {
+    background: #00A8A2;
     transform: translateY(-1px);
-    box-shadow: 0 6px 22px rgba(167, 111, 255, 0.35);
-  }
-  [data-theme="dark"] .nav-download {
-    background: #fff;
-    color: #000;
-    border-color: transparent;
-  }
-  [data-theme="dark"] .nav-download:hover {
-    box-shadow: 0 6px 22px rgba(255, 255, 255, 0.15);
   }
   .nav-download:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
-  .nav-download > .ic { margin: 0; }
   .nav-download-label { line-height: 1; }
 
-  @media (max-width: 860px) {
-    .nav-download { padding: 0 16px; font-size: 13px; height: 44px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-download { transition: none; }
+    .nav-download:hover { transform: none; }
   }
-  @media (max-width: 480px) {
-    .nav-download-label { display: none; }
-    .nav-download { width: 44px; height: 44px; padding: 0; justify-content: center; gap: 0; }
+
+  @media (max-width: 860px) {
+    .nav-download { padding: 0 18px; font-size: 13px; height: 42px; }
   }
 
   .nav-right {
@@ -920,7 +919,6 @@
   .lang-picker { position: relative; }
 
   .lang-btn {
-    width: 38px;
     height: 38px;
     box-sizing: border-box;
     border-radius: 999px;
@@ -932,13 +930,26 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    gap: 6px;
+    padding: 0 12px 0 14px;
+    width: auto;
+    min-width: 56px;
     transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.04em;
     color: var(--text-primary);
+  }
+  .lang-btn .lang-chevron {
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+  }
+  .lang-btn[aria-expanded="true"] .lang-chevron {
+    transform: rotate(180deg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lang-btn .lang-chevron { transition: none; }
   }
   .lang-btn:hover {
     border-color: var(--primary);
@@ -5107,10 +5118,11 @@
   /* TOP — 5-col grid */
   .footer-top {
     display: grid;
-    grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr 1.4fr;
-    gap: 32px;
+    grid-template-columns: 1.3fr 0.9fr 1fr 1.1fr 1.3fr;
+    gap: 28px;
     padding-bottom: 40px;
   }
+  .footer-col a { white-space: nowrap; }
 
   /* COL 1 — BRAND */
   .footer-brand { display: flex; flex-direction: column; gap: 20px; }
@@ -5162,11 +5174,11 @@
   }
   .footer-col a:hover { color: var(--primary); }
 
-  /* EMPRESA institutional */
+  /* EMPRESA institutional — visually separated from nav links */
   .footer-empresa-divider {
     height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 18px 0 14px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 12px 0;
   }
   .footer-company {
     font-family: 'Poppins', sans-serif;
@@ -5202,17 +5214,20 @@
   .footer-subscribe {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     background: #fff;
     border-radius: 999px;
     padding: 4px;
     gap: 4px;
+    max-width: 380px;
   }
   .footer-subscribe input {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
+    width: 100%;
     border: none;
     background: transparent;
-    padding: 10px 16px;
+    padding: 10px 14px;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     color: #1A1A1A;
@@ -5228,11 +5243,12 @@
     transition: background-color 9999s ease-out 0s;
   }
   .footer-subscribe button {
+    flex: 0 0 auto;
     background: var(--primary);
     color: #fff;
     border: none;
     border-radius: 999px;
-    padding: 10px 20px;
+    padding: 10px 18px;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 14px;
@@ -5822,24 +5838,26 @@
     </button>
     <div class="nav-center-menu" role="navigation" aria-label="Navegação principal">
       <a href="#como-funciona">Como funciona</a>
-      <a href="#depoimentos">Tutores</a>
+      <a href="#comparacao">Comparativo</a>
       <a href="#planos">Planos</a>
-      <a href="#faq">FAQ</a>
+      <a href="#depoimentos">Tutores</a>
+      <a href="./reflexoes.html">Reflexões</a>
+      <a href="#faq">Respostas</a>
     </div>
+  </div>
+  <div class="nav-right">
     <div class="lang-picker">
-      <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="menu" aria-expanded="false">
         <span class="lang-code js-lang-current" id="langCurrent">PT</span>
+        <svg class="lang-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="lang-menu" id="langMenu" hidden role="menu">
         <button type="button" data-lang="en" data-code="EN" role="menuitem"><span class="lang-code">EN</span> English</button>
         <button type="button" data-lang="pt" data-code="PT" role="menuitem" class="active"><span class="lang-code">PT</span> Português</button>
       </div>
     </div>
-  </div>
-  <div class="nav-right">
-    <a class="nav-download" href="#download" data-cta="nav-download" aria-label="Baixar o app (entrar na lista de espera)">
-      <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
-      <span class="nav-download-label">Baixar</span>
+    <a class="nav-download" href="#download" data-cta="nav-discover">
+      <span class="nav-download-label">Descobrir</span>
     </a>
   </div>
 </nav>
@@ -7216,7 +7234,7 @@ if (prefersReducedMotion) {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
       if (progress) progress.style.width = pct + '%';
-      if (nav) nav.classList.toggle('nav--scrolled', scrollY > 24);
+      if (nav) nav.classList.toggle('nav--scrolled', scrollY > 8);
       ticking = false;
     });
   }
@@ -7229,7 +7247,12 @@ if (prefersReducedMotion) {
       entries.forEach(e => {
         if (e.isIntersecting) {
           const id = '#' + e.target.id;
-          menuLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === id));
+          menuLinks.forEach(a => {
+            const isActive = a.getAttribute('href') === id;
+            a.classList.toggle('is-active', isActive);
+            if (isActive) a.setAttribute('aria-current', 'page');
+            else a.removeAttribute('aria-current');
+          });
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
