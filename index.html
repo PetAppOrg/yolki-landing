@@ -6036,21 +6036,22 @@
   }
 
   @media (max-width: 768px) {
-    /* Aproveitar largura máxima da tela, gap dinâmico entre frascos */
+    /* Fix 8 — jars maiores e mais próximos no mobile */
     .jars-section { min-height: auto; }
-    .jars-section > .section-container { padding: 0 16px; }
+    .jars-section > .section-container { padding: 0 6px; }
     .jars-container {
       grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      gap: 0;
       padding: 0;
       margin: 0;
       max-width: 100%;
     }
     .jars-section .jar-wrapper { max-width: 100%; }
+    .jars-section .jar-col { padding: 0; }
     .jars-section .jar-label {
       font-size: 12px;
       min-height: 44px;
-      margin-top: -16px;
+      margin-top: -12px;
     }
     .jars-section .jar-label.yolki img {
       height: 32px;
