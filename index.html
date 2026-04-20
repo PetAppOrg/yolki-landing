@@ -764,7 +764,7 @@
   }
 
   .nav-logo-img {
-    height: clamp(32px, 4vw, 48px);
+    height: clamp(54px, 6.8vw, 82px);
     width: auto;
     display: block;
   }
@@ -5004,6 +5004,20 @@
     white-space: nowrap;
   }
   .footer-subscribe button:hover { background: #00A8A3; }
+  .footer-subscribe button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .footer-subscribe-feedback {
+    margin-top: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+    min-height: 18px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .footer-subscribe-feedback.visible { opacity: 1; }
+  .footer-subscribe-feedback.ok { color: #8FE3A5; }
+  .footer-subscribe-feedback.err { color: #FF8E8E; }
 
   .footer-desc {
     margin-top: 24px;
@@ -5232,7 +5246,7 @@
   @media (max-width: 480px) {
     .orbital-center { width: 70px; height: 70px; }
     .hero-headline h1 { font-size: 26px; }
-    .nav-logo img { height: 46px !important; }
+    .nav-logo img { height: 78px !important; }
     .nav-cta { padding: 0 14px; height: 40px; font-size: 13px; }
   }
 
@@ -5565,7 +5579,7 @@
       <svg class="ic nav-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
     <div class="nav-center-menu" role="navigation" aria-label="Navegação principal">
-      <a href="#video-reveal">Como funciona</a>
+      <a href="#como-funciona">Como funciona</a>
       <a href="#depoimentos">Tutores</a>
       <a href="#planos">Planos</a>
       <a href="#faq">FAQ</a>
@@ -6512,7 +6526,7 @@
                 <span class="reward-prize">1 mês de Solo <strong>grátis</strong></span>
               </li>
               <li class="referral-reward">
-                <span class="reward-tier">4º ao 10º</span>
+                <span class="reward-tier">Top 10</span>
                 <span class="reward-prize"><strong>50% off</strong> nos 3 primeiros meses</span>
               </li>
             </ul>
@@ -6644,10 +6658,11 @@
   <div class="footer-card">
     <div class="footer-top">
       <div>
-        <form class="footer-subscribe" onsubmit="return false;">
-          <input type="email" name="email" placeholder="nome@email.com" required autocomplete="email" inputmode="email" aria-label="Seu email">
-          <button type="submit">Entrar na lista</button>
+        <form class="footer-subscribe" id="footerSubscribeForm" onsubmit="return false;">
+          <input type="email" name="email" id="footerSubscribeEmail" placeholder="nome@email.com" required autocomplete="email" inputmode="email" aria-label="Seu email">
+          <button type="submit" id="footerSubscribeBtn">Entrar na lista</button>
         </form>
+        <p class="footer-subscribe-feedback" id="footerSubscribeFeedback" role="status" aria-live="polite"></p>
         <p class="footer-desc">Educação preventiva e acompanhamento de saúde pro seu pet viver mais e melhor. Validado por veterinários.</p>
         <div class="footer-trust">
           <span class="footer-trust-item">
@@ -6667,7 +6682,7 @@
         <a href="#comparacao">Comparativo</a>
         <a href="#planos">Planos</a>
         <a href="#depoimentos">Tutores</a>
-        <a href="./blog.html">Reflexões</a>
+        <a href="./reflexoes.html">Reflexões</a>
         <a href="#faq">Respostas</a>
       </div>
       <div class="footer-col">
@@ -8065,6 +8080,57 @@ if (prefersReducedMotion) {
     }
   });
 
+})();
+
+// ─── FOOTER NEWSLETTER SIGNUP ───
+(function() {
+  const form = document.getElementById('footerSubscribeForm');
+  if (!form) return;
+  const emailInput = document.getElementById('footerSubscribeEmail');
+  const btn = document.getElementById('footerSubscribeBtn');
+  const feedback = document.getElementById('footerSubscribeFeedback');
+
+  function showFeedback(kind, msg) {
+    feedback.textContent = msg;
+    feedback.className = 'footer-subscribe-feedback visible ' + (kind === 'ok' ? 'ok' : 'err');
+  }
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = (emailInput.value || '').trim();
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      showFeedback('err', 'Informe um email válido.');
+      emailInput.focus();
+      return;
+    }
+    if (!window.sbClient) {
+      showFeedback('err', 'Serviço indisponível. Tente de novo em instantes.');
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    try {
+      const fallbackName = email.split('@')[0].slice(0, 40) || 'Assinante';
+      const { data: result, error } = await window.sbClient.rpc('join_waitlist', {
+        p_name: fallbackName,
+        p_email: email,
+        p_city: null,
+        p_referred_by: null,
+        p_source: 'footer',
+      });
+      if (error) throw error;
+      if (!result || !result.success) throw new Error('Falha no cadastro.');
+      showFeedback('ok', 'Pronto! Fica de olho no seu email.');
+      emailInput.value = '';
+      btn.textContent = 'Inscrito ✓';
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Entrar na lista'; }, 2500);
+    } catch (err) {
+      console.error('Footer subscribe error:', err);
+      showFeedback('err', 'Não deu pra inscrever agora. Tente de novo em instantes.');
+      btn.disabled = false;
+      btn.textContent = 'Entrar na lista';
+    }
+  });
 })();
 
 // ─── VIDEO: auto-preview mudo após 3s na viewport; click para ouvir ───

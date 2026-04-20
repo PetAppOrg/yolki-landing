@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog — Yolki Pet</title>
-<meta name="description" content="Conteúdo validado por veterinários sobre longevidade, prevenção e bem-estar do seu pet.">
+<title>Reflexões — Yolki Pet</title>
+<meta name="description" content="Reflexões validadas por veterinários sobre longevidade, prevenção e bem-estar do seu pet.">
+<link rel="canonical" href="https://yolki.pet/reflexoes">
 <link rel="icon" type="image/svg+xml" href="/assets/brand/yolki-logo.svg">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -71,7 +72,7 @@
   nav > .nav-center-wrap { justify-self: center; }
   nav > .nav-right { justify-self: end; }
   .nav-center-wrap { display: inline-flex; align-items: center; gap: 10px; }
-  .nav-logo-img { height: clamp(32px, 4vw, 48px); width: auto; display: block; }
+  .nav-logo-img { height: clamp(54px, 6.8vw, 82px); width: auto; display: block; }
   [data-theme="dark"] .nav-logo-img { filter: brightness(0) invert(1); }
 
   .nav-theme {
@@ -122,7 +123,7 @@
   .lang-btn:hover { border-color: var(--primary); transform: translateY(-1px); }
   [data-theme="dark"] .lang-btn { border-color: rgba(255,255,255,0.15); }
   .lang-menu {
-    position: absolute; top: calc(100% + 8px); right: 0;
+    position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
     background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px;
     box-shadow: 0 10px 32px rgba(0,0,0,0.08);
     padding: 4px; display: flex; flex-direction: column;
@@ -157,6 +158,28 @@
   .nav-download:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(167,111,255,0.35); }
   [data-theme="dark"] .nav-download { background: #fff; color: #000; }
   .ic { display: inline-block; vertical-align: -0.175em; flex-shrink: 0; }
+
+  /* Back to home */
+  .reflexoes-back {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 40px 0;
+  }
+  .reflexoes-back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .reflexoes-back a:hover { color: var(--primary); }
+  @media (max-width: 900px) {
+    .reflexoes-back { padding: 16px 20px 0; }
+  }
 
   /* Header */
   .blog-header {
@@ -316,7 +339,7 @@
       <svg class="ic nav-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
     <div class="nav-center-menu" role="navigation" aria-label="Navegação principal">
-      <a href="index.html#video-reveal">Como funciona</a>
+      <a href="index.html#como-funciona">Como funciona</a>
       <a href="index.html#depoimentos">Tutores</a>
       <a href="index.html#planos">Planos</a>
       <a href="index.html#faq">FAQ</a>
@@ -328,8 +351,6 @@
       <div class="lang-menu" id="langMenu" hidden role="menu">
         <button type="button" data-lang="en" data-code="EN" role="menuitem"><span class="lang-code">EN</span> English</button>
         <button type="button" data-lang="pt" data-code="PT" role="menuitem" class="active"><span class="lang-code">PT</span> Português</button>
-        <button type="button" data-lang="es" data-code="ES" role="menuitem"><span class="lang-code">ES</span> Español</button>
-        <button type="button" data-lang="de" data-code="DE" role="menuitem"><span class="lang-code">DE</span> Deutsch</button>
       </div>
     </div>
   </div>
@@ -341,9 +362,13 @@
   </div>
 </nav>
 
+<div class="reflexoes-back">
+  <a href="./" aria-label="Voltar para a página inicial">← Voltar para o início</a>
+</div>
+
 <header class="blog-header">
-  <h1>Conteúdo que transforma<br><span class="hl">cuidado em ciência</span></h1>
-  <p>Artigos revisados por veterinários sobre longevidade, prevenção e bem-estar do seu pet.</p>
+  <h1>Reflexões que transformam<br><span class="hl">cuidado em ciência</span></h1>
+  <p>Conteúdo revisado por veterinários sobre longevidade, prevenção e bem-estar do seu pet.</p>
 </header>
 
 <div class="blog-grid">
@@ -401,6 +426,7 @@
   © 2026 Yolki Pet by Coflint OÜ · <a href="./">Voltar ao site</a>
 </footer>
 
+<script src="confetti-secondary-buttons.js?v=5" defer></script>
 <script>
 (function() {
   const themeBtn = document.getElementById('navTheme');

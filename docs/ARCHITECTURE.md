@@ -11,7 +11,7 @@
 | Camada | Tecnologia | Onde vive |
 |---|---|---|
 | **Frontend** | HTML + CSS + JS vanilla (um único `index.html`) | Repositório GitHub `PetAppOrg/yolki-landing` |
-| **Página de blog** | Mesma stack — arquivo separado `blog.html` | Mesmo repo |
+| **Página de reflexões** | Mesma stack — arquivo separado `reflexoes.html` (ex-`blog.html`) | Mesmo repo |
 | **Hosting** | *(ainda a definir — GitHub Pages ou Vercel)* | — |
 | **DNS** | Hostinger (domínio `yolki.pet`) | hpanel.hostinger.com |
 | **Backend** | Supabase (Postgres + RPCs + Vault + pg_net) | Projeto `yolki-waitlist` em `sa-east-1` |
@@ -27,7 +27,7 @@
 ```
 yolki-landing/
 ├── index.html          # Landing principal (tudo inline: HTML, CSS, JS)
-├── blog.html           # Página dedicada de conteúdo
+├── reflexoes.html      # Página dedicada de reflexões
 ├── yolki-logo.svg      # Logo principal
 ├── yolki-logo-white.png
 ├── hero-video.mp4      # Vídeo do hero
@@ -225,7 +225,7 @@ E também no frontend (texto da success state): "você sobe 10 posições".
 
 ### Ocultar/mostrar o blog no home
 - Ocultar: `<section class="section-blog" id="conteudo" style="display:none;">`
-- Mostrar: remova o `style` e o nav link apontará pra `#conteudo` em vez de `blog.html`
+- Mostrar: remova o `style` e o nav link apontará pra `#conteudo` em vez de `reflexoes.html`
 
 ---
 
