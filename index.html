@@ -6421,13 +6421,8 @@
 
 <!-- MOBILE MENU (reescrito do zero) -->
 <div class="yk-menu" id="ykMenu" aria-hidden="true">
-  <div class="yk-menu__backdrop" id="ykMenuBackdrop" aria-label="Fechar menu"
-    onclick="var m=document.getElementById('ykMenu');m.classList.remove('is-open');m.setAttribute('aria-hidden','true');var h=document.getElementById('ykHamburger');if(h)h.setAttribute('aria-expanded','false');document.body.classList.remove('yk-menu-open');"></div>
+  <div class="yk-menu__backdrop" id="ykMenuBackdrop" aria-label="Fechar menu"></div>
   <aside class="yk-menu__panel" role="dialog" aria-modal="true" aria-label="Menu principal">
-    <button type="button" id="ykMenuClose" class="yk-menu__close" aria-label="Fechar menu"
-      onclick="var m=document.getElementById('ykMenu');m.classList.remove('is-open');m.setAttribute('aria-hidden','true');var h=document.getElementById('ykHamburger');if(h)h.setAttribute('aria-expanded','false');document.body.classList.remove('yk-menu-open');">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
-    </button>
     <nav class="yk-menu__nav" aria-label="Navegação principal">
       <a href="#como-funciona">Como funciona</a>
       <a href="#comparacao">Comparativo</a>
@@ -6437,6 +6432,9 @@
       <a href="#faq">Respostas</a>
     </nav>
   </aside>
+  <button type="button" id="ykMenuClose" class="yk-menu__close" aria-label="Fechar menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+  </button>
 </div>
 
 <main id="main-content">
