@@ -993,10 +993,14 @@
     border-radius: 50%;
     cursor: pointer;
     display: inline-flex; align-items: center; justify-content: center;
-    z-index: 10;
+    z-index: 20;
+    pointer-events: auto;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
+  .nav-drawer-close > * { pointer-events: none; }
+  .nav-drawer-panel { z-index: 2; }
+  .nav-drawer-overlay { z-index: 1; }
   .nav-drawer-close:active { background: rgba(0,0,0,0.12); }
   .nav-drawer-close:hover { background: rgba(0,0,0,0.08); }
   [data-theme="dark"] .nav-drawer-close:hover { background: rgba(255,255,255,0.06); }
@@ -8030,7 +8034,7 @@ if (prefersReducedMotion) {
   window.__openNavDrawer  = openDrawer;
 
   // Capture phase = roda ANTES de qualquer outro listener (confetti, etc.)
-  window.addEventListener('click', (e) => {
+  function handleNav(e) {
     if (!e.target || !e.target.closest) return;
     // X ou overlay → fecha
     if (e.target.closest('[data-nav-drawer-close]')) {
@@ -8051,7 +8055,19 @@ if (prefersReducedMotion) {
       openDrawer();
       return;
     }
-  }, true);
+  }
+  // click cobre desktop; touchend cobre iOS Safari (dead-zone em alguns casos)
+  window.addEventListener('click', handleNav, true);
+  window.addEventListener('touchend', handleNav, { capture: true, passive: false });
+
+  // Fechar ao tocar fora do painel (reforço além do overlay com data-attr)
+  window.addEventListener('click', (e) => {
+    const d = getDrawer();
+    if (!d || d.hidden) return;
+    if (!e.target.closest('.nav-drawer-panel') && !e.target.closest('#navHamburger')) {
+      closeDrawer();
+    }
+  });
 
   document.addEventListener('keydown', (e) => {
     const d = getDrawer();
