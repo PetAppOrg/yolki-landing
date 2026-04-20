@@ -503,6 +503,24 @@
     line-height: var(--lh-base);
     color: var(--text-muted);
   }
+  /* Fix 4 — cards compactos sem ícone (Filhote/Adulto/Sênior) */
+  .audience-card-compact {
+    padding: 18px 18px 20px;
+  }
+  .audience-card-compact h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  .audience-card-compact p {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  @media (max-width: 768px) {
+    .audience-grid { gap: 12px; }
+    .audience-card-compact { padding: 14px 16px 16px; }
+    .audience-card-compact h3 { font-size: 17px; }
+    .audience-card-compact p { font-size: 13px; }
+  }
 
   .audience-quiz {
     max-width: 720px;
@@ -6375,38 +6393,17 @@
     </div>
 
     <div class="audience-grid">
-      <article class="audience-card" data-profile="filhote">
-        <div class="audience-icon">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <circle cx="24" cy="26" r="14" fill="var(--primary)" fill-opacity="0.12"/>
-            <circle cx="19" cy="24" r="2.2" fill="var(--primary)"/>
-            <circle cx="29" cy="24" r="2.2" fill="var(--primary)"/>
-            <path d="M19 30 Q24 34 29 30" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          </svg>
-        </div>
+      <article class="audience-card audience-card-compact" data-profile="filhote">
         <h3>Filhote</h3>
         <p>Socialização, vacinação, adestramento base. A janela crítica dura 4 meses — não dá pra improvisar.</p>
       </article>
 
-      <article class="audience-card" data-profile="adulto">
-        <div class="audience-icon">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <rect x="8" y="14" width="32" height="22" rx="6" fill="var(--secondary)" fill-opacity="0.14"/>
-            <path d="M16 22 L16 30 M24 20 L24 30 M32 24 L32 30" stroke="var(--secondary)" stroke-width="3" stroke-linecap="round"/>
-          </svg>
-        </div>
+      <article class="audience-card audience-card-compact" data-profile="adulto">
         <h3>Adulto</h3>
         <p>Nutrição consistente, peso ideal, prevenção de doenças silenciosas. Pequenas rotinas hoje viram anos a mais depois.</p>
       </article>
 
-      <article class="audience-card" data-profile="senior">
-        <div class="audience-icon">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <path d="M10 24 Q24 8 38 24" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" fill="none"/>
-            <circle cx="24" cy="32" r="6" fill="var(--accent)" fill-opacity="0.2"/>
-            <circle cx="24" cy="32" r="2.5" fill="var(--accent)"/>
-          </svg>
-        </div>
+      <article class="audience-card audience-card-compact" data-profile="senior">
         <h3>Sênior</h3>
         <p>Sinais precoces de dor, cognição e mobilidade. Detecção 6 meses antes muda a expectativa de vida.</p>
       </article>
