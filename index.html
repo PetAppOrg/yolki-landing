@@ -4441,79 +4441,234 @@
     animation: fadeIn 0.3s ease-out;
   }
 
-  /* ─── Referral invite modal (shares .exit-intent-* overlay/card/close) ─── */
-  .invite-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
+  /* ─── Invite modal (novo design yp-*) ─── */
+  .yp-modal {
+    position: relative;
+    max-width: 440px;
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 28px 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+    font-family: 'Nunito', sans-serif;
+    color: #171717;
+    box-sizing: border-box;
     text-align: left;
   }
-  .invite-form label {
-    display: block;
-    font-family: 'Nunito', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
+  [data-theme="dark"] .yp-modal {
+    background: #1C1E22;
     color: var(--text-primary);
-    margin-bottom: 4px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06);
   }
-  .invite-form label .opt {
-    font-weight: 500;
-    color: var(--text-muted);
-    margin-left: 4px;
+  .yp-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 32px; height: 32px;
+    border: 0; background: transparent;
+    border-radius: 50%;
+    color: #737373;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, color 0.15s;
   }
-  .invite-form input,
-  .invite-form textarea {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    font-family: 'Nunito', sans-serif;
+  .yp-close:hover { background: #f5f5f5; color: #171717; }
+  [data-theme="dark"] .yp-close { color: var(--text-muted); }
+  [data-theme="dark"] .yp-close:hover { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+  .yp-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: #F3E8FF;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    color: #8F06CD;
+  }
+  .yp-icon svg { width: 26px; height: 26px; }
+  [data-theme="dark"] .yp-icon { background: rgba(167,111,255,0.15); color: #C084FC; }
+  .yp-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: inherit;
+    text-align: center;
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+  .yp-subtitle {
     font-size: 14px;
-    color: var(--text-primary);
-    outline: none;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
+    color: #525252;
+    text-align: center;
+    margin: 0 0 20px;
+    line-height: 1.5;
   }
-  .invite-form textarea {
+  [data-theme="dark"] .yp-subtitle { color: var(--text-muted); }
+  .yp-social-inline {
+    display: flex; align-items: center; gap: 8px;
+    justify-content: center;
+    font-size: 12px; color: #737373;
+    margin-bottom: 20px;
+  }
+  [data-theme="dark"] .yp-social-inline { color: var(--text-muted); }
+  .yp-avs { display: inline-flex; }
+  .yp-av {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 2px solid #fff; margin-left: -6px;
+    font-family: 'Poppins', sans-serif; font-weight: 600; color: #fff;
+    font-size: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .yp-av:first-child { margin-left: 0; }
+  [data-theme="dark"] .yp-av { border-color: #1C1E22; }
+
+  .yp-form { display: flex; flex-direction: column; gap: 14px; }
+  .yp-field { display: flex; flex-direction: column; }
+  .yp-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #262626;
+    margin-bottom: 6px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  [data-theme="dark"] .yp-label { color: var(--text-primary); }
+  .yp-label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .yp-label-row .yp-label { margin-bottom: 0; }
+  .yp-opt {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #a3a3a3;
+  }
+  .yp-counter {
+    font-family: 'Poppins', sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    color: #a3a3a3;
+  }
+  .yp-input-wrap { position: relative; }
+  .yp-icon-input {
+    position: absolute;
+    left: 12px; top: 50%;
+    transform: translateY(-50%);
+    width: 16px; height: 16px;
+    color: #a3a3a3;
+    pointer-events: none;
+  }
+  .yp-input, .yp-textarea {
+    width: 100%;
+    padding: 11px 14px 11px 38px;
+    border: 1.5px solid #e5e5e5;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    background: #fff;
+    color: #171717;
+    box-sizing: border-box;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .yp-input::placeholder, .yp-textarea::placeholder { color: #a3a3a3; }
+  .yp-input:focus, .yp-textarea:focus {
+    outline: none;
+    border-color: #8F06CD;
+    box-shadow: 0 0 0 3px rgba(143, 6, 205, 0.1);
+  }
+  .yp-input.is-invalid, .yp-textarea.is-invalid { border-color: #FF000B; }
+  .yp-textarea {
+    padding: 11px 14px;
     min-height: 72px;
     resize: vertical;
+    line-height: 1.5;
   }
-  .invite-form input:focus,
-  .invite-form textarea:focus { border-color: var(--primary); }
-  .invite-form .char-count {
-    font-family: 'Nunito', sans-serif;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: right;
-    margin-top: -4px;
+  [data-theme="dark"] .yp-input,
+  [data-theme="dark"] .yp-textarea {
+    background: #16181B;
+    color: var(--text-primary);
+    border-color: rgba(255,255,255,0.1);
   }
-  .invite-submit {
+  [data-theme="dark"] .yp-input::placeholder,
+  [data-theme="dark"] .yp-textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .yp-error {
+    font-size: 12px;
+    color: #FF000B;
+    margin: 4px 0 0;
+  }
+
+  .yp-preview {
+    display: flex; align-items: flex-start; gap: 8px;
+    background: #FAF5FF;
+    border: 1px dashed #D8B4FE;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #6B21A8;
+    line-height: 1.5;
+  }
+  [data-theme="dark"] .yp-preview {
+    background: rgba(167,111,255,0.08);
+    border-color: rgba(167,111,255,0.3);
+    color: #D8B4FE;
+  }
+  .yp-preview svg {
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .yp-preview b { font-weight: 700; }
+
+  .yp-checkbox {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: #525252;
+    cursor: pointer;
+  }
+  [data-theme="dark"] .yp-checkbox { color: var(--text-muted); }
+  .yp-checkbox input {
+    width: 16px; height: 16px;
+    accent-color: #8F06CD;
+    cursor: pointer;
+  }
+
+  .yp-cta {
     width: 100%;
-    background: var(--secondary);
+    background: #8F06CD;
     color: #fff;
-    border: none;
-    padding: 13px 20px;
+    border: 0;
+    padding: 14px;
     border-radius: 12px;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
-    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 4px;
   }
-  .invite-submit:hover { background: #8F52E8; }
-  .invite-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-  .invite-feedback {
+  .yp-cta:hover { background: #7A05B0; }
+  .yp-cta:active { transform: scale(0.99); }
+  .yp-cta:disabled { background: #D8B4FE; cursor: not-allowed; }
+
+  .yp-legal {
+    font-size: 11px;
+    color: #a3a3a3;
+    line-height: 1.5;
+    text-align: center;
+    margin: 8px 0 0;
+  }
+
+  .yp-feedback {
     font-family: 'Nunito', sans-serif;
     font-size: 13px;
     padding: 10px 12px;
     border-radius: 10px;
     margin-top: 10px;
     display: none;
+    text-align: center;
   }
-  .invite-feedback.visible { display: block; animation: fadeIn 0.2s ease-out; }
-  .invite-feedback.ok { background: rgba(94, 184, 100, 0.12); color: #2f7a37; }
-  .invite-feedback.err { background: rgba(255, 0, 11, 0.08); color: #b91c1c; }
+  .yp-feedback.visible { display: block; animation: fadeIn 0.2s ease-out; }
+  .yp-feedback.ok { background: rgba(94, 184, 100, 0.12); color: #2f7a37; }
+  .yp-feedback.err { background: rgba(255, 0, 11, 0.08); color: #b91c1c; }
+
+  @media (max-width: 480px) {
+    .yp-modal { padding: 24px 20px 20px; border-radius: 16px; }
+    .yp-title { font-size: 20px; }
+  }
 
   @media (max-width: 768px) {
     .exit-intent-card { padding: 36px 24px 28px; }
@@ -7869,11 +8024,13 @@ if (prefersReducedMotion) {
   const shareEmail = document.getElementById('shareEmail');
   const closeBtn = document.getElementById('waitlistSuccessClose');
 
-  // Invite modal refs (resolved lazily after DOM is parsed — modal HTML lives after this script)
+  // Invite modal refs (resolved lazily após DOM parse — modal HTML vive depois desse script)
   let inviteModal, inviteOverlay, inviteClose, inviteForm,
       inviteToEmail, inviteToName, inviteMessage,
-      inviteSubmit, inviteFeedback, inviteCharCount;
+      inviteSubmit, inviteSubmitLabel, inviteFeedback, inviteCharCount,
+      inviteToEmailError, inviteToNameError, inviteSendCopy;
   let currentUserEmail = null;
+  const INVITE_MSG_MAX = 280;
 
   if (closeBtn) {
     closeBtn.addEventListener('click', function() {
@@ -7920,14 +8077,25 @@ if (prefersReducedMotion) {
   }
 
   // ─── Invite modal ───
+  function setInviteButtonLabel(text) {
+    if (inviteSubmitLabel) inviteSubmitLabel.textContent = text;
+    else if (inviteSubmit) inviteSubmit.textContent = text;
+  }
+  function clearInviteErrors() {
+    if (inviteToEmail) inviteToEmail.classList.remove('is-invalid');
+    if (inviteToName) inviteToName.classList.remove('is-invalid');
+    if (inviteToEmailError) inviteToEmailError.hidden = true;
+    if (inviteToNameError) inviteToNameError.hidden = true;
+  }
   function openInviteModal() {
     if (!inviteModal) return;
-    inviteFeedback.className = 'invite-feedback';
+    inviteFeedback.className = 'yp-feedback';
     inviteFeedback.textContent = '';
     inviteForm.reset();
-    if (inviteCharCount) inviteCharCount.textContent = '0 / 500';
+    clearInviteErrors();
+    if (inviteCharCount) inviteCharCount.textContent = '0/' + INVITE_MSG_MAX;
     inviteSubmit.disabled = false;
-    inviteSubmit.textContent = 'Enviar convite';
+    setInviteButtonLabel('Enviar convite');
     inviteModal.classList.add('visible');
     inviteModal.setAttribute('aria-hidden', 'false');
     setTimeout(() => inviteToEmail && inviteToEmail.focus(), 50);
@@ -7938,7 +8106,7 @@ if (prefersReducedMotion) {
     inviteModal.setAttribute('aria-hidden', 'true');
   }
   function showInviteFeedback(kind, msg) {
-    inviteFeedback.className = 'invite-feedback visible ' + (kind === 'ok' ? 'ok' : 'err');
+    inviteFeedback.className = 'yp-feedback visible ' + (kind === 'ok' ? 'ok' : 'err');
     inviteFeedback.textContent = msg;
   }
   function formatRetry(iso) {
@@ -7973,14 +8141,30 @@ if (prefersReducedMotion) {
     inviteToName = document.getElementById('inviteToName');
     inviteMessage = document.getElementById('inviteMessage');
     inviteSubmit = document.getElementById('inviteSubmit');
+    inviteSubmitLabel = inviteSubmit && inviteSubmit.querySelector('span');
     inviteFeedback = document.getElementById('inviteFeedback');
     inviteCharCount = document.getElementById('inviteCharCount');
+    inviteToEmailError = document.getElementById('inviteToEmailError');
+    inviteToNameError = document.getElementById('inviteToNameError');
+    inviteSendCopy = document.getElementById('inviteSendCopy');
 
     if (inviteClose) inviteClose.addEventListener('click', closeInviteModal);
     if (inviteOverlay) inviteOverlay.addEventListener('click', closeInviteModal);
     if (inviteMessage && inviteCharCount) {
       inviteMessage.addEventListener('input', function() {
-        inviteCharCount.textContent = (inviteMessage.value.length || 0) + ' / 500';
+        inviteCharCount.textContent = (inviteMessage.value.length || 0) + '/' + INVITE_MSG_MAX;
+      });
+    }
+    if (inviteToEmail) {
+      inviteToEmail.addEventListener('input', function() {
+        inviteToEmail.classList.remove('is-invalid');
+        if (inviteToEmailError) inviteToEmailError.hidden = true;
+      });
+    }
+    if (inviteToName) {
+      inviteToName.addEventListener('input', function() {
+        inviteToName.classList.remove('is-invalid');
+        if (inviteToNameError) inviteToNameError.hidden = true;
       });
     }
     wireInviteFormSubmit();
@@ -7997,12 +8181,25 @@ if (prefersReducedMotion) {
       const toEmail = (inviteToEmail.value || '').trim();
       const toName = (inviteToName.value || '').trim();
       const message = (inviteMessage.value || '').trim();
+      const sendCopy = !!(inviteSendCopy && inviteSendCopy.checked);
+
+      let valid = true;
       if (!toEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(toEmail)) {
-        showInviteFeedback('err', 'Informe um email válido do seu amigo.');
-        inviteToEmail.focus();
+        inviteToEmail.classList.add('is-invalid');
+        if (inviteToEmailError) inviteToEmailError.hidden = false;
+        valid = false;
+      }
+      if (!toName) {
+        inviteToName.classList.add('is-invalid');
+        if (inviteToNameError) inviteToNameError.hidden = false;
+        valid = false;
+      }
+      if (!valid) {
+        (inviteToEmail.classList.contains('is-invalid') ? inviteToEmail : inviteToName).focus();
         return;
       }
       if (toEmail.toLowerCase() === currentUserEmail) {
+        inviteToEmail.classList.add('is-invalid');
         showInviteFeedback('err', 'Esse é o seu próprio email 🙂');
         return;
       }
@@ -8010,9 +8207,13 @@ if (prefersReducedMotion) {
         showInviteFeedback('err', 'Serviço indisponível. Tente de novo em instantes.');
         return;
       }
+
       inviteSubmit.disabled = true;
-      inviteSubmit.textContent = 'Enviando...';
+      setInviteButtonLabel('Enviando...');
       try {
+        // TODO: quando o template transacional estiver configurado, passar sendCopy
+        // para uma nova param p_send_copy e fazer o RPC disparar também pra quem convida.
+        void sendCopy;
         const { data: res, error } = await window.sbClient.rpc('send_referral_invite', {
           p_from_email: currentUserEmail,
           p_to_email: toEmail,
@@ -8026,39 +8227,41 @@ if (prefersReducedMotion) {
             ? ' Você atingiu o limite de hoje.'
             : ` Você ainda pode enviar ${rem} ${rem === 1 ? 'convite' : 'convites'} hoje.`);
           showInviteFeedback('ok', 'Convite enviado! 🐾' + suffix);
-          inviteSubmit.textContent = 'Enviado ✓';
+          setInviteButtonLabel('Enviado ✓');
           inviteToEmail.value = '';
           inviteToName.value = '';
           inviteMessage.value = '';
-          if (inviteCharCount) inviteCharCount.textContent = '0 / 500';
-          setTimeout(() => { inviteSubmit.disabled = false; inviteSubmit.textContent = 'Enviar outro'; }, 1200);
+          if (inviteCharCount) inviteCharCount.textContent = '0/' + INVITE_MSG_MAX;
+          setTimeout(() => { inviteSubmit.disabled = false; setInviteButtonLabel('Enviar outro'); }, 1200);
         } else if (res && res.error === 'rate_limited') {
           const when = res.retry_after ? formatRetry(res.retry_after) : '';
           showInviteFeedback('err', `Você já enviou 10 convites hoje.${when ? ' Próximo envio liberado ' + when + '.' : ''}`);
           inviteSubmit.disabled = false;
-          inviteSubmit.textContent = 'Enviar convite';
+          setInviteButtonLabel('Enviar convite');
         } else if (res && res.error === 'invalid_to_email') {
-          showInviteFeedback('err', 'Email do amigo parece inválido.');
+          inviteToEmail.classList.add('is-invalid');
+          if (inviteToEmailError) inviteToEmailError.hidden = false;
           inviteSubmit.disabled = false;
-          inviteSubmit.textContent = 'Enviar convite';
+          setInviteButtonLabel('Enviar convite');
         } else if (res && res.error === 'cannot_invite_self') {
+          inviteToEmail.classList.add('is-invalid');
           showInviteFeedback('err', 'Esse é o seu próprio email 🙂');
           inviteSubmit.disabled = false;
-          inviteSubmit.textContent = 'Enviar convite';
+          setInviteButtonLabel('Enviar convite');
         } else if (res && res.error === 'sender_not_in_waitlist') {
           showInviteFeedback('err', 'Recarregue a página e entre na fila antes de convidar.');
           inviteSubmit.disabled = false;
-          inviteSubmit.textContent = 'Enviar convite';
+          setInviteButtonLabel('Enviar convite');
         } else {
           showInviteFeedback('err', 'Não deu pra enviar agora. Tente de novo em instantes.');
           inviteSubmit.disabled = false;
-          inviteSubmit.textContent = 'Enviar convite';
+          setInviteButtonLabel('Enviar convite');
         }
       } catch (err) {
         console.error('Invite error:', err);
         showInviteFeedback('err', 'Não deu pra enviar agora. Tente de novo em instantes.');
         inviteSubmit.disabled = false;
-        inviteSubmit.textContent = 'Enviar convite';
+        setInviteButtonLabel('Enviar convite');
       }
     });
   }
@@ -8866,29 +9069,88 @@ if (prefersReducedMotion) {
 <!-- ═══════════════════════════════════════════ -->
 <!-- REFERRAL INVITE MODAL                        -->
 <!-- ═══════════════════════════════════════════ -->
-<div class="exit-intent-modal" id="inviteModal" role="dialog" aria-labelledby="invite-modal-title" aria-hidden="true">
+<div class="exit-intent-modal" id="inviteModal" role="dialog" aria-labelledby="invite-modal-title" aria-describedby="invite-modal-subtitle" aria-hidden="true">
   <div class="exit-intent-overlay" id="inviteModalOverlay"></div>
-  <div class="exit-intent-card" role="document">
-    <button type="button" class="exit-intent-close" id="inviteModalClose" aria-label="Fechar">×</button>
-    <div class="exit-intent-emoji" aria-hidden="true">💌</div>
-    <h3 id="invite-modal-title">Convide um amigo</h3>
-    <p>A gente envia o convite pra ele com o seu link — você sobe na fila quando ele entrar.</p>
-    <form class="invite-form" id="inviteForm" novalidate>
-      <div>
-        <label for="inviteToEmail">Email do amigo</label>
-        <input type="email" id="inviteToEmail" name="to_email" placeholder="amigo@email.com" required autocomplete="off" inputmode="email">
+  <div class="yp-modal" role="document">
+    <button class="yp-close" type="button" id="inviteModalClose" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <div class="yp-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+    </div>
+
+    <h2 id="invite-modal-title" class="yp-title">Convide um amigo</h2>
+    <p id="invite-modal-subtitle" class="yp-subtitle">A gente envia o convite pra ele com o seu link — você sobe na fila quando ele entrar.</p>
+
+    <div class="yp-social-inline">
+      <div class="yp-avs" aria-hidden="true">
+        <span class="yp-av" style="background:#01BCB5">M</span>
+        <span class="yp-av" style="background:#FDA600">J</span>
+        <span class="yp-av" style="background:#8F06CD">R</span>
       </div>
-      <div>
-        <label for="inviteToName">Nome do amigo <span class="opt">(opcional)</span></label>
-        <input type="text" id="inviteToName" name="to_name" placeholder="Ex: Ana" autocomplete="off" maxlength="60">
+      <span>42 tutores já convidaram esta semana</span>
+    </div>
+
+    <form class="yp-form" id="inviteForm" novalidate>
+      <div class="yp-field">
+        <label class="yp-label" for="inviteToEmail">Email do amigo</label>
+        <div class="yp-input-wrap">
+          <svg class="yp-icon-input" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <input class="yp-input" id="inviteToEmail" name="to_email" type="email" placeholder="amigo@email.com" required autocomplete="off" inputmode="email">
+        </div>
+        <p class="yp-error" id="inviteToEmailError" hidden>Email inválido</p>
       </div>
-      <div>
-        <label for="inviteMessage">Mensagem pessoal <span class="opt">(opcional)</span></label>
-        <textarea id="inviteMessage" name="message" placeholder="Achei legal e lembrei de você…" maxlength="500"></textarea>
-        <div class="char-count" id="inviteCharCount">0 / 500</div>
+
+      <div class="yp-field">
+        <label class="yp-label" for="inviteToName">Nome do amigo</label>
+        <div class="yp-input-wrap">
+          <svg class="yp-icon-input" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <input class="yp-input" id="inviteToName" name="to_name" type="text" placeholder="Ana" required autocomplete="off" maxlength="60">
+        </div>
+        <p class="yp-error" id="inviteToNameError" hidden>Nome do amigo é obrigatório</p>
       </div>
-      <button type="submit" class="invite-submit" id="inviteSubmit">Enviar convite</button>
-      <div class="invite-feedback" id="inviteFeedback" role="status" aria-live="polite"></div>
+
+      <div class="yp-field">
+        <div class="yp-label-row">
+          <label class="yp-label" for="inviteMessage">Mensagem para o amigo <span class="yp-opt">opcional</span></label>
+          <span class="yp-counter" id="inviteCharCount">0/280</span>
+        </div>
+        <textarea class="yp-textarea" id="inviteMessage" name="message" placeholder="Achei a Yolki e lembrei de você!" maxlength="280" rows="3"></textarea>
+      </div>
+
+      <div class="yp-preview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <span>Enviamos um email do <b>yolki.pet</b> em seu nome. Sem spam, sem vender dado.</span>
+      </div>
+
+      <label class="yp-checkbox">
+        <input type="checkbox" id="inviteSendCopy" name="copy" checked>
+        <span>Me enviar cópia do convite</span>
+      </label>
+
+      <button class="yp-cta" type="submit" id="inviteSubmit">
+        <span>Enviar convite</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+
+      <div class="yp-feedback" id="inviteFeedback" role="status" aria-live="polite"></div>
+
+      <p class="yp-legal">Ao enviar, você confirma que tem autorização do seu amigo para compartilhar o email dele. Usamos o email apenas para enviar este convite único — ele pode optar por não receber novas mensagens com um clique.</p>
     </form>
   </div>
 </div>
