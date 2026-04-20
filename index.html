@@ -223,10 +223,11 @@
   [data-theme="dark"] .hero { background: var(--surface-1); }
   [data-theme="dark"] .grain-layer { mix-blend-mode: screen; opacity: 0.05; }
 
-  /* Logo do Yolki em branco no dark mode (SVG é preto por padrão) */
-  [data-theme="dark"] .nav-logo-img {
-    filter: brightness(0) invert(1);
-  }
+  /* Logo: PNG colorido em light, SVG branco em dark */
+  .logo-dark { display: none; }
+  [data-theme="dark"] .logo-light { display: none; }
+  [data-theme="dark"] .logo-dark { display: block; filter: brightness(0) invert(1); }
+
   [data-theme="dark"] .nav-center-menu {
     background: #272727;
     border-color: rgba(255, 255, 255, 0.06);
@@ -389,16 +390,7 @@
   [data-theme="dark"] .exit-intent-close { color: var(--text-muted); }
 
   /* Footer */
-  [data-theme="dark"] .site-footer { background: #0A0B0D; }
-  [data-theme="dark"] .footer-card { background: transparent; }
-  [data-theme="dark"] .footer-col a,
-  [data-theme="dark"] .footer-col p,
-  [data-theme="dark"] .footer-desc,
-  [data-theme="dark"] .footer-copy,
-  [data-theme="dark"] .footer-company,
-  [data-theme="dark"] .footer-note { color: var(--text-muted); }
-  [data-theme="dark"] .footer-col a:hover { color: var(--primary); }
-  [data-theme="dark"] .footer-col h4 { color: var(--text-primary); }
+  /* Footer is always dark — no theme variant needed */
 
   /* Mobile sticky CTA */
   [data-theme="dark"] .mobile-sticky-cta { background: rgba(15, 17, 19, 0.92); border-top-color: var(--border-subtle); }
@@ -4825,15 +4817,13 @@
   /* FOOTER                                      */
   /* ═══════════════════════════════════════════ */
   .site-footer {
-    background: #242425;
+    background: #1A1A1A;
+    color: #fff;
     position: relative;
     z-index: 10;
     padding: 0;
     margin-top: 0;
   }
-
-  .footer-company { line-height: var(--lh-base); }
-  .footer-note { opacity: 0.7; font-size: 13px; }
 
   /* Cookie banner */
   /* ─── MODAL: YOLKI NO RH (corporate) ─── */
@@ -5111,189 +5101,263 @@
   .footer-card {
     max-width: 1300px;
     margin: 0 auto;
-    background: transparent;
-    padding: 64px 56px 40px;
-    overflow: visible;
+    padding: 64px 56px 28px;
   }
 
-  /* Footer text colors on dark bg */
-  .site-footer .footer-col h4 { color: #fff; }
-  .site-footer .footer-col a,
-  .site-footer .footer-col p { color: rgba(255, 255, 255, 0.58); }
-  .site-footer .footer-col a:hover { color: var(--primary); }
-  .site-footer .footer-desc { color: rgba(255, 255, 255, 0.58); }
-  .site-footer .footer-trust-item { color: rgba(255, 255, 255, 0.85); }
-  .site-footer .footer-designed { color: #ffffff; }
-  .site-footer .footer-copy { color: rgba(255, 255, 255, 0.55); }
-  .site-footer .footer-socials a {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-  }
-  .site-footer .footer-socials a:hover { background: var(--primary); }
-
+  /* TOP — 5-col grid */
   .footer-top {
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 56px;
-  }
-  @media (max-width: 960px) {
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr 1.4fr;
+    gap: 32px;
+    padding-bottom: 40px;
   }
 
+  /* COL 1 — BRAND */
+  .footer-brand { display: flex; flex-direction: column; gap: 20px; }
+  .footer-logo { display: inline-block; line-height: 0; }
+  .footer-logo img {
+    height: 40px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+  .footer-tagline {
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+    max-width: 320px;
+  }
+  .footer-badges { display: flex; flex-direction: column; gap: 12px; }
+  .footer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+  }
+  .footer-badge svg { color: var(--primary); flex-shrink: 0; }
+
+  /* COLS — Produto / Empresa / Legal / Newsletter heading */
+  .footer-col h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #fff;
+    margin: 0 0 18px;
+  }
+  .footer-col a {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: color 0.15s ease;
+  }
+  .footer-col a:hover { color: var(--primary); }
+
+  /* EMPRESA institutional */
+  .footer-empresa-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 18px 0 14px;
+  }
+  .footer-company {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 4px;
+  }
+  .footer-company strong { font-weight: 600; }
+  .footer-company-loc {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0 0 10px;
+  }
+  .footer-company-mail {
+    display: inline-block !important;
+    color: var(--primary) !important;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+    font-size: 14px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* COL 5 — NEWSLETTER */
+  .footer-news-desc {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 14px;
+  }
   .footer-subscribe {
     display: flex;
     align-items: center;
-    border: 1px solid var(--primary);
-    border-radius: 50px;
+    background: #fff;
+    border-radius: 999px;
     padding: 4px;
     gap: 4px;
-    background: var(--surface-2);
-    max-width: 440px;
   }
-  [data-theme="dark"] .footer-subscribe { background: var(--surface-3); }
-  [data-theme="dark"] .footer-subscribe input { background: transparent !important; color: var(--text-primary); }
   .footer-subscribe input {
     flex: 1;
     min-width: 0;
     border: none;
     background: transparent;
-    padding: 12px 20px;
+    padding: 10px 16px;
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    color: var(--text-primary);
+    font-size: 14px;
+    color: #1A1A1A;
     outline: none;
   }
-  .footer-subscribe input::placeholder { color: #C8C8C8; opacity: 1; }
-  /* Neutralize Safari/Chrome autofill yellow background */
+  .footer-subscribe input::placeholder { color: #999; opacity: 1; }
   .footer-subscribe input:-webkit-autofill,
   .footer-subscribe input:-webkit-autofill:hover,
   .footer-subscribe input:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--text-primary);
-    -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset;
-    caret-color: var(--text-primary);
+    -webkit-text-fill-color: #1A1A1A;
+    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+    caret-color: #1A1A1A;
     transition: background-color 9999s ease-out 0s;
-  }
-  [data-theme="dark"] .footer-subscribe input:-webkit-autofill,
-  [data-theme="dark"] .footer-subscribe input:-webkit-autofill:hover,
-  [data-theme="dark"] .footer-subscribe input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px var(--surface-3) inset;
-    -webkit-text-fill-color: var(--text-primary);
   }
   .footer-subscribe button {
     background: var(--primary);
     color: #fff;
     border: none;
-    border-radius: 50px;
-    padding: 12px 28px;
+    border-radius: 999px;
+    padding: 10px 20px;
     font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: 500;
+    font-size: 14px;
     cursor: pointer;
-    transition: background 0.25s;
+    transition: background 0.15s ease, opacity 0.15s ease;
     white-space: nowrap;
   }
   .footer-subscribe button:hover { background: #00A8A3; }
-  .footer-subscribe button:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  .footer-subscribe-feedback {
-    margin-top: 8px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.75);
-    min-height: 18px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+  .footer-subscribe.is-submitting button { opacity: 0.7; cursor: wait; }
+  .footer-subscribe.is-success button,
+  .footer-subscribe.is-success button:hover {
+    background: #5EB864;
+    cursor: default;
   }
-  .footer-subscribe-feedback.visible { opacity: 1; }
-  .footer-subscribe-feedback.ok { color: #8FE3A5; }
-  .footer-subscribe-feedback.err { color: #FF8E8E; }
-
-  .footer-desc {
-    margin-top: 24px;
+  .footer-news-micro {
     font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    font-weight: 200;
-    line-height: 1.6;
-    color: var(--text-muted);
-    max-width: 420px;
-  }
-
-  .footer-trust {
-    display: flex;
-    gap: 28px;
-    margin-top: 18px;
-    flex-wrap: wrap;
-  }
-  .footer-trust-item {
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 8px 0 0;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+  }
+  .footer-news-micro.is-success { color: #5EB864; }
+  .footer-news-micro.is-error { color: #FF8E8E; }
+
+  /* MIDDLE ROW — app badges + controls */
+  .footer-middle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+  }
+  .footer-stores { display: flex; gap: 10px; flex-wrap: wrap; }
+  .footer-store {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #0F0F0F;
+    border: 1px solid #2A2A2A;
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: #fff;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+  .footer-store:hover { border-color: var(--primary); }
+  .footer-store svg { color: #fff; flex-shrink: 0; }
+  .footer-store-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .footer-store-text small {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .footer-store-text strong {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
+    font-weight: 500;
+    color: #fff;
   }
-  .footer-trust-item svg {
-    color: var(--primary);
-    flex-shrink: 0;
-  }
+  .footer-controls { display: flex; align-items: center; gap: 10px; }
 
-  .footer-col h4 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--text-primary);
-    margin-bottom: 24px;
-  }
-  .footer-col a,
-  .footer-col p {
-    display: block;
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    font-weight: 200;
-    line-height: 1.7;
-    color: var(--text-muted);
-    text-decoration: none;
-    margin-bottom: 14px;
-  }
-  .footer-col a:hover { color: var(--primary); }
-
+  /* BOTTOM ROW — socials + copyright */
   .footer-bottom {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 24px;
-    padding-top: 24px;
-  }
-  .footer-heart { display: inline-block; }
-  .footer-designed {
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    color: var(--text-muted);
-  }
-  .footer-socials {
     display: flex;
-    gap: 10px;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
   }
+  .footer-socials { display: flex; gap: 8px; }
   .footer-socials a {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: var(--text-primary);
+    background: #2A2A2A;
     color: #fff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    transition: background 0.15s ease;
   }
   .footer-socials a:hover { background: var(--primary); }
   .footer-copy {
     font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-    color: var(--text-muted);
-    text-align: right;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  /* Lang menu drop UP variant (footer popover above the button) */
+  .lang-menu.lang-menu-up {
+    top: auto;
+    bottom: calc(100% + 8px);
+  }
+
+  /* RESPONSIVE — tablet */
+  @media (max-width: 1023px) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-news { grid-column: 1 / -1; }
+  }
+  /* RESPONSIVE — mobile */
+  @media (max-width: 768px) {
+    .footer-card { padding: 48px 22px 24px; }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-middle { flex-direction: column; align-items: stretch; gap: 16px; }
+    .footer-stores { justify-content: center; }
+    .footer-controls { justify-content: center; }
+    .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-col a, .footer-store, .footer-socials a,
+    .footer-subscribe button { transition: none; }
   }
 
   /* ─── ANIMATIONS ─── */
@@ -5418,19 +5482,6 @@
 
     /* Entry animations - shorter slide on mobile */
     .reveal, .reveal-stagger > * { transform: translateY(18px); transition-duration: .7s; }
-
-    /* Footer */
-    .footer-card { padding: 48px 20px 28px; }
-    .footer-top { grid-template-columns: 1fr; gap: 32px; }
-    .footer-bottom { grid-template-columns: 1fr; text-align: center; gap: 16px; }
-    .footer-copy { text-align: center; }
-    .footer-designed { text-align: center; }
-    .site-footer { padding: 0; }
-
-    /* Subscribe form: keep inline if possible, stack on smaller */
-    .footer-subscribe { flex-wrap: wrap; }
-    .footer-subscribe input { min-width: 0; flex: 1 1 100%; }
-    .footer-subscribe button { flex: 1 1 auto; padding: 10px 20px; }
   }
 
   @media (max-width: 480px) {
@@ -5761,10 +5812,11 @@
 <!-- NAV -->
 <nav id="siteNav">
   <a class="nav-logo" href="#">
-    <img src="assets/brand/yolki-logo.svg" alt="Yolki Pet" class="nav-logo-img" width="245" height="171">
+    <img src="assets/brand/yolki-logo.png" alt="Yolki Pet" class="nav-logo-img logo-light" width="490" height="350">
+    <img src="assets/brand/yolki-logo.svg" alt="" aria-hidden="true" class="nav-logo-img logo-dark" width="245" height="171">
   </a>
   <div class="nav-center-wrap">
-    <button type="button" class="nav-theme" id="navTheme" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+    <button type="button" class="nav-theme js-theme-toggle" id="navTheme" aria-label="Alternar tema claro/escuro" title="Alternar tema">
       <svg class="ic nav-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
       <svg class="ic nav-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
@@ -5776,7 +5828,7 @@
     </div>
     <div class="lang-picker">
       <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
-        <span class="lang-code" id="langCurrent">PT</span>
+        <span class="lang-code js-lang-current" id="langCurrent">PT</span>
       </button>
       <div class="lang-menu" id="langMenu" hidden role="menu">
         <button type="button" data-lang="en" data-code="EN" role="menuitem"><span class="lang-code">EN</span> English</button>
@@ -6266,7 +6318,10 @@
             <ellipse cx="100" cy="65" rx="72" ry="2.5" fill="#000" opacity="0.05"/>
           </svg>
         </div>
-        <div class="jar-label yolki"><img src="assets/brand/yolki-logo.svg" alt="Yolki Pet"></div>
+        <div class="jar-label yolki">
+          <img src="assets/brand/yolki-logo.png" alt="Yolki Pet" class="logo-light">
+          <img src="assets/brand/yolki-logo.svg" alt="" aria-hidden="true" class="logo-dark">
+        </div>
       </div>
 
       <!-- ============ CHATGPT ============ -->
@@ -6853,24 +6908,25 @@
 <footer class="site-footer">
   <div class="footer-card">
     <div class="footer-top">
-      <div>
-        <form class="footer-subscribe" id="footerSubscribeForm" onsubmit="return false;">
-          <input type="email" name="email" id="footerSubscribeEmail" placeholder="nome@email.com" required autocomplete="email" inputmode="email" aria-label="Seu email">
-          <button type="submit" id="footerSubscribeBtn">Newsletter</button>
-        </form>
-        <p class="footer-subscribe-feedback" id="footerSubscribeFeedback" role="status" aria-live="polite"></p>
-        <p class="footer-desc">Educação preventiva e acompanhamento de saúde pro seu pet viver mais e melhor. Validado por veterinários.</p>
-        <div class="footer-trust">
-          <span class="footer-trust-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-            Validado
+      <!-- COL 1 — BRAND -->
+      <div class="footer-brand">
+        <a href="#" class="footer-logo" aria-label="Yolki Pet">
+          <img src="assets/brand/yolki-logo.svg" alt="Yolki Pet">
+        </a>
+        <p class="footer-tagline">Microlearning gamificado para a longevidade do seu pet.</p>
+        <div class="footer-badges">
+          <span class="footer-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Conteúdo validado
           </span>
-          <span class="footer-trust-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Seguro & confiável
+          <span class="footer-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Seguro &amp; confiável
           </span>
         </div>
       </div>
+
+      <!-- COL 2 — PRODUTO -->
       <div class="footer-col">
         <h4>Produto</h4>
         <a href="#como-funciona">Como funciona</a>
@@ -6880,14 +6936,20 @@
         <a href="./reflexoes.html">Reflexões</a>
         <a href="#faq">Respostas</a>
       </div>
+
+      <!-- COL 3 — EMPRESA -->
       <div class="footer-col">
         <h4>Empresa</h4>
-        <p class="footer-company">
-          <strong>Coflint OÜ</strong><br>
-          Tallinn, Estônia · Europa
-        </p>
-        <p><a href="mailto:hello@yolki.pet">hello@yolki.pet</a></p>
+        <a href="#sobre">Sobre</a>
+        <a href="mailto:hello@yolki.pet">Contato</a>
+        <a href="#imprensa">Imprensa</a>
+        <div class="footer-empresa-divider" aria-hidden="true"></div>
+        <p class="footer-company"><strong>Coflint OÜ</strong></p>
+        <p class="footer-company-loc">Tallinn, Estônia · Europa</p>
+        <a class="footer-company-mail" href="mailto:hello@yolki.pet">hello@yolki.pet</a>
       </div>
+
+      <!-- COL 4 — LEGAL -->
       <div class="footer-col">
         <h4>Legal</h4>
         <a href="/termos.html">Termos de uso</a>
@@ -6896,17 +6958,62 @@
         <a href="/lgpd.html">Aviso LGPD</a>
         <a href="#" id="openCookiePrefs">Preferências de cookies</a>
       </div>
+
+      <!-- COL 5 — NEWSLETTER -->
+      <div class="footer-col footer-news">
+        <h4>Newsletter</h4>
+        <p class="footer-news-desc">Receba novidades do Yolki direto no seu email.</p>
+        <form class="footer-subscribe" id="footerSubscribeForm" onsubmit="return false;">
+          <input type="email" name="email" id="footerSubscribeEmail" placeholder="nome@email.com" required autocomplete="email" inputmode="email" aria-label="Seu email" aria-describedby="footerNewsMicro">
+          <button type="submit" id="footerSubscribeBtn">Inscrever</button>
+        </form>
+        <p class="footer-news-micro" id="footerNewsMicro" role="status" aria-live="polite">1 email por semana · cancele quando quiser</p>
+      </div>
     </div>
 
-
-    <div class="footer-bottom">
-      <div class="footer-designed">Designed with purpose, built with passion <span class="footer-heart" aria-hidden="true">💜</span></div>
-      <div class="footer-socials">
-        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-        <a href="#" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/></svg></a>
-        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <!-- MIDDLE ROW — app badges + controls -->
+    <div class="footer-middle">
+      <div class="footer-stores">
+        <a href="#" class="footer-store" aria-label="Baixar na App Store">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c.04 1.07-.4 2.16-1.05 2.95-.69.83-1.83 1.47-2.92 1.39-.13-1.07.43-2.18 1.06-2.92.7-.85 1.95-1.51 2.91-1.42zM20.5 17.21c-.55 1.27-1.21 2.53-2.27 2.55-1.04.02-1.38-.62-2.57-.62-1.18 0-1.55.6-2.54.64-1.02.04-1.79-1.37-2.35-2.62-1.16-2.55-2.05-7.21.86-10.36.94-1.02 2.18-1.65 3.5-1.67 1 .02 1.94.7 2.55.7.6 0 1.75-.86 2.95-.74.5.02 1.91.2 2.81 1.51-.07.05-1.68.99-1.66 2.95.02 2.34 2.05 3.13 2.07 3.14-.02.06-.32 1.13-1.06 2.22z"/></svg>
+          <span class="footer-store-text">
+            <small>Baixar na</small>
+            <strong>App Store</strong>
+          </span>
+        </a>
+        <a href="#" class="footer-store" aria-label="Disponível no Google Play">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.609-.92V2.734c0-.41.241-.768.608-.92zM14.5 12.7l2.41 2.41-10.7 6.18 8.29-8.59zm0-1.4L6.21 2.71l10.7 6.18-2.41 2.41zm6.39-1.43c.61.36.99.99.99 1.71 0 .72-.38 1.35-.98 1.71l-2.66 1.54-2.83-2.83 2.83-2.83 2.65 1.7z"/></svg>
+          <span class="footer-store-text">
+            <small>Disponível no</small>
+            <strong>Google Play</strong>
+          </span>
+        </a>
       </div>
-      <div class="footer-copy">© <span id="footerYear">2026</span> Yolki Pet · <strong>Coflint OÜ</strong> · Todos os direitos reservados.</div>
+      <div class="footer-controls">
+        <button type="button" class="nav-theme js-theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+          <svg class="ic nav-theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
+          <svg class="ic nav-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <div class="lang-picker">
+          <button type="button" class="lang-btn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
+            <span class="lang-code js-lang-current">PT</span>
+          </button>
+          <div class="lang-menu lang-menu-up" hidden role="menu">
+            <button type="button" data-lang="en" data-code="EN" role="menuitem"><span class="lang-code">EN</span> English</button>
+            <button type="button" data-lang="pt" data-code="PT" role="menuitem" class="active"><span class="lang-code">PT</span> Português</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW — socials + copyright -->
+    <div class="footer-bottom">
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="TikTok"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      </div>
+      <p class="footer-copy">© <span id="footerYear">2026</span> Yolki Pet · Coflint OÜ, Europa</p>
     </div>
   </div>
 </footer>
@@ -7368,25 +7475,29 @@ if (prefersReducedMotion) {
 })();
 
 
-// ─── THEME TOGGLE (sun/moon) ───
+// ─── THEME TOGGLE (sun/moon) — supports multiple instances (.js-theme-toggle) ───
 (function() {
-  const btn = document.getElementById('navTheme');
-  if (!btn) return;
+  const btns = document.querySelectorAll('.js-theme-toggle');
+  if (!btns.length) return;
   const meta = document.querySelector('meta[name="theme-color"]');
 
   function apply(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     if (meta) meta.setAttribute('content', theme === 'dark' ? '#0F1113' : '#00C2B7');
-    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-    btn.setAttribute('title', theme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro');
+    btns.forEach(b => {
+      b.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      b.setAttribute('title', theme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro');
+    });
   }
 
   apply(document.documentElement.getAttribute('data-theme') || 'light');
 
-  btn.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    apply(next);
-    try { localStorage.setItem('yolki_theme', next); } catch (_) {}
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      apply(next);
+      try { localStorage.setItem('yolki_theme', next); } catch (_) {}
+    });
   });
 })();
 
@@ -8342,27 +8453,41 @@ if (prefersReducedMotion) {
   if (!form) return;
   const emailInput = document.getElementById('footerSubscribeEmail');
   const btn = document.getElementById('footerSubscribeBtn');
-  const feedback = document.getElementById('footerSubscribeFeedback');
+  const micro = document.getElementById('footerNewsMicro');
 
-  function showFeedback(kind, msg) {
-    feedback.textContent = msg;
-    feedback.className = 'footer-subscribe-feedback visible ' + (kind === 'ok' ? 'ok' : 'err');
+  const MICRO_DEFAULT = '1 email por semana · cancele quando quiser';
+  const SUCCESS_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+
+  function setMicro(state, msg) {
+    micro.className = 'footer-news-micro' + (state ? ' is-' + state : '');
+    if (state === 'success') {
+      micro.innerHTML = SUCCESS_ICON + '<span>' + msg + '</span>';
+    } else {
+      micro.textContent = msg;
+    }
   }
+
+  let succeeded = false;
 
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
+    if (succeeded) return; // Don't resubmit after success
+
     const email = (emailInput.value || '').trim();
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      showFeedback('err', 'Informe um email válido.');
+      setMicro('error', 'Informe um email válido.');
       emailInput.focus();
       return;
     }
     if (!window.sbClient) {
-      showFeedback('err', 'Serviço indisponível. Tente de novo em instantes.');
+      setMicro('error', 'Serviço indisponível. Tente de novo em instantes.');
       return;
     }
+
+    form.classList.add('is-submitting');
     btn.disabled = true;
-    btn.textContent = 'Enviando...';
+    btn.textContent = 'Inscrevendo...';
+
     try {
       const fallbackName = email.split('@')[0].slice(0, 40) || 'Assinante';
       const { data: result, error } = await window.sbClient.rpc('join_waitlist', {
@@ -8374,15 +8499,20 @@ if (prefersReducedMotion) {
       });
       if (error) throw error;
       if (!result || !result.success) throw new Error('Falha no cadastro.');
-      showFeedback('ok', 'Pronto! Fica de olho no seu email.');
-      emailInput.value = '';
-      btn.textContent = 'Inscrito ✓';
-      setTimeout(() => { btn.disabled = false; btn.textContent = 'Newsletter'; }, 2500);
+
+      succeeded = true;
+      form.classList.remove('is-submitting');
+      form.classList.add('is-success');
+      btn.textContent = '✓ Inscrito';
+      btn.disabled = true;
+      emailInput.disabled = true;
+      setMicro('success', 'Pronto! Fica de olho no seu email.');
     } catch (err) {
       console.error('Footer subscribe error:', err);
-      showFeedback('err', 'Não deu pra inscrever agora. Tente de novo em instantes.');
+      form.classList.remove('is-submitting');
+      setMicro('error', 'Não deu pra inscrever agora. Tente de novo em instantes.');
       btn.disabled = false;
-      btn.textContent = 'Newsletter';
+      btn.textContent = 'Inscrever';
     }
   });
 })();
@@ -8543,42 +8673,67 @@ if (prefersReducedMotion) {
   onScroll();
 })();
 
-// ─── LANGUAGE PICKER ───
+// ─── LANGUAGE PICKER — supports multiple instances (.lang-picker), state synced ───
 (function() {
-  const btn = document.getElementById('langBtn');
-  const menu = document.getElementById('langMenu');
-  const current = document.getElementById('langCurrent');
-  if (!btn || !menu || !current) return;
+  const pickers = document.querySelectorAll('.lang-picker');
+  if (!pickers.length) return;
 
-  function closeMenu() {
-    menu.setAttribute('hidden', '');
-    btn.setAttribute('aria-expanded', 'false');
+  const instances = [];
+
+  function closeAll(except) {
+    instances.forEach(inst => {
+      if (inst === except) return;
+      inst.menu.setAttribute('hidden', '');
+      inst.btn.setAttribute('aria-expanded', 'false');
+    });
   }
-  function openMenu() {
-    menu.removeAttribute('hidden');
-    btn.setAttribute('aria-expanded', 'true');
+
+  function syncAll(code) {
+    instances.forEach(inst => {
+      if (inst.current) inst.current.textContent = code;
+      inst.menu.querySelectorAll('button[data-code]').forEach(b => {
+        b.classList.toggle('active', b.dataset.code === code);
+      });
+    });
   }
 
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (menu.hasAttribute('hidden')) openMenu(); else closeMenu();
-  });
+  pickers.forEach(picker => {
+    const btn = picker.querySelector('.lang-btn');
+    const menu = picker.querySelector('.lang-menu');
+    const current = picker.querySelector('.js-lang-current') || picker.querySelector('.lang-code');
+    if (!btn || !menu) return;
 
-  menu.addEventListener('click', (e) => {
-    const option = e.target.closest('button[data-lang]');
-    if (!option) return;
-    current.textContent = option.dataset.code;
-    menu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-    option.classList.add('active');
-    closeMenu();
-    // TODO: hook up actual language switching when translations are ready
+    const inst = { btn, menu, current };
+    instances.push(inst);
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = menu.hasAttribute('hidden');
+      closeAll(isHidden ? inst : null);
+      if (isHidden) {
+        menu.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        menu.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    menu.addEventListener('click', (e) => {
+      const option = e.target.closest('button[data-lang]');
+      if (!option) return;
+      syncAll(option.dataset.code);
+      closeAll(null);
+      // TODO: hook up actual language switching when translations are ready
+    });
   });
 
   document.addEventListener('click', (e) => {
-    if (!btn.contains(e.target) && !menu.contains(e.target)) closeMenu();
+    const inside = instances.some(inst => inst.btn.contains(e.target) || inst.menu.contains(e.target));
+    if (!inside) closeAll(null);
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
+    if (e.key === 'Escape') closeAll(null);
   });
 })();
 
