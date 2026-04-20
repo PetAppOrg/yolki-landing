@@ -5837,6 +5837,16 @@
     transition: transform 0.3s ease;
   }
 
+  /* Smart hide em scroll down (mobile apenas) */
+  @media (max-width: 900px) {
+    nav {
+      transition: background 200ms ease, backdrop-filter 200ms ease,
+                  border-bottom-color 200ms ease, transform 0.3s ease;
+      will-change: transform;
+    }
+    nav.nav--hidden { transform: translateY(-100%); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .footer-col a, .footer-store, .footer-socials a,
     .footer-subscribe button { transition: none; }
@@ -7788,6 +7798,9 @@ if (prefersReducedMotion) {
     .filter(Boolean);
 
   let ticking = false;
+  let lastScrollY = window.scrollY;
+  const HIDE_THRESHOLD = 10; // px — evita flicker em micro-scrolls
+  const TOP_EPSILON = 4;     // sempre mostra no topo
   function onScroll() {
     if (ticking) return;
     ticking = true;
@@ -7796,7 +7809,18 @@ if (prefersReducedMotion) {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
       if (progress) progress.style.width = pct + '%';
-      if (nav) nav.classList.toggle('nav--scrolled', scrollY > 8);
+      if (nav) {
+        nav.classList.toggle('nav--scrolled', scrollY > 8);
+        // Smart hide: down esconde, up mostra
+        const delta = scrollY - lastScrollY;
+        const menuOpen = document.body.classList.contains('yk-menu-open');
+        if (scrollY <= TOP_EPSILON || menuOpen) {
+          nav.classList.remove('nav--hidden');
+        } else if (Math.abs(delta) > HIDE_THRESHOLD) {
+          nav.classList.toggle('nav--hidden', delta > 0);
+        }
+        lastScrollY = scrollY;
+      }
       ticking = false;
     });
   }
