@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Yolki Pet — Micro-aulas diárias e monitoramento de saúde validado por veterinários. Dois minutos por dia para você, anos a mais ao lado do seu pet.">
-<meta name="theme-color" content="#FAFAF8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0F1113" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FAFAF8">
 <meta property="og:title" content="Yolki Pet — Longevidade começa aqui">
 <meta property="og:description" content="Micro-aulas diárias e monitoramento de saúde validado por veterinários. Dois minutos por dia para você, anos a mais ao lado do seu pet.">
 <meta property="og:type" content="website">
@@ -998,7 +997,7 @@
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
-  .nav-drawer-close:active { background: rgba(0,0,0,0.12); transform: scale(0.95); }
+  .nav-drawer-close:active { background: rgba(0,0,0,0.12); }
   .nav-drawer-close:hover { background: rgba(0,0,0,0.08); }
   [data-theme="dark"] .nav-drawer-close:hover { background: rgba(255,255,255,0.06); }
   .nav-drawer-menu {
@@ -1955,7 +1954,7 @@
     .testimonials-scroll-sticky { position: static; height: auto; display: block; padding: 32px 0; overflow: visible; }
     .testimonials-grid-scroll .testimonial-card { transform: none !important; opacity: 1 !important; }
 
-    /* Carrossel horizontal com snap */
+    /* Carrossel horizontal: 1 card por vez, snap mandatório */
     .testimonials-grid {
       display: flex;
       flex-wrap: nowrap;
@@ -1963,49 +1962,34 @@
       overflow-y: visible;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      gap: 12px;
-      padding: 8px 20px 20px;
-      margin: 20px -20px 0;
-      max-width: 100vw;
+      gap: 16px;
+      padding: 12px 20px 20px;
+      margin: 20px 0 0;
+      max-width: 100%;
       scrollbar-width: none;
     }
     .testimonials-grid::-webkit-scrollbar { display: none; }
-
     .testimonials-grid .testimonial-card {
-      flex: 0 0 82%;
+      flex: 0 0 calc(100% - 40px);
       scroll-snap-align: center;
       width: auto;
       max-width: none;
       margin: 0;
       border-radius: 16px;
     }
-
-    /* Foto com borda fina igual ao desktop */
     .testimonials-grid .testimonial-photo {
-      margin: 8px 8px 0 8px;
-      height: 240px;
+      margin: 8px;
+      height: 260px;
       border-radius: 14px;
     }
     .testimonials-grid .testimonial-photo img { border-radius: 14px; }
-    /* Fix Yves: evita scale excessivo que causa soft/blur na parte de baixo */
     .testimonials-grid .testimonial-photo-fit img {
       object-fit: cover;
       object-position: center 15%;
       transform: none;
     }
-    .testimonials-grid .testimonial-light {
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    }
-    .testimonials-grid .testimonial-body {
-      padding: 16px 18px 14px;
-    }
-    .testimonials-grid .testimonial-body > p {
-      font-size: 15px;
-      line-height: 1.45;
-      margin-bottom: 12px;
-      min-height: 0;
-    }
-    .testimonials-grid .testimonial-footer { margin-bottom: 8px; }
+    .testimonials-grid .testimonial-body { padding: 18px 20px 16px; }
+    .testimonials-grid .testimonial-body > p { font-size: 15px; line-height: 1.5; margin-bottom: 14px; min-height: 0; }
     .testimonials-grid .testimonial-footer strong { font-size: 14px; }
     .testimonials-grid .testimonial-footer span { font-size: 12px; }
   }
@@ -2307,7 +2291,7 @@
   .pricing-social-proof-wrap {
     display: flex;
     justify-content: center;
-    margin: 20px auto 0;
+    margin: 20px auto 36px;
   }
   .pricing-social-proof-wrap .orbit-proof-line.yw-social {
     padding: 10px 18px;
@@ -4992,25 +4976,13 @@
   }
 
   @media (max-width: 768px) {
-    /* Fotos subindo menores e mais fracas pro texto ficar legível */
+    /* Fotos subindo: apenas mais claras (sem blur) pra texto ficar legível */
     .floating-card {
       width: calc(var(--fc-size) * 1.2);
       height: calc(var(--fc-size) * 1.2);
-      opacity: 0.45;
+      opacity: 0.55;
     }
-    .floating-card img { filter: brightness(0.75) blur(0.5px); }
-    /* Reforça overlay suave sobre imagens no section-app */
-    .section-app::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.5));
-      z-index: 1;
-      pointer-events: none;
-    }
-    [data-theme="dark"] .section-app::before {
-      background: linear-gradient(to bottom, rgba(15,17,19,0.35), rgba(15,17,19,0.5));
-    }
+    .floating-card img { filter: none; }
   }
 
   /* ═══════════════════════════════════════════ */
@@ -5698,10 +5670,10 @@
     .footer-badges { align-items: center; }
     .footer-brand .footer-socials { justify-content: center; }
     .footer-middle { flex-direction: column; align-items: center; gap: 20px; padding-bottom: 24px; }
-    .footer-stores { justify-content: center; align-items: center; flex-wrap: nowrap; gap: 10px; width: 100%; max-width: 340px; margin: 0 auto; }
-    /* Badges App Store e Google Play com mesma largura visual */
-    .footer-store { flex: 1 1 0; max-width: 160px; display: flex; justify-content: center; }
-    .footer-store img { width: 100%; height: auto; max-height: 44px; object-fit: contain; }
+    .footer-stores { justify-content: center; align-items: center; flex-wrap: nowrap; gap: 12px; width: 100%; max-width: 340px; margin: 0 auto; }
+    /* Badges App Store e Google Play: mesmo box (155x46) */
+    .footer-store { width: 155px; height: 46px; display: flex; align-items: center; justify-content: center; flex: 0 0 155px; }
+    .footer-store img { width: 100%; height: 100%; object-fit: contain; }
     .footer-controls { justify-content: center; }
     .footer-bottom { justify-content: center; }
     .footer-copy { text-align: center; font-size: 12px; }
@@ -5837,7 +5809,9 @@
     .plan-save { font-size: 12px; }
     .pricing-risk-free { flex-direction: column; gap: 8px; font-size: 13px; margin-top: 20px; }
     .pricing-lead { font-size: 14px; padding: 0 12px; }
-    .billing-toggle-wrap { margin-bottom: 24px; gap: 10px; flex-wrap: wrap; }
+    .billing-toggle-wrap { margin: 16px 0 28px; gap: 10px; flex-wrap: wrap; }
+    .pricing-social-proof-wrap { margin: 16px auto 24px; }
+    .pricing-lead { margin-bottom: 0; }
     .billing-toggle-wrap .toggle-label { font-size: 14px; }
     .pricing-corp-cta { padding: 20px; margin-top: 32px; }
     .pricing-legal-disclaimer { font-size: 11px; padding: 0 16px; }
@@ -6021,7 +5995,7 @@
     .jars-section > .section-container { padding: 0 16px; }
     .jars-container {
       grid-template-columns: repeat(3, 1fr);
-      gap: clamp(8px, 3vw, 20px);
+      gap: 2px;
       padding: 0;
       margin: 0;
       max-width: 100%;
@@ -8036,35 +8010,52 @@ if (prefersReducedMotion) {
   io.observe(footer);
 })();
 
-// ─── MOBILE NAV DRAWER ───
+// ─── MOBILE NAV DRAWER (capture-phase + global — imune a qualquer interferência) ───
 (function() {
-  const hamburger = document.getElementById('navHamburger');
-  const drawer = document.getElementById('navDrawer');
-  if (!hamburger || !drawer) return;
+  function getDrawer() { return document.getElementById('navDrawer'); }
+  function getHamb()   { return document.getElementById('navHamburger'); }
 
   function openDrawer() {
-    drawer.hidden = false;
-    drawer.removeAttribute('hidden');
-    hamburger.setAttribute('aria-expanded', 'true');
+    const d = getDrawer(); if (!d) return;
+    d.hidden = false; d.removeAttribute('hidden');
+    const h = getHamb(); if (h) h.setAttribute('aria-expanded', 'true');
   }
   function closeDrawer() {
-    drawer.hidden = true;
-    drawer.setAttribute('hidden', '');
-    hamburger.setAttribute('aria-expanded', 'false');
+    const d = getDrawer(); if (!d) return;
+    d.hidden = true; d.setAttribute('hidden', '');
+    const h = getHamb(); if (h) h.setAttribute('aria-expanded', 'false');
   }
 
   window.__closeNavDrawer = closeDrawer;
+  window.__openNavDrawer  = openDrawer;
 
-  hamburger.addEventListener('click', openDrawer);
-
-  // Delegation SIMPLES — fecha ao clicar em qualquer [data-nav-drawer-close] OU [data-nav-drawer-link]
-  drawer.addEventListener('click', (e) => {
-    if (e.target.closest('[data-nav-drawer-close]') || e.target.closest('[data-nav-drawer-link]')) {
+  // Capture phase = roda ANTES de qualquer outro listener (confetti, etc.)
+  window.addEventListener('click', (e) => {
+    if (!e.target || !e.target.closest) return;
+    // X ou overlay → fecha
+    if (e.target.closest('[data-nav-drawer-close]')) {
+      e.preventDefault();
+      e.stopPropagation();
       closeDrawer();
+      return;
     }
-  });
+    // Link do menu → fecha + deixa navegar
+    if (e.target.closest('[data-nav-drawer-link]')) {
+      closeDrawer();
+      return;
+    }
+    // Hamburger → abre
+    if (e.target.closest('#navHamburger')) {
+      e.preventDefault();
+      e.stopPropagation();
+      openDrawer();
+      return;
+    }
+  }, true);
+
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !drawer.hidden) closeDrawer();
+    const d = getDrawer();
+    if (e.key === 'Escape' && d && !d.hidden) closeDrawer();
   });
 })();
 
