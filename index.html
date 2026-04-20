@@ -2025,26 +2025,18 @@
     .testimonials-scroll-sticky { position: static; height: auto; display: block; padding: 32px 0; overflow: visible; }
     .testimonials-grid-scroll .testimonial-card { transform: none !important; opacity: 1 !important; }
 
-    /* Carrossel horizontal: 1 card por vez, snap mandatório */
+    /* Cards empilhados verticalmente (revertido — um em baixo do outro) */
     .testimonials-grid {
       display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      overflow-y: visible;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      gap: 16px;
+      flex-direction: column;
+      gap: 20px;
       padding: 12px 20px 20px;
-      margin: 20px 0 0;
-      max-width: 100%;
-      scrollbar-width: none;
+      margin: 20px auto 0;
+      max-width: 340px;
     }
-    .testimonials-grid::-webkit-scrollbar { display: none; }
     .testimonials-grid .testimonial-card {
-      flex: 0 0 calc(100% - 40px);
-      scroll-snap-align: center;
-      width: auto;
-      max-width: none;
+      width: 100%;
+      max-width: 100%;
       margin: 0;
       border-radius: 16px;
     }
@@ -2136,22 +2128,32 @@
   @media (max-width: 768px) {
     .features-scroll-outer { height: auto; }
     .features-scroll-sticky { position: static; height: auto; display: block; padding: 48px 0; }
-    /* Fix 7 — entrada alternada (esq/dir/esq) no mobile via IntersectionObserver */
+    /* Fix 7 — cards centralizados, largura igual aos blocos acima (340px),
+       entrada alternada (esq/dir/esq) via IntersectionObserver */
     .cosmos-features-grid-scroll .cosmos-feature {
       opacity: 0;
+      width: 100%;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
       will-change: transform, opacity;
       transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
     }
-    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="0"] { transform: translateX(-40px); }
-    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="1"] { transform: translateX(40px); }
-    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="2"] { transform: translateX(-40px); }
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="0"] { transform: translateX(-24px); }
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="1"] { transform: translateX(24px); }
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="2"] { transform: translateX(-24px); }
     .cosmos-features-grid-scroll .cosmos-feature.in-view {
-      transform: translateX(0);
-      opacity: 1;
+      transform: translateX(0) !important;
+      opacity: 1 !important;
     }
     .cosmos-features-grid-scroll .cosmos-feature-label { transform: none; opacity: 1; }
-    /* Mesma largura dos cards acima (cosmos-collage / audience) */
-    .cosmos-features-grid { max-width: 340px !important; }
+    /* Grid 100% com largura forçada a 340px centralizada, igual aos cards de cima */
+    .cosmos-features-grid {
+      max-width: 340px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      grid-template-columns: 1fr !important;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .features-scroll-outer { height: auto; }
@@ -2877,16 +2879,22 @@
       will-change: transform, opacity;
     }
     .cosmos-proativo-split .cosmos-split-left {
-      top: -9vh;
-      transform: translateY(80%);
+      top: 0;
+      bottom: auto;
+      transform: translateY(0);  /* começa sobre a imagem (escondido atrás dela pelo z-index) */
+      opacity: 1;
     }
     .cosmos-proativo-split .cosmos-split-right {
-      bottom: -12vh;
-      transform: translateY(80%);
-    }
-    .cosmos-proativo-split.text-in .cosmos-split-text {
-      transform: translateY(0);
+      top: calc(100% + 16px);
+      bottom: auto;
+      transform: translateY(calc(-100% - 16px));  /* começa atrás da imagem (parte de baixo) */
       opacity: 1;
+    }
+    .cosmos-proativo-split.text-in .cosmos-split-left {
+      transform: translateY(-100%);  /* sai POR CIMA da imagem, slide up */
+    }
+    .cosmos-proativo-split.text-in .cosmos-split-right {
+      transform: translateY(0);  /* sai POR BAIXO da imagem, slide down */
     }
     .cosmos-proativo-container .cosmos-subtitle { display: none; }
   }
@@ -2962,55 +2970,23 @@
     opacity: 0.95;
   }
 
-  /* Fix 5 — Mobile: cards empilham (slide OVER), com pausa artificial antes de cada flip */
+  /* Mobile: cada card é sticky. Gap grande (90vh) força o usuário a rolar
+     bastante ANTES do próximo card aparecer — dá tempo de virar e ler. */
   @media (max-width: 768px) {
-    .cosmos-flip-outer {
-      height: 360vh;  /* friction: ~260vh de scroll dentro do sticky */
-      position: relative;
-    }
-    .cosmos-flip-sticky {
-      position: sticky; top: 0;
-      height: 100vh; height: 100dvh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: flex-start;
-      padding: 80px 16px 0;
-      overflow: hidden;
-    }
-    .cosmos-flip-sticky .cosmos-title {
-      position: static;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .cosmos-flip-sticky .section-container {
+    .cosmos-flip-outer { height: auto; }
+    .cosmos-flip-sticky { position: static; height: auto; display: block; padding: 48px 0; overflow: visible; }
+    .cosmos-flip-sticky .cosmos-title { position: static; margin-bottom: 32px; }
+    .cosmos-collage-3col {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      flex: 1;
-      width: 100%;
-    }
-    .cosmos-collage-3col {
-      position: relative;
-      display: block !important;
-      max-width: 300px !important;
-      width: 100%;
+      gap: 90vh;
+      max-width: 340px !important;
       margin: 0 auto !important;
-      flex: 1;
-      gap: 0 !important;
     }
     .cosmos-card-flip {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      max-height: 60vh;
-      transform: translateY(130vh);
-      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform;
+      position: sticky;
+      top: 15vh;
     }
-    .cosmos-card-flip[data-flip-index="0"] { z-index: 1; }
-    .cosmos-card-flip[data-flip-index="1"] { z-index: 2; }
-    .cosmos-card-flip[data-flip-index="2"] { z-index: 3; }
-    .cosmos-card-flip.is-entered { transform: translateY(0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .cosmos-flip-outer { height: auto; }
@@ -4137,6 +4113,19 @@
   .app-left {
     max-width: 520px;
     text-align: center;
+    /* Glass translúcido: vê as imagens flutuantes passando por trás */
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+    backdrop-filter: blur(18px) saturate(1.25);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    padding: 36px 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+  [data-theme="dark"] .app-left {
+    background: rgba(22, 24, 27, 0.55);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .app-description {
@@ -4383,15 +4372,18 @@
   .waitlist-privacy {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 6px;
     font-family: 'Nunito', sans-serif;
     font-size: 13px;
     color: var(--text-muted);
     margin-top: 8px;
+    text-align: center;
   }
   .waitlist-privacy .wp-item {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
   }
   .waitlist-privacy .wp-item svg { flex-shrink: 0; color: var(--primary); }
@@ -5821,9 +5813,9 @@
     .footer-brand .footer-socials { justify-content: center; }
     .footer-middle { flex-direction: column; align-items: center; gap: 20px; padding-bottom: 24px; }
     .footer-stores { justify-content: center; align-items: center; flex-wrap: nowrap; gap: 12px; width: 100%; max-width: 340px; margin: 0 auto; }
-    /* Badges App Store e Google Play: mesmo box (155x46) */
+    /* Badges App Store e Google Play: mesmo box (155x46) com PNGs padronizados */
     .footer-store { width: 155px; height: 46px; display: flex; align-items: center; justify-content: center; flex: 0 0 155px; }
-    .footer-store img { width: 100%; height: 100%; object-fit: contain; }
+    .footer-store img { width: 100%; height: 100%; object-fit: contain; display: block; }
     .footer-controls { justify-content: center; }
     .footer-bottom { justify-content: center; }
     .footer-copy { text-align: center; font-size: 12px; }
@@ -5940,20 +5932,19 @@
     .side-tags { display: none; }
 
     .section-container { padding: 0 20px; }
-    .section-proof, .section-pricing, .section-cta, .section-app, .section-faq { padding: 80px 0; }
-    .cosmos-block { padding: 72px 0; }
-    /* Fix 2 — espaçamento uniforme entre header e título de cada seção no mobile.
-       Mantém padding-bottom original; força apenas o top para eliminar saltos visuais. */
+    /* Fix 2 — espaçamento uniforme entre seções no mobile.
+       Top 56px (header→título) + bottom 32px para não somar gaps exagerados. */
     .section-audience,
     .section-video,
     .section-screens,
     .section-proof,
     .section-pricing,
+    .section-cta,
     .section-app,
     .section-faq,
     .section-blog,
     .jars-section,
-    .cosmos-block { padding-top: 72px; }
+    .cosmos-block { padding: 56px 0 32px !important; }
     .section-title { margin-top: 0; }
     .blog-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; max-width: 360px; gap: 32px; padding-top: 16px; }
@@ -7573,7 +7564,7 @@
     <div class="footer-middle">
       <div class="footer-stores">
         <span class="footer-store is-disabled" role="img" aria-label="Em breve na App Store">
-          <img src="assets/store-badges/app-store-badge.svg" alt="Download on the App Store" height="40">
+          <img src="assets/store-badges/app-store-badge.png" alt="Download on the App Store" height="40">
         </span>
         <span class="footer-store is-disabled" role="img" aria-label="Em breve no Google Play">
           <img src="assets/store-badges/google-play-badge.png" alt="Get it on Google Play" height="40">
@@ -8026,74 +8017,6 @@ if (prefersReducedMotion) {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
   update();
-})();
-
-// ─── TESTIMONIALS CAROUSEL autoplay (mobile) — swipe + loop + pause on touch ───
-(function() {
-  const grid = document.getElementById('testimonialsScrollGrid');
-  if (!grid) return;
-  const mq = matchMedia('(max-width: 768px)');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
-
-  const INTERVAL_MS = 2800;   // 2.8s entre slides
-  const RESUME_MS = 4500;     // reinicia autoplay após interação
-  let timer = null;
-  let paused = false;
-  let userIdleTimer = null;
-
-  function visible() { return mq.matches; }
-
-  function cardStep() {
-    const first = grid.querySelector('.testimonial-card');
-    if (!first) return grid.clientWidth;
-    // gap é column-gap no flex; usa diferença entre 2 cards se existirem 2
-    const cards = grid.querySelectorAll('.testimonial-card');
-    if (cards.length >= 2) {
-      return cards[1].offsetLeft - cards[0].offsetLeft;
-    }
-    return first.offsetWidth;
-  }
-
-  function advance() {
-    if (!visible() || paused) return;
-    const step = cardStep();
-    const max = grid.scrollWidth - grid.clientWidth - 2;
-    const next = grid.scrollLeft + step;
-    if (next > max) {
-      grid.scrollTo({ left: 0, behavior: 'smooth' });
-    } else {
-      grid.scrollBy({ left: step, behavior: 'smooth' });
-    }
-  }
-
-  function start() {
-    stop();
-    if (!visible()) return;
-    timer = setInterval(advance, INTERVAL_MS);
-  }
-  function stop() {
-    if (timer) { clearInterval(timer); timer = null; }
-  }
-  function pauseUser() {
-    paused = true;
-    stop();
-    clearTimeout(userIdleTimer);
-    userIdleTimer = setTimeout(() => { paused = false; start(); }, RESUME_MS);
-  }
-
-  // Pausa ao tocar/arrastar, retoma depois do idle
-  grid.addEventListener('touchstart', pauseUser, { passive: true });
-  grid.addEventListener('pointerdown', pauseUser);
-  // Pausa quando página não está visível
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stop(); else if (!paused && visible()) start();
-  });
-  // Re-avalia em resize (ex: rotação)
-  mq.addEventListener?.('change', () => { visible() ? start() : stop(); });
-  window.addEventListener('resize', () => { if (!paused) start(); }, { passive: true });
-
-  start();
 })();
 
 // ─── SCROLL-REVEAL Features (cards 2/3 saem de trás do 1; labels no fim) ───
