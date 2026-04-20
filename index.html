@@ -3014,6 +3014,11 @@
     object-position: center 15%;
     border-radius: 14px;
   }
+  /* Variant for transparent PNG/WebP photos — show full figure with bg color */
+  .testimonial-photo-fit img {
+    object-fit: contain;
+    object-position: center bottom;
+  }
 
   .photo-placeholder {
     width: 100%;
@@ -6516,8 +6521,8 @@
 
         <div class="testimonials-grid testimonials-grid-scroll" id="testimonialsScrollGrid">
           <div class="testimonial-card testimonial-dark" data-testimonial-index="0">
-            <div class="testimonial-photo">
-              <div class="photo-placeholder">YM</div>
+            <div class="testimonial-photo testimonial-photo-fit" style="background: var(--primary);">
+              <img src="assets/photos/yves-matos.webp" alt="Yves Matos" loading="lazy">
             </div>
             <div class="testimonial-body">
               <p>"Sinto que finalmente entendo o que meu cachorro precisa. Isso muda tudo."</p>
