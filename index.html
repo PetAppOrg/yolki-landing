@@ -4373,6 +4373,80 @@
     animation: fadeIn 0.3s ease-out;
   }
 
+  /* ─── Referral invite modal (shares .exit-intent-* overlay/card/close) ─── */
+  .invite-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  .invite-form label {
+    display: block;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .invite-form label .opt {
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-left: 4px;
+  }
+  .invite-form input,
+  .invite-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  .invite-form textarea {
+    min-height: 72px;
+    resize: vertical;
+  }
+  .invite-form input:focus,
+  .invite-form textarea:focus { border-color: var(--primary); }
+  .invite-form .char-count {
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: -4px;
+  }
+  .invite-submit {
+    width: 100%;
+    background: var(--secondary);
+    color: #fff;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .invite-submit:hover { background: #8F52E8; }
+  .invite-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .invite-feedback {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: none;
+  }
+  .invite-feedback.visible { display: block; animation: fadeIn 0.2s ease-out; }
+  .invite-feedback.ok { background: rgba(94, 184, 100, 0.12); color: #2f7a37; }
+  .invite-feedback.err { background: rgba(255, 0, 11, 0.08); color: #b91c1c; }
+
   @media (max-width: 768px) {
     .exit-intent-card { padding: 36px 24px 28px; }
     .exit-intent-form { flex-direction: column; gap: 10px; }
@@ -7691,6 +7765,19 @@ if (prefersReducedMotion) {
   const shareEmail = document.getElementById('shareEmail');
   const closeBtn = document.getElementById('waitlistSuccessClose');
 
+  // Invite modal refs
+  const inviteModal = document.getElementById('inviteModal');
+  const inviteOverlay = document.getElementById('inviteModalOverlay');
+  const inviteClose = document.getElementById('inviteModalClose');
+  const inviteForm = document.getElementById('inviteForm');
+  const inviteToEmail = document.getElementById('inviteToEmail');
+  const inviteToName = document.getElementById('inviteToName');
+  const inviteMessage = document.getElementById('inviteMessage');
+  const inviteSubmit = document.getElementById('inviteSubmit');
+  const inviteFeedback = document.getElementById('inviteFeedback');
+  const inviteCharCount = document.getElementById('inviteCharCount');
+  let currentUserEmail = null;
+
   if (closeBtn) {
     closeBtn.addEventListener('click', function() {
       success.style.display = 'none';
@@ -7726,12 +7813,141 @@ if (prefersReducedMotion) {
     const shareText = `Entrei na lista do Yolki Pet — app que ajuda o meu pet a viver mais 🐾. Garante sua vaga comigo:`;
     shareWA.href = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + link)}`;
     shareX.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(link)}`;
-    shareEmail.href = `mailto:?subject=${encodeURIComponent('Conheça o Yolki Pet')}&body=${encodeURIComponent(shareText + '\n\n' + link)}`;
+    shareEmail.href = '#';
+
+    currentUserEmail = (result.email || '').toLowerCase() || null;
 
     form.style.display = 'none';
     success.style.display = 'block';
     const appSection = document.querySelector('.section-app');
     if (appSection) appSection.classList.add('is-showing-success');
+  }
+
+  // ─── Invite modal ───
+  function openInviteModal() {
+    if (!inviteModal) return;
+    inviteFeedback.className = 'invite-feedback';
+    inviteFeedback.textContent = '';
+    inviteForm.reset();
+    if (inviteCharCount) inviteCharCount.textContent = '0 / 500';
+    inviteSubmit.disabled = false;
+    inviteSubmit.textContent = 'Enviar convite';
+    inviteModal.classList.add('visible');
+    inviteModal.setAttribute('aria-hidden', 'false');
+    setTimeout(() => inviteToEmail && inviteToEmail.focus(), 50);
+  }
+  function closeInviteModal() {
+    if (!inviteModal) return;
+    inviteModal.classList.remove('visible');
+    inviteModal.setAttribute('aria-hidden', 'true');
+  }
+  function showInviteFeedback(kind, msg) {
+    inviteFeedback.className = 'invite-feedback visible ' + (kind === 'ok' ? 'ok' : 'err');
+    inviteFeedback.textContent = msg;
+  }
+  function formatRetry(iso) {
+    try {
+      const d = new Date(iso);
+      const now = new Date();
+      const sameDay = d.toDateString() === now.toDateString();
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      return sameDay ? `hoje às ${hh}:${mm}` : `${d.toLocaleDateString('pt-BR')} às ${hh}:${mm}`;
+    } catch (_) { return ''; }
+  }
+
+  if (shareEmail) {
+    shareEmail.addEventListener('click', function(e) {
+      e.preventDefault();
+      openInviteModal();
+    });
+  }
+  if (inviteClose) inviteClose.addEventListener('click', closeInviteModal);
+  if (inviteOverlay) inviteOverlay.addEventListener('click', closeInviteModal);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && inviteModal && inviteModal.classList.contains('visible')) {
+      closeInviteModal();
+    }
+  });
+  if (inviteMessage && inviteCharCount) {
+    inviteMessage.addEventListener('input', function() {
+      inviteCharCount.textContent = (inviteMessage.value.length || 0) + ' / 500';
+    });
+  }
+  if (inviteForm) {
+    inviteForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (!currentUserEmail) {
+        showInviteFeedback('err', 'Sessão expirada. Recarregue a página e tente de novo.');
+        return;
+      }
+      const toEmail = (inviteToEmail.value || '').trim();
+      const toName = (inviteToName.value || '').trim();
+      const message = (inviteMessage.value || '').trim();
+      if (!toEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(toEmail)) {
+        showInviteFeedback('err', 'Informe um email válido do seu amigo.');
+        inviteToEmail.focus();
+        return;
+      }
+      if (toEmail.toLowerCase() === currentUserEmail) {
+        showInviteFeedback('err', 'Esse é o seu próprio email 🙂');
+        return;
+      }
+      if (!window.sbClient) {
+        showInviteFeedback('err', 'Serviço indisponível. Tente de novo em instantes.');
+        return;
+      }
+      inviteSubmit.disabled = true;
+      inviteSubmit.textContent = 'Enviando...';
+      try {
+        const { data: res, error } = await window.sbClient.rpc('send_referral_invite', {
+          p_from_email: currentUserEmail,
+          p_to_email: toEmail,
+          p_to_name: toName || null,
+          p_message: message || null,
+        });
+        if (error) throw error;
+        if (res && res.success) {
+          const rem = (typeof res.invites_remaining === 'number') ? res.invites_remaining : null;
+          const suffix = rem === null ? '' : (rem === 0
+            ? ' Você atingiu o limite de hoje.'
+            : ` Você ainda pode enviar ${rem} ${rem === 1 ? 'convite' : 'convites'} hoje.`);
+          showInviteFeedback('ok', 'Convite enviado! 🐾' + suffix);
+          inviteSubmit.textContent = 'Enviado ✓';
+          inviteToEmail.value = '';
+          inviteToName.value = '';
+          inviteMessage.value = '';
+          if (inviteCharCount) inviteCharCount.textContent = '0 / 500';
+          setTimeout(() => { inviteSubmit.disabled = false; inviteSubmit.textContent = 'Enviar outro'; }, 1200);
+        } else if (res && res.error === 'rate_limited') {
+          const when = res.retry_after ? formatRetry(res.retry_after) : '';
+          showInviteFeedback('err', `Você já enviou 10 convites hoje.${when ? ' Próximo envio liberado ' + when + '.' : ''}`);
+          inviteSubmit.disabled = false;
+          inviteSubmit.textContent = 'Enviar convite';
+        } else if (res && res.error === 'invalid_to_email') {
+          showInviteFeedback('err', 'Email do amigo parece inválido.');
+          inviteSubmit.disabled = false;
+          inviteSubmit.textContent = 'Enviar convite';
+        } else if (res && res.error === 'cannot_invite_self') {
+          showInviteFeedback('err', 'Esse é o seu próprio email 🙂');
+          inviteSubmit.disabled = false;
+          inviteSubmit.textContent = 'Enviar convite';
+        } else if (res && res.error === 'sender_not_in_waitlist') {
+          showInviteFeedback('err', 'Recarregue a página e entre na fila antes de convidar.');
+          inviteSubmit.disabled = false;
+          inviteSubmit.textContent = 'Enviar convite';
+        } else {
+          showInviteFeedback('err', 'Não deu pra enviar agora. Tente de novo em instantes.');
+          inviteSubmit.disabled = false;
+          inviteSubmit.textContent = 'Enviar convite';
+        }
+      } catch (err) {
+        console.error('Invite error:', err);
+        showInviteFeedback('err', 'Não deu pra enviar agora. Tente de novo em instantes.');
+        inviteSubmit.disabled = false;
+        inviteSubmit.textContent = 'Enviar convite';
+      }
+    });
   }
 
   // Copy to clipboard
@@ -8475,6 +8691,36 @@ if (prefersReducedMotion) {
       <h3>Pronto!</h3>
       <p>Já separamos as dicas. Fica de olho no seu inbox nos próximos minutos.</p>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- REFERRAL INVITE MODAL                        -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="exit-intent-modal" id="inviteModal" role="dialog" aria-labelledby="invite-modal-title" aria-hidden="true">
+  <div class="exit-intent-overlay" id="inviteModalOverlay"></div>
+  <div class="exit-intent-card" role="document">
+    <button type="button" class="exit-intent-close" id="inviteModalClose" aria-label="Fechar">×</button>
+    <div class="exit-intent-emoji" aria-hidden="true">💌</div>
+    <h3 id="invite-modal-title">Convide um amigo</h3>
+    <p>A gente envia o convite pra ele com o seu link — você sobe na fila quando ele entrar.</p>
+    <form class="invite-form" id="inviteForm" novalidate>
+      <div>
+        <label for="inviteToEmail">Email do amigo</label>
+        <input type="email" id="inviteToEmail" name="to_email" placeholder="amigo@email.com" required autocomplete="off" inputmode="email">
+      </div>
+      <div>
+        <label for="inviteToName">Nome do amigo <span class="opt">(opcional)</span></label>
+        <input type="text" id="inviteToName" name="to_name" placeholder="Ex: Ana" autocomplete="off" maxlength="60">
+      </div>
+      <div>
+        <label for="inviteMessage">Mensagem pessoal <span class="opt">(opcional)</span></label>
+        <textarea id="inviteMessage" name="message" placeholder="Achei legal e lembrei de você…" maxlength="500"></textarea>
+        <div class="char-count" id="inviteCharCount">0 / 500</div>
+      </div>
+      <button type="submit" class="invite-submit" id="inviteSubmit">Enviar convite</button>
+      <div class="invite-feedback" id="inviteFeedback" role="status" aria-live="polite"></div>
+    </form>
   </div>
 </div>
 

@@ -77,6 +77,30 @@ yolki-landing/
 - Consulta posição de quem já se cadastrou (para returning visitor).
 - Retorna: `{ found, position, referral_code, referrals_count, name }`
 
+#### `send_referral_invite(p_from_email, p_to_email, p_to_name, p_message)`
+- Usado pelo modal "Convide um amigo" no success state.
+- Valida: sender existe na waitlist, to_email bem formado, não é o próprio email, mensagem ≤ 500 chars.
+- Rate limit: **10 envios por `from_email` a cada 24h**. Se estourou, retorna `{ success: false, error: 'rate_limited', retry_after: <timestamp> }`.
+- Log em `public.referral_invites` (só inserido quando o envio é de fato disparado).
+- Dispara async via `pg_net.http_post` para `https://app.loops.so/api/v1/transactional` usando:
+  - Key do Vault: `loops_api_key`
+  - Template ID do Vault: `loops_referral_transactional_id` (vazio por padrão — configure no dashboard do Loops e salve aqui)
+- `dataVariables` enviadas pro template: `fromName`, `toName`, `message`, `referralLink`.
+- Retorna: `{ success, invite_id, invites_remaining }` no happy path. Outros erros: `missing_from_email`, `missing_to_email`, `invalid_to_email`, `cannot_invite_self`, `sender_not_in_waitlist`, `message_too_long`, `email_not_configured`.
+
+### Tabela `referral_invites`
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `id` | UUID (pk) | Auto |
+| `from_email` | TEXT | Waitlist do remetente |
+| `to_email` | TEXT | Amigo convidado |
+| `to_name` | TEXT nullable | Para saudação no email |
+| `message` | TEXT nullable | Mensagem pessoal (≤ 500 chars) |
+| `loops_transaction_id` | TEXT nullable | ID da requisição pg_net (pra tracing) |
+| `sent_at` | TIMESTAMPTZ | Auto |
+
+Index em `(from_email, sent_at DESC)` para o rate-limit. RLS habilitado, sem policies — tudo via SECURITY DEFINER.
+
 ### Como a "posição" é calculada
 ```
 position = (quem entrou antes + 1) - (seus convites × 10)
