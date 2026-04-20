@@ -700,14 +700,36 @@
     select { font-size: 16px !important; }
   }
 
-  /* Parada artificial em seções chave — user precisa de um segundo scroll pra continuar */
+  /* Fix 3 — Scroll snap controlado: 1 seção por vez em mobile.
+     Proximity (não mandatory) para conviver com sticky-scroll stories.
+     scroll-snap-stop: always só em desktop; mobile usa normal pra não travar. */
   .section-video,
   .section-audience,
-  #features,
   .jars-section,
-  .section-proof {
+  .section-proof,
+  .section-pricing,
+  .section-faq,
+  .section-app,
+  .section-screens {
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+  /* Seções com sticky-scroll (stories) NUNCA devem snap — quebra a animação */
+  .cosmos-flip-outer,
+  .cosmos-proativo-outer,
+  .features-scroll-outer,
+  .testimonials-scroll-outer {
+    scroll-snap-align: none !important;
+  }
+  @media (max-width: 768px) {
+    .section-video,
+    .section-audience,
+    .jars-section,
+    .section-proof,
+    .section-pricing,
+    .section-faq,
+    .section-app,
+    .section-screens { scroll-snap-stop: normal; }
   }
   body {
     font-family: 'Nunito', sans-serif;
