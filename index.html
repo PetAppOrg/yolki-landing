@@ -4135,11 +4135,60 @@
     font-size: 13px;
     line-height: 1.5;
     color: var(--text-muted);
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .referral-box .referral-desc strong {
     color: var(--text-primary);
     font-weight: 700;
+  }
+
+  .referral-rewards {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px;
+    display: grid;
+    gap: 6px;
+  }
+  .referral-reward {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+  }
+  .reward-tier {
+    display: inline-block;
+    padding: 3px 9px;
+    background: var(--secondary);
+    color: #fff;
+    border-radius: 999px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .reward-prize {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .reward-prize strong { font-weight: 700; }
+  [data-theme="dark"] .referral-reward {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+  .referral-rewards-note {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: -6px 0 14px;
   }
 
   .referral-link-row {
@@ -5530,8 +5579,6 @@
       <div class="lang-menu" id="langMenu" hidden role="menu">
         <button type="button" data-lang="en" data-code="EN" role="menuitem"><span class="lang-code">EN</span> English</button>
         <button type="button" data-lang="pt" data-code="PT" role="menuitem" class="active"><span class="lang-code">PT</span> Português</button>
-        <button type="button" data-lang="es" data-code="ES" role="menuitem"><span class="lang-code">ES</span> Español</button>
-        <button type="button" data-lang="de" data-code="DE" role="menuitem"><span class="lang-code">DE</span> Deutsch</button>
       </div>
     </div>
   </div>
@@ -6460,7 +6507,18 @@
           </div>
           <div class="referral-box">
             <h4>Quer subir na fila?</h4>
-            <p class="referral-desc">A cada amigo que entrar pelo seu link você sobe <strong>3 posições no ranking</strong>. Vamos lançar em blocos de 100 inscritos — o <strong>Top 3 de cada lançamento</strong> ganha <strong>1 mês de Solo grátis</strong>, e do <strong>4º ao 10º</strong> <strong>50% de desconto nos 3 primeiros meses</strong>.</p>
+            <p class="referral-desc">Cada amigo que entra pelo seu link te sobe <strong>3 posições</strong>.</p>
+            <ul class="referral-rewards">
+              <li class="referral-reward">
+                <span class="reward-tier">Top 3</span>
+                <span class="reward-prize">1 mês de Solo <strong>grátis</strong></span>
+              </li>
+              <li class="referral-reward">
+                <span class="reward-tier">4º ao 10º</span>
+                <span class="reward-prize"><strong>50% off</strong> nos 3 primeiros meses</span>
+              </li>
+            </ul>
+            <p class="referral-rewards-note">Premiações por bloco de 100 inscritos.</p>
             <div class="referral-link-row">
               <input type="text" class="referral-link" id="referralLink" readonly aria-label="Seu link de convite">
               <button type="button" class="referral-copy" id="referralCopy" aria-label="Copiar link"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
