@@ -7893,6 +7893,74 @@ if (prefersReducedMotion) {
   update();
 })();
 
+// ─── TESTIMONIALS CAROUSEL autoplay (mobile) — swipe + loop + pause on touch ───
+(function() {
+  const grid = document.getElementById('testimonialsScrollGrid');
+  if (!grid) return;
+  const mq = matchMedia('(max-width: 768px)');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  const INTERVAL_MS = 2800;   // 2.8s entre slides
+  const RESUME_MS = 4500;     // reinicia autoplay após interação
+  let timer = null;
+  let paused = false;
+  let userIdleTimer = null;
+
+  function visible() { return mq.matches; }
+
+  function cardStep() {
+    const first = grid.querySelector('.testimonial-card');
+    if (!first) return grid.clientWidth;
+    // gap é column-gap no flex; usa diferença entre 2 cards se existirem 2
+    const cards = grid.querySelectorAll('.testimonial-card');
+    if (cards.length >= 2) {
+      return cards[1].offsetLeft - cards[0].offsetLeft;
+    }
+    return first.offsetWidth;
+  }
+
+  function advance() {
+    if (!visible() || paused) return;
+    const step = cardStep();
+    const max = grid.scrollWidth - grid.clientWidth - 2;
+    const next = grid.scrollLeft + step;
+    if (next > max) {
+      grid.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      grid.scrollBy({ left: step, behavior: 'smooth' });
+    }
+  }
+
+  function start() {
+    stop();
+    if (!visible()) return;
+    timer = setInterval(advance, INTERVAL_MS);
+  }
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+  function pauseUser() {
+    paused = true;
+    stop();
+    clearTimeout(userIdleTimer);
+    userIdleTimer = setTimeout(() => { paused = false; start(); }, RESUME_MS);
+  }
+
+  // Pausa ao tocar/arrastar, retoma depois do idle
+  grid.addEventListener('touchstart', pauseUser, { passive: true });
+  grid.addEventListener('pointerdown', pauseUser);
+  // Pausa quando página não está visível
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop(); else if (!paused && visible()) start();
+  });
+  // Re-avalia em resize (ex: rotação)
+  mq.addEventListener?.('change', () => { visible() ? start() : stop(); });
+  window.addEventListener('resize', () => { if (!paused) start(); }, { passive: true });
+
+  start();
+})();
+
 // ─── SCROLL-REVEAL Features (cards 2/3 saem de trás do 1; labels no fim) ───
 (function() {
   const outer = document.getElementById('featuresScrollOuter');
