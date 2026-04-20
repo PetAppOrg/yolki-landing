@@ -1439,27 +1439,33 @@
     color: var(--text-primary);
   }
 
-  /* Social proof pill — avatares + contagem */
+  /* Social proof pill — avatares + contagem (tamanho fluido pra caber na órbita) */
+  .orbit-proof-line.yw-social {
+    padding: clamp(4px, 0.7vw, 8px) clamp(10px, 1.4vw, 16px);
+    max-width: 100%;
+  }
   .yw-social {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: clamp(6px, 1vw, 12px);
     font-family: 'Nunito', sans-serif;
-    font-size: 16px;
+    font-size: clamp(11px, 1.2vw, 15px);
     color: #171717;
   }
-  .yw-avatars { display: inline-flex; }
+  .yw-avatars { display: inline-flex; flex-shrink: 0; }
   .yw-av {
-    width: 32px; height: 32px;
+    width: clamp(22px, 2.6vw, 32px);
+    height: clamp(22px, 2.6vw, 32px);
     border-radius: 50%;
     border: 2px solid #fff;
-    margin-left: -10px;
+    margin-left: clamp(-10px, -0.9vw, -8px);
     display: inline-flex; align-items: center; justify-content: center;
-    color: #fff; font-weight: 700; font-size: 13px;
+    color: #fff; font-weight: 700;
+    font-size: clamp(10px, 1vw, 13px);
     font-family: 'Poppins', sans-serif;
   }
   .yw-av:first-child { margin-left: 0; }
-  .yw-text { margin: 0; }
+  .yw-text { margin: 0; line-height: 1.2; }
   .yw-count {
     color: #8F06CD;
     font-family: 'Poppins', sans-serif;
