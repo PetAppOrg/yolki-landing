@@ -2935,22 +2935,55 @@
     opacity: 0.95;
   }
 
-  /* Mobile: cada card é sticky individualmente, gap de 45vh cria "pausa" no scroll */
+  /* Fix 5 — Mobile: cards empilham (slide OVER), com pausa artificial antes de cada flip */
   @media (max-width: 768px) {
-    .cosmos-flip-outer { height: auto; }
-    .cosmos-flip-sticky { position: static; height: auto; display: block; padding: 48px 0; overflow: visible; }
-    .cosmos-flip-sticky .cosmos-title { position: static; margin-bottom: 32px; }
-    .cosmos-collage-3col {
+    .cosmos-flip-outer {
+      height: 360vh;  /* friction: ~260vh de scroll dentro do sticky */
+      position: relative;
+    }
+    .cosmos-flip-sticky {
+      position: sticky; top: 0;
+      height: 100vh; height: 100dvh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      padding: 80px 16px 0;
+      overflow: hidden;
+    }
+    .cosmos-flip-sticky .cosmos-title {
+      position: static;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .cosmos-flip-sticky .section-container {
       display: flex;
       flex-direction: column;
-      gap: 45vh;
-      max-width: 340px !important;
+      align-items: center;
+      flex: 1;
+      width: 100%;
+    }
+    .cosmos-collage-3col {
+      position: relative;
+      display: block !important;
+      max-width: 300px !important;
+      width: 100%;
       margin: 0 auto !important;
+      flex: 1;
+      gap: 0 !important;
     }
     .cosmos-card-flip {
-      position: sticky;
-      top: 18vh;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      max-height: 60vh;
+      transform: translateY(130vh);
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
     }
+    .cosmos-card-flip[data-flip-index="0"] { z-index: 1; }
+    .cosmos-card-flip[data-flip-index="1"] { z-index: 2; }
+    .cosmos-card-flip[data-flip-index="2"] { z-index: 3; }
+    .cosmos-card-flip.is-entered { transform: translateY(0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .cosmos-flip-outer { height: auto; }
@@ -7785,28 +7818,40 @@ if (prefersReducedMotion) {
 
   const isMobile = matchMedia('(max-width: 768px)').matches;
   if (isMobile) {
-    // Mobile: sticky per card. Cada card segura no viewport enquanto user scrolla.
-    // Flip dispara quando o card está "centralizado" (topo a 18vh = stuck position)
-    // com delay de 1200ms após atingir ~80% visível (segura antes de flipar).
-    // Uma vez flipado, não desvira.
-    const FLIP_DELAY = 1200;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const card = entry.target;
-        if (card.classList.contains('is-flipped')) return;
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
-          if (!card.__flipTimer) {
-            card.__flipTimer = setTimeout(() => {
-              card.classList.add('is-flipped');
-              card.__flipTimer = null;
-            }, FLIP_DELAY);
-          }
-        } else {
-          if (card.__flipTimer) { clearTimeout(card.__flipTimer); card.__flipTimer = null; }
-        }
+    // Mobile: progressão step-based baseada em progress do outer sticky.
+    // 6 marcos: enter0 → flip0 → enter1 → flip1 → enter2 → flip2.
+    // O outer tem 360vh — o usuário é FORÇADO a rolar todo o caminho,
+    // não dá pra pular com 1 swipe: a sticky segura até acabar o scroll.
+    const STEPS = [
+      { at: 0.03, card: 0, act: 'enter' },
+      { at: 0.18, card: 0, act: 'flip'  },
+      { at: 0.35, card: 1, act: 'enter' },
+      { at: 0.50, card: 1, act: 'flip'  },
+      { at: 0.67, card: 2, act: 'enter' },
+      { at: 0.82, card: 2, act: 'flip'  }
+    ];
+    let ticking = false;
+    function update() {
+      const rect = outer.getBoundingClientRect();
+      const total = outer.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      const progress = Math.min(1, Math.max(0, -rect.top / total));
+      STEPS.forEach(step => {
+        const card = cards[step.card];
+        if (!card) return;
+        const cls = step.act === 'enter' ? 'is-entered' : 'is-flipped';
+        if (progress >= step.at) card.classList.add(cls);
+        else card.classList.remove(cls);
       });
-    }, { threshold: [0, 0.3, 0.7, 0.9] });
-    cards.forEach(c => io.observe(c));
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
     return;
   }
 
