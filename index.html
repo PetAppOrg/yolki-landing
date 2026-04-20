@@ -5235,10 +5235,16 @@
     align-items: center;
     flex-wrap: nowrap;
     background: #fff;
-    border-radius: 999px;
+    border-radius: 9999px;
     padding: 4px;
     gap: 4px;
     max-width: 380px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .footer-subscribe.is-success {
+    background: #fff;
+    border-radius: 9999px;
     overflow: hidden;
   }
   .footer-subscribe input {
@@ -5264,13 +5270,20 @@
     opacity: 1;
     cursor: default;
   }
+  /* Autofill: keep input transparent so the form's pill shape stays clean */
+  @keyframes footer-subscribe-autofill-fix {
+    to { background: transparent; color: #1A1A1A; }
+  }
   .footer-subscribe input:-webkit-autofill,
   .footer-subscribe input:-webkit-autofill:hover,
-  .footer-subscribe input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #1A1A1A;
-    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  .footer-subscribe input:-webkit-autofill:focus,
+  .footer-subscribe input:-webkit-autofill:active {
+    -webkit-text-fill-color: #1A1A1A !important;
     caret-color: #1A1A1A;
-    transition: background-color 9999s ease-out 0s;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    transition: background-color 9999s ease-in-out 0s;
+    animation: footer-subscribe-autofill-fix 0s forwards;
   }
   .footer-subscribe button {
     flex: 0 0 auto;
