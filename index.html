@@ -5254,6 +5254,14 @@
     text-overflow: ellipsis;
   }
   .footer-subscribe input::placeholder { color: #999; opacity: 1; }
+  .footer-subscribe input:disabled,
+  .footer-subscribe input:read-only {
+    background: transparent;
+    color: #1A1A1A;
+    -webkit-text-fill-color: #1A1A1A;
+    opacity: 1;
+    cursor: default;
+  }
   .footer-subscribe input:-webkit-autofill,
   .footer-subscribe input:-webkit-autofill:hover,
   .footer-subscribe input:-webkit-autofill:focus {
@@ -5320,6 +5328,8 @@
     transition: border-color 0.15s ease;
   }
   .footer-store:hover { border-color: var(--primary); }
+  .footer-store.is-disabled { cursor: default; pointer-events: none; }
+  .footer-store.is-disabled:hover { border-color: #2A2A2A; }
   .footer-store svg { color: #fff; flex-shrink: 0; }
   .footer-store-text { display: flex; flex-direction: column; line-height: 1.15; }
   .footer-store-text small {
@@ -6974,9 +6984,9 @@
       <!-- COL 3 — EMPRESA -->
       <div class="footer-col">
         <h4>Empresa</h4>
-        <a href="#sobre">Sobre</a>
+        <a href="https://coflint.com" target="_blank" rel="noopener">Sobre</a>
         <a href="mailto:hello@yolki.pet">Contato</a>
-        <a href="#imprensa">Imprensa</a>
+        <a href="/imprensa.html">Imprensa</a>
         <div class="footer-empresa-divider" aria-hidden="true"></div>
         <p class="footer-company"><strong>Coflint OÜ</strong></p>
         <p class="footer-company-loc">Tallinn, Estônia · Europa</p>
@@ -7008,20 +7018,20 @@
     <!-- MIDDLE ROW — app badges + controls -->
     <div class="footer-middle">
       <div class="footer-stores">
-        <a href="#" class="footer-store" aria-label="Baixar na App Store">
+        <span class="footer-store is-disabled" role="img" aria-label="Em breve na App Store">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c.04 1.07-.4 2.16-1.05 2.95-.69.83-1.83 1.47-2.92 1.39-.13-1.07.43-2.18 1.06-2.92.7-.85 1.95-1.51 2.91-1.42zM20.5 17.21c-.55 1.27-1.21 2.53-2.27 2.55-1.04.02-1.38-.62-2.57-.62-1.18 0-1.55.6-2.54.64-1.02.04-1.79-1.37-2.35-2.62-1.16-2.55-2.05-7.21.86-10.36.94-1.02 2.18-1.65 3.5-1.67 1 .02 1.94.7 2.55.7.6 0 1.75-.86 2.95-.74.5.02 1.91.2 2.81 1.51-.07.05-1.68.99-1.66 2.95.02 2.34 2.05 3.13 2.07 3.14-.02.06-.32 1.13-1.06 2.22z"/></svg>
           <span class="footer-store-text">
             <small>Baixar na</small>
             <strong>App Store</strong>
           </span>
-        </a>
-        <a href="#" class="footer-store" aria-label="Disponível no Google Play">
+        </span>
+        <span class="footer-store is-disabled" role="img" aria-label="Em breve no Google Play">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.609-.92V2.734c0-.41.241-.768.608-.92zM14.5 12.7l2.41 2.41-10.7 6.18 8.29-8.59zm0-1.4L6.21 2.71l10.7 6.18-2.41 2.41zm6.39-1.43c.61.36.99.99.99 1.71 0 .72-.38 1.35-.98 1.71l-2.66 1.54-2.83-2.83 2.83-2.83 2.65 1.7z"/></svg>
           <span class="footer-store-text">
             <small>Disponível no</small>
             <strong>Google Play</strong>
           </span>
-        </a>
+        </span>
       </div>
       <div class="footer-controls">
         <button type="button" class="nav-theme js-theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
@@ -8545,7 +8555,7 @@ if (prefersReducedMotion) {
       form.classList.add('is-success');
       btn.textContent = '✓ Inscrito';
       btn.disabled = true;
-      emailInput.disabled = true;
+      emailInput.readOnly = true;
       setMicro('success', 'Pronto! Fica de olho no seu email.');
     } catch (err) {
       console.error('Footer subscribe error:', err);
