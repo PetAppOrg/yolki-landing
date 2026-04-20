@@ -3014,9 +3014,9 @@
   /* Variant for transparent PNG/WebP photos — show full figure with bg color */
   .testimonial-photo-fit img {
     object-fit: contain;
-    object-position: center bottom;
-    transform: scale(1.5);
-    transform-origin: center bottom;
+    object-position: center top;
+    transform: scale(1.2);
+    transform-origin: center top;
   }
 
   .photo-placeholder {
@@ -5130,7 +5130,7 @@
 
   /* COL 1 — BRAND */
   .footer-brand { display: flex; flex-direction: column; gap: 20px; }
-  .footer-logo { display: inline-block; line-height: 0; }
+  .footer-logo { display: inline-block; line-height: 0; margin-top: -28px; }
   .footer-logo img {
     height: 80px;
     width: auto;
@@ -5231,11 +5231,12 @@
     width: 100%;
     border: none;
     background: transparent;
-    padding: 10px 14px;
+    padding: 10px 12px;
     font-family: 'Poppins', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     color: #1A1A1A;
     outline: none;
+    text-overflow: ellipsis;
   }
   .footer-subscribe input::placeholder { color: #999; opacity: 1; }
   .footer-subscribe input:-webkit-autofill,
@@ -5252,10 +5253,10 @@
     color: #fff;
     border: none;
     border-radius: 999px;
-    padding: 10px 18px;
+    padding: 10px 14px;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
     transition: background 0.15s ease, opacity 0.15s ease;
     white-space: nowrap;
