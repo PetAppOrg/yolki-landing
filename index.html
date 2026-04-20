@@ -2825,8 +2825,43 @@
   .cosmos-proativo-container { padding-top: 0; }
 
   @media (max-width: 768px) {
-    .cosmos-proativo-outer { height: auto; }
-    .cosmos-proativo-sticky { position: static; height: auto; display: block; padding: 48px 0; }
+    /* Fix 6 — Proativo: sticky com texto saindo de trás da imagem */
+    .cosmos-proativo-outer { height: 220vh; }
+    .cosmos-proativo-sticky {
+      position: sticky; top: 0;
+      height: 100vh; height: 100dvh;
+      display: flex; align-items: center;
+      padding: 0; overflow: hidden;
+    }
+    .cosmos-proativo-split {
+      position: relative;
+      grid-template-columns: none !important;
+      max-width: 320px !important;
+      margin: 0 auto !important;
+      display: block !important;
+    }
+    .cosmos-proativo-split .cosmos-split-center { position: relative; z-index: 3; }
+    .cosmos-proativo-split .cosmos-split-text {
+      position: absolute; left: 0; right: 0;
+      z-index: 1;
+      opacity: 0;
+      text-align: center;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease;
+      will-change: transform, opacity;
+    }
+    .cosmos-proativo-split .cosmos-split-left {
+      top: -9vh;
+      transform: translateY(80%);
+    }
+    .cosmos-proativo-split .cosmos-split-right {
+      bottom: -12vh;
+      transform: translateY(80%);
+    }
+    .cosmos-proativo-split.text-in .cosmos-split-text {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .cosmos-proativo-container .cosmos-subtitle { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .cosmos-proativo-outer { height: auto; }
@@ -7813,13 +7848,16 @@ if (prefersReducedMotion) {
 
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = matchMedia('(max-width: 768px)').matches;
-  if (prefersReduced || isMobile) {
+  if (prefersReduced) {
     split.classList.add('is-revealed');
+    split.classList.add('text-in');
     return;
   }
 
   // Pausa curta antes + reveal cedo + pausa longa depois (tempo pra ler)
-  const REVEAL_AT = 0.15;
+  const REVEAL_AT = isMobile ? 0.28 : 0.15;
+  // No mobile, usamos .text-in (texto sobe de trás da imagem); desktop usa .is-revealed
+  const CLS = isMobile ? 'text-in' : 'is-revealed';
 
   let ticking = false;
   function update() {
@@ -7827,7 +7865,7 @@ if (prefersReducedMotion) {
     const total = outer.offsetHeight - window.innerHeight;
     if (total <= 0) return;
     const progress = Math.min(1, Math.max(0, -rect.top / total));
-    split.classList.toggle('is-revealed', progress >= REVEAL_AT);
+    split.classList.toggle(CLS, progress >= REVEAL_AT);
   }
 
   function onScroll() {
