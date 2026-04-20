@@ -3015,6 +3015,8 @@
   .testimonial-photo-fit img {
     object-fit: contain;
     object-position: center bottom;
+    transform: scale(1.5);
+    transform-origin: center bottom;
   }
 
   .photo-placeholder {
@@ -5130,7 +5132,7 @@
   .footer-brand { display: flex; flex-direction: column; gap: 20px; }
   .footer-logo { display: inline-block; line-height: 0; }
   .footer-logo img {
-    height: 40px;
+    height: 80px;
     width: auto;
     display: block;
     filter: brightness(0) invert(1);
@@ -5628,6 +5630,9 @@
   }
   .jars-section .jar-label.yolki { color: var(--primary); font-weight: 700; }
   .jars-section .jar-label.yolki img { height: 72px; width: auto; display: block; align-self: flex-start; margin-top: -12px; }
+  .jars-section .jar-label.yolki img.logo-dark { display: none; }
+  [data-theme="dark"] .jars-section .jar-label.yolki img.logo-light { display: none; }
+  [data-theme="dark"] .jars-section .jar-label.yolki img.logo-dark { display: block; filter: brightness(0) invert(1); }
   .jars-section .jar-label.competitor { color: var(--text-muted); }
 
   .jars-section .jars-disclaimer {
@@ -7015,8 +7020,9 @@
           <svg class="ic nav-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
         <div class="lang-picker">
-          <button type="button" class="lang-btn" aria-label="Escolher idioma" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="lang-btn" aria-label="Escolher idioma" aria-haspopup="menu" aria-expanded="false">
             <span class="lang-code js-lang-current">PT</span>
+            <svg class="lang-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="lang-menu lang-menu-up" hidden role="menu">
             <button type="button" data-lang="en" data-code="EN" role="menuitem"><span class="lang-code">EN</span> English</button>
