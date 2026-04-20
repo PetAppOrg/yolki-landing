@@ -1086,8 +1086,9 @@
   [data-theme="dark"] .yk-menu__nav a:active { background: rgba(255,255,255,0.08); }
   body.yk-menu-open {
     overflow: hidden;
-    touch-action: none;
+    /* touch-action: none removido: bloqueava clique no X e links do menu no iOS Safari */
   }
+  body.yk-menu-open .yk-menu__panel { overscroll-behavior: contain; }
 
   .lang-picker { position: relative; }
 

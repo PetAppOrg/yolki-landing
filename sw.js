@@ -1,4 +1,4 @@
-const CACHE = 'yolki-v3';
+const CACHE = 'yolki-v4';
 const ASSETS = [
   '/',
   '/index.html',
