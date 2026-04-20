@@ -8196,6 +8196,15 @@ if (prefersReducedMotion) {
     if (a) window.ykCloseMenu();
   });
 
+  // Listener para botão de fechar
+  var closeBtn = document.getElementById('ykMenuClose');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.ykCloseMenu();
+    });
+  }
+
   // Escape
   document.addEventListener('keydown', function(e) {
     var m = menu();
