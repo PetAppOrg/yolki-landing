@@ -2,9 +2,10 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Yolki Pet — Micro-aulas diárias e monitoramento de saúde validado por veterinários. Dois minutos por dia para você, anos a mais ao lado do seu pet.">
-<meta name="theme-color" content="#00C2B7">
+<meta name="theme-color" content="#FAFAF8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1113" media="(prefers-color-scheme: dark)">
 <meta property="og:title" content="Yolki Pet — Longevidade começa aqui">
 <meta property="og:description" content="Micro-aulas diárias e monitoramento de saúde validado por veterinários. Dois minutos por dia para você, anos a mais ao lado do seu pet.">
 <meta property="og:type" content="website">
@@ -985,15 +986,20 @@
   [data-theme="dark"] .nav-drawer-panel { background: #16181B; }
   @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
   .nav-drawer-close {
-    position: absolute; top: 18px; right: 18px;
-    width: 40px; height: 40px;
-    border: 0; background: transparent;
+    position: absolute; top: 12px; right: 12px;
+    width: 48px; height: 48px;
+    border: 0;
+    background: rgba(0, 0, 0, 0.04);
     color: var(--text-primary);
     border-radius: 50%;
     cursor: pointer;
     display: inline-flex; align-items: center; justify-content: center;
+    z-index: 10;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
-  .nav-drawer-close:hover { background: rgba(0,0,0,0.06); }
+  .nav-drawer-close:active { background: rgba(0,0,0,0.12); transform: scale(0.95); }
+  .nav-drawer-close:hover { background: rgba(0,0,0,0.08); }
   [data-theme="dark"] .nav-drawer-close:hover { background: rgba(255,255,255,0.06); }
   .nav-drawer-menu {
     display: flex; flex-direction: column; gap: 4px;
@@ -2855,12 +2861,22 @@
     opacity: 0.95;
   }
 
-  /* Mobile: cards em sequência vertical com espaço entre pra scroll "pausar" e flipar */
+  /* Mobile: cada card é sticky individualmente, gap de 45vh cria "pausa" no scroll */
   @media (max-width: 768px) {
     .cosmos-flip-outer { height: auto; }
     .cosmos-flip-sticky { position: static; height: auto; display: block; padding: 48px 0; overflow: visible; }
     .cosmos-flip-sticky .cosmos-title { position: static; margin-bottom: 32px; }
-    .cosmos-collage-3col { gap: 30vh; }
+    .cosmos-collage-3col {
+      display: flex;
+      flex-direction: column;
+      gap: 45vh;
+      max-width: 340px !important;
+      margin: 0 auto !important;
+    }
+    .cosmos-card-flip {
+      position: sticky;
+      top: 18vh;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .cosmos-flip-outer { height: auto; }
@@ -4231,14 +4247,20 @@
   }
 
   .waitlist-privacy {
-    display: inline-flex;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     gap: 6px;
     font-family: 'Nunito', sans-serif;
     font-size: 13px;
     color: var(--text-muted);
-    margin-top: 6px;
+    margin-top: 8px;
   }
+  .waitlist-privacy .wp-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .waitlist-privacy .wp-item svg { flex-shrink: 0; color: var(--primary); }
   .waitlist-privacy svg { color: var(--primary); flex-shrink: 0; }
   .waitlist-privacy a { color: var(--primary); text-decoration: none; font-weight: 600; }
   .waitlist-privacy a:hover { text-decoration: underline; }
@@ -4970,10 +4992,24 @@
   }
 
   @media (max-width: 768px) {
-    /* Reabilita fotos subindo, escaladas pra 70% no mobile */
+    /* Fotos subindo menores e mais fracas pro texto ficar legível */
     .floating-card {
-      width: calc(var(--fc-size) * 1.4);
-      height: calc(var(--fc-size) * 1.4);
+      width: calc(var(--fc-size) * 1.2);
+      height: calc(var(--fc-size) * 1.2);
+      opacity: 0.45;
+    }
+    .floating-card img { filter: brightness(0.75) blur(0.5px); }
+    /* Reforça overlay suave sobre imagens no section-app */
+    .section-app::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.5));
+      z-index: 1;
+      pointer-events: none;
+    }
+    [data-theme="dark"] .section-app::before {
+      background: linear-gradient(to bottom, rgba(15,17,19,0.35), rgba(15,17,19,0.5));
     }
   }
 
@@ -5655,19 +5691,36 @@
   @media (max-width: 768px) {
     .footer-card { padding: 48px 22px 24px; }
     .footer-top { grid-template-columns: 1fr; gap: 28px; padding-bottom: 32px; }
-    .footer-brand { align-items: flex-start; }
-    .footer-brand .footer-socials { justify-content: flex-start; }
-    .footer-middle { flex-direction: column; align-items: stretch; gap: 20px; padding-bottom: 24px; }
-    .footer-stores { justify-content: flex-start; flex-wrap: wrap; gap: 8px; }
-    /* Badges App Store e Google Play com mesma largura proporcional no mobile */
-    .footer-store { flex: 1 1 0; max-width: 150px; }
-    .footer-store img { width: 100%; height: auto; max-height: 40px; object-fit: contain; object-position: left center; }
-    .footer-controls { justify-content: flex-start; }
+    /* Brand col centralizada no mobile */
+    .footer-brand { align-items: center; text-align: center; }
+    .footer-brand .footer-logo { margin: 0 auto; }
+    .footer-tagline { text-align: center; margin-left: auto; margin-right: auto; }
+    .footer-badges { align-items: center; }
+    .footer-brand .footer-socials { justify-content: center; }
+    .footer-middle { flex-direction: column; align-items: center; gap: 20px; padding-bottom: 24px; }
+    .footer-stores { justify-content: center; align-items: center; flex-wrap: nowrap; gap: 10px; width: 100%; max-width: 340px; margin: 0 auto; }
+    /* Badges App Store e Google Play com mesma largura visual */
+    .footer-store { flex: 1 1 0; max-width: 160px; display: flex; justify-content: center; }
+    .footer-store img { width: 100%; height: auto; max-height: 44px; object-fit: contain; }
+    .footer-controls { justify-content: center; }
     .footer-bottom { justify-content: center; }
     .footer-copy { text-align: center; font-size: 12px; }
-    /* Divider "Empresa → Coflint" some no mobile (vira linha full-width indesejada) */
+    /* Divider "Empresa → Coflint" some no mobile */
     .footer-empresa-divider { display: none; }
     .footer-empresa-divider + p { margin-top: 14px; }
+    /* Empresa/Legal cols centralizadas */
+    .footer-col { text-align: center; }
+    .footer-col h4 { text-align: center; }
+    .footer-col a { text-align: center; }
+    .footer-news-desc { text-align: center; }
+    .footer-news-micro { text-align: center; justify-content: center; }
+    .footer-subscribe { margin: 0 auto; }
+  }
+
+  /* Navbar esconde quando footer entra em view */
+  nav.nav--hide-for-footer {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -5767,7 +5820,7 @@
     .section-container { padding: 0 20px; }
     .section-proof, .section-pricing, .section-cta, .section-app, .section-faq { padding: 80px 0; }
     .cosmos-block { padding: 72px 0; }
-    .testimonials-grid, .blog-grid { grid-template-columns: 1fr; }
+    .blog-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; max-width: 360px; gap: 32px; padding-top: 16px; }
     .pricing-card { padding: 28px 22px 24px !important; border-radius: 18px; gap: 14px; }
     .pricing-featured { border-width: 3px; }
@@ -5963,12 +6016,14 @@
   }
 
   @media (max-width: 768px) {
-    /* 3 frascos lado a lado, padding padrão da section, gap reduzido pela metade */
+    /* Aproveitar largura máxima da tela, gap dinâmico entre frascos */
+    .jars-section { min-height: auto; }
+    .jars-section > .section-container { padding: 0 16px; }
     .jars-container {
       grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
+      gap: clamp(8px, 3vw, 20px);
       padding: 0;
-      margin-top: 0;
+      margin: 0;
       max-width: 100%;
     }
     .jars-section .jar-wrapper { max-width: 100%; }
@@ -6568,7 +6623,7 @@
 <!-- INLINE CTA — mid-page conversion point       -->
 <!-- ═══════════════════════════════════════════ -->
 <section class="section-inline-cta" aria-label="Entrar na lista de espera">
-  <div class="section-container reveal-on-scroll-up">
+  <div class="section-container">
     <p class="inline-cta-lead">Já faz sentido pra você?</p>
     <a href="#download" class="hero-cta-primary" data-cta="inline-post-preview">Entrar na lista →</a>
     <span class="inline-cta-note">
@@ -6939,7 +6994,7 @@
 <!-- SECTION: PRICING / PLANOS                   -->
 <!-- ═══════════════════════════════════════════ -->
 <section class="section-pricing" id="planos">
-  <div class="section-container reveal-on-scroll-up">
+  <div class="section-container">
     <h2 class="pricing-main-title">Planos que crescem<br><span class="hl">com o seu pet</span></h2>
     <p class="pricing-lead">Lançamento <strong>grátis pra todos</strong>. Solo e Família chegam logo em seguida — quem está na lista garante <strong>preço Early Bird vitalício</strong>.</p>
     <div class="pricing-social-proof-wrap">
@@ -6962,7 +7017,7 @@
       <span id="toggleAnnual" class="toggle-label active">Anual <span class="save-badge">ganhe 25%</span></span>
     </div>
 
-    <div class="pricing-grid reveal-on-scroll-up">
+    <div class="pricing-grid">
       <!-- FREE — featured/recommended -->
       <div class="pricing-card pricing-featured">
         <span class="pricing-recommended-badge">Recomendado</span>
@@ -7200,8 +7255,14 @@
           <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Sem spam</span>
         </p>
         <p class="waitlist-privacy">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Dados protegidos por LGPD · <a href="/privacidade.html">seus dados nunca são produto</a>
+          <span class="wp-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Dados protegidos por LGPD
+          </span>
+          <span class="wp-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <a href="/privacidade.html">Seus dados nunca são produto</a>
+          </span>
         </p>
 
       </div>
@@ -7667,23 +7728,27 @@ if (prefersReducedMotion) {
 
   const isMobile = matchMedia('(max-width: 768px)').matches;
   if (isMobile) {
-    // Mobile: cards em fluxo vertical. IntersectionObserver com delay (~500ms)
-    // pra criar sensação de "pausa" antes do flip.
-    const FLIP_DELAY = 500;
+    // Mobile: sticky per card. Cada card segura no viewport enquanto user scrolla.
+    // Flip dispara quando o card está "centralizado" (topo a 18vh = stuck position)
+    // com delay de 1200ms após atingir ~80% visível (segura antes de flipar).
+    // Uma vez flipado, não desvira.
+    const FLIP_DELAY = 1200;
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const card = entry.target;
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
-          if (card.__flipTimer) clearTimeout(card.__flipTimer);
-          card.__flipTimer = setTimeout(() => {
-            card.classList.add('is-flipped');
-          }, FLIP_DELAY);
-        } else if (entry.intersectionRatio < 0.2) {
+        if (card.classList.contains('is-flipped')) return;
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
+          if (!card.__flipTimer) {
+            card.__flipTimer = setTimeout(() => {
+              card.classList.add('is-flipped');
+              card.__flipTimer = null;
+            }, FLIP_DELAY);
+          }
+        } else {
           if (card.__flipTimer) { clearTimeout(card.__flipTimer); card.__flipTimer = null; }
-          card.classList.remove('is-flipped');
         }
       });
-    }, { threshold: [0, 0.2, 0.55, 0.85] });
+    }, { threshold: [0, 0.3, 0.7, 0.9] });
     cards.forEach(c => io.observe(c));
     return;
   }
@@ -7910,6 +7975,67 @@ if (prefersReducedMotion) {
 })();
 
 
+// ─── TESTIMONIALS AUTOPLAY (mobile only) ───
+(function() {
+  if (!matchMedia('(max-width: 768px)').matches) return;
+  const grid = document.getElementById('testimonialsScrollGrid');
+  if (!grid) return;
+  const cards = Array.from(grid.querySelectorAll('.testimonial-card'));
+  if (cards.length < 2) return;
+
+  let currentIdx = 0;
+  let autoplayTimer;
+  let userInteracted = false;
+  const INTERVAL = 4500;
+
+  function goTo(idx) {
+    const card = cards[idx];
+    if (!card) return;
+    const left = card.offsetLeft - (grid.offsetWidth - card.offsetWidth) / 2;
+    grid.scrollTo({ left: left, behavior: 'smooth' });
+  }
+
+  function next() {
+    if (userInteracted) return;
+    currentIdx = (currentIdx + 1) % cards.length;
+    goTo(currentIdx);
+  }
+
+  // Autoplay kickoff quando o grid entra em viewport
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !autoplayTimer && !userInteracted) {
+        autoplayTimer = setInterval(next, INTERVAL);
+      } else if (!entry.isIntersecting && autoplayTimer) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    });
+  }, { threshold: 0.3 });
+  io.observe(grid);
+
+  // Pausa autoplay ao user tocar
+  ['touchstart', 'mousedown'].forEach(evt => {
+    grid.addEventListener(evt, () => {
+      userInteracted = true;
+      if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
+    }, { once: true, passive: true });
+  });
+})();
+
+// ─── NAVBAR HIDES WHEN FOOTER IS IN VIEW ───
+(function() {
+  const nav = document.getElementById('siteNav');
+  const footer = document.querySelector('.site-footer');
+  if (!nav || !footer) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      nav.classList.toggle('nav--hide-for-footer', entry.isIntersecting);
+    });
+  }, { threshold: 0.02 });
+  io.observe(footer);
+})();
+
 // ─── MOBILE NAV DRAWER ───
 (function() {
   const hamburger = document.getElementById('navHamburger');
@@ -7920,43 +8046,26 @@ if (prefersReducedMotion) {
     drawer.hidden = false;
     drawer.removeAttribute('hidden');
     hamburger.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
   }
   function closeDrawer() {
     drawer.hidden = true;
     drawer.setAttribute('hidden', '');
     hamburger.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
   }
 
-  // Expor global pra onclick inline de fallback
   window.__closeNavDrawer = closeDrawer;
 
   hamburger.addEventListener('click', openDrawer);
 
-  // Bind direto em cada elemento de close: click + touchend + pointerdown (cobre touch/mouse/pen)
-  drawer.querySelectorAll('[data-nav-drawer-close]').forEach(el => {
-    ['click', 'touchend', 'pointerdown'].forEach(evt => {
-      el.addEventListener(evt, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        closeDrawer();
-      }, { passive: false });
-    });
-  });
-  // Links do menu: fecha ao navegar
-  drawer.querySelectorAll('[data-nav-drawer-link]').forEach(el => {
-    el.addEventListener('click', closeDrawer);
+  // Delegation SIMPLES — fecha ao clicar em qualquer [data-nav-drawer-close] OU [data-nav-drawer-link]
+  drawer.addEventListener('click', (e) => {
+    if (e.target.closest('[data-nav-drawer-close]') || e.target.closest('[data-nav-drawer-link]')) {
+      closeDrawer();
+    }
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !drawer.hidden) closeDrawer();
   });
-  // Capture-phase safety: se algum listener mais abaixo swallow o event, pega aqui
-  document.addEventListener('click', (e) => {
-    if (e.target.closest && e.target.closest('[data-nav-drawer-close]') && !drawer.hidden) {
-      closeDrawer();
-    }
-  }, true);
 })();
 
 // ─── THEME TOGGLE (sun/moon) — supports multiple instances (.js-theme-toggle) ───
