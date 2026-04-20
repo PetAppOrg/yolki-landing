@@ -7869,12 +7869,12 @@ if (prefersReducedMotion) {
     // O outer tem 360vh — o usuário é FORÇADO a rolar todo o caminho,
     // não dá pra pular com 1 swipe: a sticky segura até acabar o scroll.
     const STEPS = [
-      { at: 0.03, card: 0, act: 'enter' },
-      { at: 0.18, card: 0, act: 'flip'  },
+      { at: 0.02, card: 0, act: 'enter' },
+      { at: 0.08, card: 0, act: 'flip'  },
       { at: 0.35, card: 1, act: 'enter' },
-      { at: 0.50, card: 1, act: 'flip'  },
-      { at: 0.67, card: 2, act: 'enter' },
-      { at: 0.82, card: 2, act: 'flip'  }
+      { at: 0.42, card: 1, act: 'flip'  },
+      { at: 0.68, card: 2, act: 'enter' },
+      { at: 0.75, card: 2, act: 'flip'  }
     ];
     let ticking = false;
     function update() {
