@@ -7864,30 +7864,19 @@ if (prefersReducedMotion) {
 
   const isMobile = matchMedia('(max-width: 768px)').matches;
   if (isMobile) {
-    // Mobile: progressão step-based baseada em progress do outer sticky.
-    // 6 marcos: enter0 → flip0 → enter1 → flip1 → enter2 → flip2.
-    // O outer tem 360vh — o usuário é FORÇADO a rolar todo o caminho,
-    // não dá pra pular com 1 swipe: a sticky segura até acabar o scroll.
-    const STEPS = [
-      { at: 0.02, card: 0, act: 'enter' },
-      { at: 0.08, card: 0, act: 'flip'  },
-      { at: 0.35, card: 1, act: 'enter' },
-      { at: 0.42, card: 1, act: 'flip'  },
-      { at: 0.68, card: 2, act: 'enter' },
-      { at: 0.75, card: 2, act: 'flip'  }
-    ];
+    // Mobile: cada card vira quando seu proprio top atinge a posicao sticky
+    // (top: 15vh no CSS). Independente de altura total do outer — mede o card
+    // diretamente via getBoundingClientRect.
+    const STICKY_TOP_VH = 15;
+    const TRIGGER_OFFSET_VH = 10; // flipa 10vh antes de ficar totalmente sticky
     let ticking = false;
     function update() {
-      const rect = outer.getBoundingClientRect();
-      const total = outer.offsetHeight - window.innerHeight;
-      if (total <= 0) return;
-      const progress = Math.min(1, Math.max(0, -rect.top / total));
-      STEPS.forEach(step => {
-        const card = cards[step.card];
-        if (!card) return;
-        const cls = step.act === 'enter' ? 'is-entered' : 'is-flipped';
-        if (progress >= step.at) card.classList.add(cls);
-        else card.classList.remove(cls);
+      const vh = window.innerHeight;
+      const triggerPx = (STICKY_TOP_VH + TRIGGER_OFFSET_VH) * vh / 100;
+      cards.forEach(card => {
+        const top = card.getBoundingClientRect().top;
+        if (top <= triggerPx) card.classList.add('is-flipped');
+        else card.classList.remove('is-flipped');
       });
     }
     function onScroll() {
