@@ -5010,6 +5010,21 @@
     outline: none;
   }
   .footer-subscribe input::placeholder { color: #C8C8C8; opacity: 1; }
+  /* Neutralize Safari/Chrome autofill yellow background */
+  .footer-subscribe input:-webkit-autofill,
+  .footer-subscribe input:-webkit-autofill:hover,
+  .footer-subscribe input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-primary);
+    -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset;
+    caret-color: var(--text-primary);
+    transition: background-color 9999s ease-out 0s;
+  }
+  [data-theme="dark"] .footer-subscribe input:-webkit-autofill,
+  [data-theme="dark"] .footer-subscribe input:-webkit-autofill:hover,
+  [data-theme="dark"] .footer-subscribe input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--surface-3) inset;
+    -webkit-text-fill-color: var(--text-primary);
+  }
   .footer-subscribe button {
     background: var(--primary);
     color: #fff;
@@ -6686,7 +6701,7 @@
       <div>
         <form class="footer-subscribe" id="footerSubscribeForm" onsubmit="return false;">
           <input type="email" name="email" id="footerSubscribeEmail" placeholder="nome@email.com" required autocomplete="email" inputmode="email" aria-label="Seu email">
-          <button type="submit" id="footerSubscribeBtn">Entrar na lista</button>
+          <button type="submit" id="footerSubscribeBtn">Newsletter</button>
         </form>
         <p class="footer-subscribe-feedback" id="footerSubscribeFeedback" role="status" aria-live="polite"></p>
         <p class="footer-desc">Educação preventiva e acompanhamento de saúde pro seu pet viver mais e melhor. Validado por veterinários.</p>
@@ -7854,17 +7869,10 @@ if (prefersReducedMotion) {
   const shareEmail = document.getElementById('shareEmail');
   const closeBtn = document.getElementById('waitlistSuccessClose');
 
-  // Invite modal refs
-  const inviteModal = document.getElementById('inviteModal');
-  const inviteOverlay = document.getElementById('inviteModalOverlay');
-  const inviteClose = document.getElementById('inviteModalClose');
-  const inviteForm = document.getElementById('inviteForm');
-  const inviteToEmail = document.getElementById('inviteToEmail');
-  const inviteToName = document.getElementById('inviteToName');
-  const inviteMessage = document.getElementById('inviteMessage');
-  const inviteSubmit = document.getElementById('inviteSubmit');
-  const inviteFeedback = document.getElementById('inviteFeedback');
-  const inviteCharCount = document.getElementById('inviteCharCount');
+  // Invite modal refs (resolved lazily after DOM is parsed — modal HTML lives after this script)
+  let inviteModal, inviteOverlay, inviteClose, inviteForm,
+      inviteToEmail, inviteToName, inviteMessage,
+      inviteSubmit, inviteFeedback, inviteCharCount;
   let currentUserEmail = null;
 
   if (closeBtn) {
@@ -7950,19 +7958,36 @@ if (prefersReducedMotion) {
       openInviteModal();
     });
   }
-  if (inviteClose) inviteClose.addEventListener('click', closeInviteModal);
-  if (inviteOverlay) inviteOverlay.addEventListener('click', closeInviteModal);
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && inviteModal && inviteModal.classList.contains('visible')) {
       closeInviteModal();
     }
   });
-  if (inviteMessage && inviteCharCount) {
-    inviteMessage.addEventListener('input', function() {
-      inviteCharCount.textContent = (inviteMessage.value.length || 0) + ' / 500';
-    });
+
+  function initInviteModal() {
+    inviteModal = document.getElementById('inviteModal');
+    inviteOverlay = document.getElementById('inviteModalOverlay');
+    inviteClose = document.getElementById('inviteModalClose');
+    inviteForm = document.getElementById('inviteForm');
+    inviteToEmail = document.getElementById('inviteToEmail');
+    inviteToName = document.getElementById('inviteToName');
+    inviteMessage = document.getElementById('inviteMessage');
+    inviteSubmit = document.getElementById('inviteSubmit');
+    inviteFeedback = document.getElementById('inviteFeedback');
+    inviteCharCount = document.getElementById('inviteCharCount');
+
+    if (inviteClose) inviteClose.addEventListener('click', closeInviteModal);
+    if (inviteOverlay) inviteOverlay.addEventListener('click', closeInviteModal);
+    if (inviteMessage && inviteCharCount) {
+      inviteMessage.addEventListener('input', function() {
+        inviteCharCount.textContent = (inviteMessage.value.length || 0) + ' / 500';
+      });
+    }
+    wireInviteFormSubmit();
   }
-  if (inviteForm) {
+
+  function wireInviteFormSubmit() {
+    if (!inviteForm) return;
     inviteForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       if (!currentUserEmail) {
@@ -8101,6 +8126,11 @@ if (prefersReducedMotion) {
     }
   });
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInviteModal, { once: true });
+  } else {
+    initInviteModal();
+  }
 })();
 
 // ─── FOOTER NEWSLETTER SIGNUP ───
@@ -8144,12 +8174,12 @@ if (prefersReducedMotion) {
       showFeedback('ok', 'Pronto! Fica de olho no seu email.');
       emailInput.value = '';
       btn.textContent = 'Inscrito ✓';
-      setTimeout(() => { btn.disabled = false; btn.textContent = 'Entrar na lista'; }, 2500);
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Newsletter'; }, 2500);
     } catch (err) {
       console.error('Footer subscribe error:', err);
       showFeedback('err', 'Não deu pra inscrever agora. Tente de novo em instantes.');
       btn.disabled = false;
-      btn.textContent = 'Entrar na lista';
+      btn.textContent = 'Newsletter';
     }
   });
 })();
