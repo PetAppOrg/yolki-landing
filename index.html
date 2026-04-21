@@ -1985,15 +1985,15 @@
     margin-top: 16px;
   }
 
-  @media (max-width: 768px) {
-    /* Cards empilhados verticalmente no mobile */
+  @media (max-width: 1023px) {
+    /* Tablet + mobile: cards empilhados verticalmente, um abaixo do outro */
     .testimonials-grid {
-      display: flex;
+      display: flex !important;
       flex-direction: column;
       gap: 20px;
       padding: 12px 20px 20px;
       margin: 20px auto 0;
-      max-width: 340px;
+      max-width: 420px;
     }
     .testimonials-grid .testimonial-card {
       width: 100%;
@@ -5948,7 +5948,6 @@
 
     .orbital-center { width: 110px; height: 110px; }
     .side-tags { right: 20px; }
-    .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
     .proof-stats { gap: 48px; }
   }
 
