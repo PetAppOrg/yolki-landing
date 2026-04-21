@@ -2973,23 +2973,50 @@
     opacity: 0.95;
   }
 
-  /* Mobile: cada card é sticky. Gap grande (90vh) força o usuário a rolar
-     bastante ANTES do próximo card aparecer — dá tempo de virar e ler. */
+  /* Mobile: scroll-lock sticky. Cards empilham em absolute; cada scroll avança
+     uma etapa — entra card 0 → flip 0 → pausa → entra card 1 sobre 0 → flip 1 → pausa → entra card 2 → flip 2. */
   @media (max-width: 768px) {
-    .cosmos-flip-outer { height: auto; }
-    .cosmos-flip-sticky { position: static; height: auto; display: block; padding: 48px 0; overflow: visible; }
-    .cosmos-flip-sticky .cosmos-title { position: static; margin-bottom: 32px; }
-    .cosmos-collage-3col {
+    .cosmos-flip-outer { height: 360vh; }
+    .cosmos-flip-sticky {
+      position: sticky; top: 0;
+      height: 100vh; height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 0;
+      overflow: hidden;
+    }
+    .cosmos-flip-sticky .section-container {
       display: flex;
       flex-direction: column;
-      gap: 90vh;
-      max-width: 340px !important;
+      align-items: center;
+      gap: 24px;
+    }
+    .cosmos-flip-sticky .cosmos-title { position: static; margin-bottom: 0; }
+    .cosmos-collage-3col {
+      position: relative !important;
+      display: block !important;
+      width: min(280px, 72vw) !important;
+      max-width: 320px !important;
+      aspect-ratio: 3 / 4;
+      gap: 0 !important;
       margin: 0 auto !important;
     }
     .cosmos-card-flip {
-      position: sticky;
-      top: 15vh;
+      position: absolute !important;
+      inset: 0;
+      top: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      transform: translateY(110%);
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
     }
+    .cosmos-card-flip[data-flip-index="0"] { z-index: 1; transform: translateY(0); }
+    .cosmos-card-flip[data-flip-index="1"] { z-index: 2; }
+    .cosmos-card-flip[data-flip-index="2"] { z-index: 3; }
+    .cosmos-card-flip.is-entered { transform: translateY(0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .cosmos-flip-outer { height: auto; }
