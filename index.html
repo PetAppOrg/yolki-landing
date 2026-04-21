@@ -3913,6 +3913,26 @@
     }
   }
 
+  /* ── Pricing: sem efeitos/animações ── */
+  .section-pricing,
+  .section-pricing *,
+  .section-pricing *::before,
+  .section-pricing *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .section-pricing .pricing-main-title { text-shadow: none; }
+  .section-pricing .pricing-card:hover,
+  .section-pricing .plan-cta:hover,
+  .section-pricing .plan-cta-primary:hover,
+  .section-pricing .plan-cta-secondary:hover,
+  .section-pricing .plan-cta-outline:hover,
+  .section-pricing .pricing-corp-cta:hover,
+  .section-pricing .pricing-corp-cta-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
   /* Pricing signup bar */
   .pricing-signup {
     margin-top: 64px;
@@ -9537,6 +9557,7 @@ if (prefersReducedMotion) {
   // Titles: split and observe
   titleSelectors.forEach(sel => {
     document.querySelectorAll(sel).forEach(el => {
+      if (el.closest('#planos')) return;
       splitIntoWords(el);
       el.classList.add('words-reveal');
       io.observe(el);
@@ -9545,6 +9566,7 @@ if (prefersReducedMotion) {
 
   staggerSelectors.forEach(sel => {
     document.querySelectorAll(sel).forEach(el => {
+      if (el.closest('#planos')) return;
       el.classList.add('reveal-stagger');
       io.observe(el);
     });
@@ -9553,6 +9575,7 @@ if (prefersReducedMotion) {
   revealSelectors.forEach(sel => {
     document.querySelectorAll(sel).forEach(el => {
       if (el.closest('.reveal-stagger')) return;
+      if (el.closest('#planos')) return;
       el.classList.add('reveal');
       io.observe(el);
     });
@@ -9574,7 +9597,7 @@ if (prefersReducedMotion) {
   if (reduceMotion) return;
 
   // Only apply to 2 key moments to keep the effect impactful without fatigue
-  const selectorIds = ['#comparacao', '#planos'];
+  const selectorIds = ['#comparacao'];
   const sections = selectorIds
     .map(id => document.querySelector(id))
     .filter(Boolean);
