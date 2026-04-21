@@ -717,8 +717,7 @@
   /* Seções com sticky-scroll (stories) NUNCA devem snap — quebra a animação */
   .cosmos-flip-outer,
   .cosmos-proativo-outer,
-  .features-scroll-outer,
-  .testimonials-scroll-outer {
+  .features-scroll-outer {
     scroll-snap-align: none !important;
   }
   @media (max-width: 768px) {
@@ -1986,49 +1985,8 @@
     margin-top: 16px;
   }
 
-  /* ─── SCROLL-REVEAL Testimonials: mesmo pattern dos features ─── */
-  .testimonials-scroll-outer {
-    position: relative;
-    height: 260vh;
-  }
-  .testimonials-scroll-sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    height: 100dvh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-  .testimonials-scroll-sticky .section-container { width: 100%; }
-
-  /* Card 1 (Yves) sempre visível */
-  .testimonials-grid-scroll .testimonial-card[data-testimonial-index="0"] { z-index: 3; }
-  /* Card 2 (Ana) sai de trás do 1 */
-  .testimonials-grid-scroll .testimonial-card[data-testimonial-index="1"] {
-    z-index: 2;
-    transform: translateX(-100%);
-    opacity: 0;
-    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease;
-    will-change: transform, opacity;
-  }
-  .testimonials-grid-scroll.t-card2-in .testimonial-card[data-testimonial-index="1"] { transform: translateX(0); opacity: 1; }
-  /* Card 3 (Olga) sai de trás do 2 */
-  .testimonials-grid-scroll .testimonial-card[data-testimonial-index="2"] {
-    z-index: 1;
-    transform: translateX(-100%);
-    opacity: 0;
-    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease;
-    will-change: transform, opacity;
-  }
-  .testimonials-grid-scroll.t-card3-in .testimonial-card[data-testimonial-index="2"] { transform: translateX(0); opacity: 1; }
-
   @media (max-width: 768px) {
-    .testimonials-scroll-outer { height: auto; }
-    .testimonials-scroll-sticky { position: static; height: auto; display: block; padding: 32px 0; overflow: visible; }
-    .testimonials-grid-scroll .testimonial-card { transform: none !important; opacity: 1 !important; }
-
-    /* Cards empilhados verticalmente (revertido — um em baixo do outro) */
+    /* Cards empilhados verticalmente no mobile */
     .testimonials-grid {
       display: flex;
       flex-direction: column;
@@ -2058,11 +2016,6 @@
     .testimonials-grid .testimonial-body > p { font-size: 15px; line-height: 1.5; margin-bottom: 14px; min-height: 0; }
     .testimonials-grid .testimonial-footer strong { font-size: 14px; }
     .testimonials-grid .testimonial-footer span { font-size: 12px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .testimonials-scroll-outer { height: auto; }
-    .testimonials-scroll-sticky { position: static; height: auto; }
-    .testimonials-grid-scroll .testimonial-card { transform: none !important; opacity: 1 !important; }
   }
 
   /* ─── SCROLL-REVEAL Features: cards 2/3 saem de trás do 1; labels no fim ─── */
@@ -3438,9 +3391,9 @@
   /* Variant for transparent PNG/WebP photos — show full figure with bg color */
   .testimonial-photo-fit img {
     object-fit: contain;
-    object-position: center top;
-    transform: scale(1.32) translateY(-10%);
-    transform-origin: center top;
+    object-position: center bottom;
+    transform: scale(1.15);
+    transform-origin: center bottom;
   }
 
   .photo-placeholder {
@@ -7140,59 +7093,55 @@
 <!-- SECTION: SOCIAL PROOF (moved up — Sprint 2)  -->
 <!-- ═══════════════════════════════════════════ -->
 <section class="section-proof" id="depoimentos">
-  <div class="testimonials-scroll-outer" id="testimonialsScrollOuter">
-    <div class="testimonials-scroll-sticky">
-      <div class="section-container" style="text-align:center;">
-        <h2 class="section-title">Tutores que <span class="hl">confiam</span> no Yolki.</h2>
+  <div class="section-container" style="text-align:center;">
+    <h2 class="section-title">Tutores que <span class="hl">confiam</span> no Yolki.</h2>
 
-        <div class="testimonials-grid testimonials-grid-scroll" id="testimonialsScrollGrid">
-          <div class="testimonial-card testimonial-dark" data-testimonial-index="0">
-            <div class="testimonial-photo testimonial-photo-fit" style="background: var(--primary);">
-              <img src="assets/photos/yves-matos.webp" alt="Yves Matos" loading="lazy">
-            </div>
-            <div class="testimonial-body">
-              <p>"Sinto que finalmente entendo o que meu cachorro precisa. Isso muda tudo."</p>
-              <div class="testimonial-footer">
-                <strong>Yves Matos</strong>
-                <span>Cientista · Tutor de 1 cachorro</span>
-                <span class="author-location">São Paulo-SP</span>
-              </div>
-              <div class="testimonial-stars">★★★★★</div>
-            </div>
-          </div>
-          <div class="testimonial-card testimonial-light" data-testimonial-index="1">
-            <div class="testimonial-photo" style="background: var(--secondary);">
-              <img src="assets/photos/ana-carolina.webp" alt="Ana Carolina" loading="lazy" style="object-position: 32% 22%;">
-            </div>
-            <div class="testimonial-body">
-              <p>"Descobri coisas sobre a saúde do meu cachorro que eu nem imaginava. Agora tenho mais tranquilidade no dia a dia."</p>
-              <div class="testimonial-footer">
-                <strong>Ana Carolina</strong>
-                <span>Assistente de Cartório · Tutora de 1 cachorro</span>
-                <span class="author-location">Salvador-BA</span>
-              </div>
-              <div class="testimonial-stars">★★★★★</div>
-            </div>
-          </div>
-          <div class="testimonial-card testimonial-light" data-testimonial-index="2">
-            <div class="testimonial-photo">
-              <div class="photo-placeholder" style="background: var(--accent);">OD</div>
-            </div>
-            <div class="testimonial-body">
-              <p>"Em duas semanas já mudei hábitos que nem sabia que estavam errados. O app me ensina sem eu perceber."</p>
-              <div class="testimonial-footer">
-                <strong>Olga Delfino</strong>
-                <span>Advogada · Tutora de 3 cachorros</span>
-                <span class="author-location">Uberlândia-MG</span>
-              </div>
-              <div class="testimonial-stars">★★★★★</div>
-            </div>
-          </div>
+    <div class="testimonials-grid" id="testimonialsScrollGrid">
+      <div class="testimonial-card testimonial-dark" data-testimonial-index="0">
+        <div class="testimonial-photo testimonial-photo-fit" style="background: var(--primary);">
+          <img src="assets/photos/yves-matos.webp" alt="Yves Matos" loading="lazy">
         </div>
-
-        <p class="testimonial-disclaimer">*Relatos de participantes do beta fechado · 2026</p>
+        <div class="testimonial-body">
+          <p>"Sinto que finalmente entendo o que meu cachorro precisa. Isso muda tudo."</p>
+          <div class="testimonial-footer">
+            <strong>Yves Matos</strong>
+            <span>Cientista · Tutor de 1 cachorro</span>
+            <span class="author-location">São Paulo-SP</span>
+          </div>
+          <div class="testimonial-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="testimonial-card testimonial-light" data-testimonial-index="1">
+        <div class="testimonial-photo" style="background: var(--secondary);">
+          <img src="assets/photos/ana-carolina.webp" alt="Ana Carolina" loading="lazy" style="object-position: 32% 22%;">
+        </div>
+        <div class="testimonial-body">
+          <p>"Descobri coisas sobre a saúde do meu cachorro que eu nem imaginava. Agora tenho mais tranquilidade no dia a dia."</p>
+          <div class="testimonial-footer">
+            <strong>Ana Carolina</strong>
+            <span>Assistente de Cartório · Tutora de 1 cachorro</span>
+            <span class="author-location">Salvador-BA</span>
+          </div>
+          <div class="testimonial-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="testimonial-card testimonial-light" data-testimonial-index="2">
+        <div class="testimonial-photo">
+          <div class="photo-placeholder" style="background: var(--accent);">OD</div>
+        </div>
+        <div class="testimonial-body">
+          <p>"Em duas semanas já mudei hábitos que nem sabia que estavam errados. O app me ensina sem eu perceber."</p>
+          <div class="testimonial-footer">
+            <strong>Olga Delfino</strong>
+            <span>Advogada · Tutora de 3 cachorros</span>
+            <span class="author-location">Uberlândia-MG</span>
+          </div>
+          <div class="testimonial-stars">★★★★★</div>
+        </div>
       </div>
     </div>
+
+    <p class="testimonial-disclaimer">*Relatos de participantes do beta fechado · 2026</p>
   </div>
 </section>
 
@@ -8008,81 +7957,6 @@ if (prefersReducedMotion) {
     if (total <= 0) return;
     const progress = Math.min(1, Math.max(0, -rect.top / total));
     split.classList.toggle(CLS, progress >= REVEAL_AT);
-  }
-
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => { update(); ticking = false; });
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  update();
-})();
-
-// ─── SCROLL-REVEAL Testimonials (mesmo pattern dos features) ───
-(function() {
-  const outer = document.getElementById('testimonialsScrollOuter');
-  const grid = document.getElementById('testimonialsScrollGrid');
-  if (!outer || !grid) return;
-
-  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isMobile = matchMedia('(max-width: 768px)').matches;
-  if (prefersReduced || isMobile) {
-    grid.classList.add('t-card2-in', 't-card3-in');
-    return;
-  }
-
-  // State machine com delay mínimo — impede que scroll forte revele cards 2 e 3 juntos
-  const CARD2_AT = 0.15;
-  const CARD3_AT = 0.45;
-  const MIN_GAP_MS = 900;
-
-  let card2At = null;
-  let card3Timer = null;
-  let ticking = false;
-  let lastProgress = 0;
-
-  function getProgress() {
-    const rect = outer.getBoundingClientRect();
-    const total = outer.offsetHeight - window.innerHeight;
-    if (total <= 0) return 0;
-    return Math.min(1, Math.max(0, -rect.top / total));
-  }
-
-  function update() {
-    const progress = getProgress();
-    lastProgress = progress;
-
-    const has2 = grid.classList.contains('t-card2-in');
-    const has3 = grid.classList.contains('t-card3-in');
-
-    if (progress >= CARD2_AT && !has2) {
-      grid.classList.add('t-card2-in');
-      card2At = Date.now();
-    } else if (progress < CARD2_AT && has2) {
-      grid.classList.remove('t-card2-in');
-      grid.classList.remove('t-card3-in');
-      clearTimeout(card3Timer);
-      card3Timer = null;
-      card2At = null;
-    }
-
-    if (progress >= CARD3_AT && grid.classList.contains('t-card2-in') && !has3 && !card3Timer) {
-      const elapsed = card2At ? Date.now() - card2At : MIN_GAP_MS;
-      const wait = Math.max(0, MIN_GAP_MS - elapsed);
-      card3Timer = setTimeout(() => {
-        card3Timer = null;
-        if (lastProgress >= CARD3_AT && grid.classList.contains('t-card2-in')) {
-          grid.classList.add('t-card3-in');
-        }
-      }, wait);
-    } else if (progress < CARD3_AT && has3) {
-      grid.classList.remove('t-card3-in');
-    } else if (progress < CARD3_AT && card3Timer) {
-      clearTimeout(card3Timer);
-      card3Timer = null;
-    }
   }
 
   function onScroll() {
