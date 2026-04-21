@@ -3384,14 +3384,15 @@
     border-radius: 14px;
   }
 
-  /* Fit variant for transparent photos — scale subject to fill container */
+  /* Fit variant — full-bleed cover anchored to top (keeps head visible) */
   .testimonial-photo--fit {
     overflow: hidden;
+    padding: 0;
   }
   .testimonial-photo--fit img {
     object-fit: cover;
-    transform: scale(1.35);
-    transform-origin: center bottom;
+    object-position: center top;
+    display: block;
   }
 
   .photo-placeholder {
