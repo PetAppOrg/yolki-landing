@@ -2634,6 +2634,12 @@
     align-items: center;
     justify-items: center;
   }
+  .phone-shot-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    will-change: transform, opacity;
+  }
   .phone-shot {
     width: 100%;
     max-width: 320px;
@@ -2646,6 +2652,28 @@
   @media (prefers-reduced-motion: reduce) {
     .phone-shot { transition: none; }
     .phone-shot:hover { transform: none; }
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .phone-shot-wrap.phone-left {
+        animation: phone-slide-in-left linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 45%;
+      }
+      .phone-shot-wrap.phone-right {
+        animation: phone-slide-in-right linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 45%;
+      }
+    }
+  }
+  @keyframes phone-slide-in-left {
+    from { transform: translateX(-80vw) rotate(-6deg); opacity: 0; }
+    to   { transform: translateX(0) rotate(0); opacity: 1; }
+  }
+  @keyframes phone-slide-in-right {
+    from { transform: translateX(80vw) rotate(6deg); opacity: 0; }
+    to   { transform: translateX(0) rotate(0); opacity: 1; }
   }
   .phone-mockup {
     position: relative;
@@ -6783,9 +6811,13 @@
       <h2 class="section-title">Preview do <span class="hl">app</span>.</h2>
       <p class="section-subtitle">Veja o Yolki em ação.</p>
     </div>
-    <div class="screens-grid reveal-on-scroll-up">
-      <img class="phone-shot reveal" src="assets/app/preview-splash.webp" alt="Tela de abertura do app Yolki Pet" loading="lazy">
-      <img class="phone-shot reveal" src="assets/app/preview-home.webp" alt="Tela inicial do app Yolki Pet com conteúdo de atividades" loading="lazy">
+    <div class="screens-grid">
+      <div class="phone-shot-wrap phone-left">
+        <img class="phone-shot" src="assets/app/preview-splash.webp" alt="Tela de abertura do app Yolki Pet" loading="lazy">
+      </div>
+      <div class="phone-shot-wrap phone-right">
+        <img class="phone-shot" src="assets/app/preview-home.webp" alt="Tela inicial do app Yolki Pet com conteúdo de atividades" loading="lazy">
+      </div>
     </div>
     <p class="screens-disclaimer">* Previews conceituais — a versão final pode variar</p>
   </div>
@@ -9567,7 +9599,6 @@ if (prefersReducedMotion) {
     '.app-left', '.app-right',
     '.app-description', '.waitlist-note',
     '.testimonial-disclaimer',
-    '.phone-shot',
   ];
 
   // Parents whose direct children should stagger
