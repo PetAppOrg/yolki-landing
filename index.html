@@ -9919,7 +9919,9 @@ if (prefersReducedMotion) {
   };
 
   const cta = jarsSection.querySelector('.compare-cta');
-  const target = cta || jarsSection;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const lastJar = isMobile ? jarsSection.querySelector('.jar-col:last-child') : null;
+  const target = lastJar || cta || jarsSection;
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && entry.intersectionRatio >= 0.99) {
