@@ -6159,6 +6159,12 @@
     align-items: start;
     justify-items: center;
   }
+  @media (min-width: 769px) {
+    .jars-container {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas: "yolki gpt net";
+    }
+  }
   .jars-section .jar-col:nth-child(1) { grid-area: yolki; }
   .jars-section .jar-col:nth-child(2) { grid-area: gpt; }
   .jars-section .jar-col:nth-child(3) { grid-area: net; }
