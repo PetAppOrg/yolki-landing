@@ -31,7 +31,7 @@
 
 <style>
   :root {
-    --primary: #00C2B7;
+    --primary: #01BCB5;
     --secondary: #A76FFF;
     --accent: #FFB139;
     --success: #5EB864;
@@ -457,7 +457,7 @@
   const meta = document.querySelector('meta[name="theme-color"]');
   function applyTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
-    if (meta) meta.setAttribute('content', t === 'dark' ? '#0F1113' : '#00C2B7');
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#0F1113' : '#01BCB5');
   }
   applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
   if (themeBtn) themeBtn.addEventListener('click', () => {

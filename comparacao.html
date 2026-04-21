@@ -33,7 +33,7 @@
 
 <style>
   :root {
-    --primary: #00C2B7;
+    --primary: #01BCB5;
     --secondary: #A76FFF;
     --accent: #FFB139;
     --danger: #E85959;
@@ -93,7 +93,7 @@
   .hero {
     padding: 80px 0 48px;
     text-align: center;
-    background: radial-gradient(ellipse at top, rgba(0,194,183,0.08) 0%, transparent 60%);
+    background: radial-gradient(ellipse at top, rgba(1, 188, 181,0.08) 0%, transparent 60%);
   }
 
   /* Back to home — matches other subpages (reflexoes pattern) */
@@ -164,7 +164,7 @@
     font-weight: 700;
     font-size: 14px;
   }
-  .sym-yes { background: rgba(0,194,183,0.15); color: var(--primary); }
+  .sym-yes { background: rgba(1, 188, 181,0.15); color: var(--primary); }
   .sym-no { background: rgba(232,89,89,0.12); color: var(--danger); }
   .sym-partial { background: rgba(255,177,57,0.18); color: #C97E00; }
 
@@ -204,7 +204,7 @@
     letter-spacing: 1px;
   }
   .compare-table thead th.yolki-col {
-    background: linear-gradient(180deg, rgba(0,194,183,0.12) 0%, rgba(0,194,183,0.06) 100%);
+    background: linear-gradient(180deg, rgba(1, 188, 181,0.12) 0%, rgba(1, 188, 181,0.06) 100%);
     color: var(--primary);
     font-size: 17px;
     position: relative;
@@ -234,7 +234,7 @@
   }
 
   .compare-table tbody td.yolki-col {
-    background: rgba(0,194,183,0.04);
+    background: rgba(1, 188, 181,0.04);
   }
 
   .cell-sub {
@@ -252,7 +252,7 @@
   }
 
   .compare-table tbody tr:hover td { background: rgba(0,0,0,0.015); }
-  .compare-table tbody tr:hover td.yolki-col { background: rgba(0,194,183,0.07); }
+  .compare-table tbody tr:hover td.yolki-col { background: rgba(1, 188, 181,0.07); }
 
   /* BOTTOM CTA */
   .bottom-cta {
@@ -615,7 +615,7 @@
   const meta = document.querySelector('meta[name="theme-color"]');
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0F1113' : '#00C2B7');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0F1113' : '#01BCB5');
     if (themeBtn) themeBtn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
   }
   applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
