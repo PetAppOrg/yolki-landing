@@ -1,3 +1,4 @@
 # Arquivos internos não devem ser deployados publicamente
 docs/
 audit-report-*.md
+refactor-proposals.md
