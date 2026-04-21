@@ -2002,11 +2002,11 @@
       border-radius: 16px;
     }
     .testimonials-grid .testimonial-photo {
-      margin: 0;
+      margin: 8px;
       height: 260px;
-      border-radius: 0;
+      border-radius: 14px;
     }
-    .testimonials-grid .testimonial-photo img { border-radius: 0; }
+    .testimonials-grid .testimonial-photo img { border-radius: 14px; }
     .testimonials-grid .testimonial-body { padding: 18px 20px 16px; }
     .testimonials-grid .testimonial-body > p { font-size: 15px; line-height: 1.5; margin-bottom: 14px; min-height: 0; }
     .testimonials-grid .testimonial-footer strong { font-size: 14px; }
@@ -3368,12 +3368,12 @@
 
   .testimonial-light .testimonial-footer span { color: var(--text-muted); }
 
-  /* Photo area — full-bleed inside card (card clips corners via overflow) */
+  /* Photo area — inset with padding and rounded corners */
   .testimonial-photo {
-    margin: 0;
+    margin: 8px 8px 0 8px;
     height: 220px;
     overflow: hidden;
-    border-radius: 0;
+    border-radius: 14px;
   }
 
   .testimonial-photo img {
@@ -3381,8 +3381,17 @@
     height: 100%;
     object-fit: cover;
     object-position: center 15%;
-    border-radius: 0;
-    display: block;
+    border-radius: 14px;
+  }
+
+  /* Fit variant for transparent photos — scale subject to fill container */
+  .testimonial-photo--fit {
+    overflow: hidden;
+  }
+  .testimonial-photo--fit img {
+    object-fit: cover;
+    transform: scale(1.35);
+    transform-origin: center bottom;
   }
 
   .photo-placeholder {
@@ -7110,8 +7119,8 @@
 
     <div class="testimonials-grid" id="testimonialsScrollGrid">
       <div class="testimonial-card testimonial-dark" data-testimonial-index="0">
-        <div class="testimonial-photo" style="background: var(--primary);">
-          <img src="assets/photos/yves-matos.webp" alt="Yves Matos" loading="lazy" style="object-position: center 20%;">
+        <div class="testimonial-photo testimonial-photo--fit" style="background: var(--primary);">
+          <img src="assets/photos/yves-matos.webp" alt="Yves Matos" loading="lazy">
         </div>
         <div class="testimonial-body">
           <p>"Sinto que finalmente entendo o que meu cachorro precisa. Isso muda tudo."</p>
