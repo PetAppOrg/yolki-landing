@@ -2894,7 +2894,7 @@
       opacity: 1;
     }
     .cosmos-proativo-split.text-in .cosmos-split-left {
-      transform: translateY(-100%);  /* sai POR CIMA da imagem, slide up */
+      transform: translateY(calc(-100% - 24px));  /* sai POR CIMA da imagem, slide up */
     }
     .cosmos-proativo-split.text-in .cosmos-split-right {
       transform: translateY(0);  /* sai POR BAIXO da imagem, slide down */
@@ -3187,6 +3187,9 @@
       width: 100% !important;
       max-width: 340px !important;
     }
+    /* Override container-query padding em .cosmos-feature: a imagem precisa
+       preencher os 340px iguais aos cards do "3 minutos por dia" */
+    .cosmos-feature { padding-left: 0 !important; padding-right: 0 !important; }
   }
 
   /* ═══════════════════════════════════════════ */
