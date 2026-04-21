@@ -2129,34 +2129,46 @@
   }
 
   @media (max-width: 768px) {
-    .features-scroll-outer { height: auto; }
-    .features-scroll-sticky { position: static; height: auto; display: block; padding: 48px 0; }
-    /* Fix 7 — cards centralizados, largura igual aos blocos acima (340px),
-       entrada alternada (esq/dir/esq) via IntersectionObserver */
+    .features-scroll-outer { height: auto; overflow: visible; }
+    .features-scroll-sticky {
+      position: static; height: auto;
+      display: block; padding: 48px 0;
+      overflow: visible;
+    }
+    /* Sticky stack: cada card cola no top:88px e o próximo sobe por cima
+       — mesmo padrão dos cards do "3 minutos por dia" (cosmos-card-flip) */
+    .cosmos-features-grid {
+      display: flex !important;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 340px !important;
+      margin: 0 auto !important;
+    }
     .cosmos-features-grid-scroll .cosmos-feature {
-      opacity: 0;
+      position: sticky;
+      top: 88px;
+      background: var(--bg);
       width: 100%;
       max-width: 340px;
       margin-left: auto;
       margin-right: auto;
-      will-change: transform, opacity;
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
-    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="0"] { transform: translateX(-24px); }
-    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="1"] { transform: translateX(24px); }
-    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="2"] { transform: translateX(-24px); }
-    .cosmos-features-grid-scroll .cosmos-feature.in-view {
-      transform: translateX(0) !important;
-      opacity: 1 !important;
+    /* Anula as transformações iniciais e z-index da animação antiga (slide-in lateral) */
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="0"],
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="1"],
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="2"] {
+      transform: none;
+      opacity: 1;
+      z-index: auto;
+    }
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="1"] .cosmos-feature-img,
+    .cosmos-features-grid-scroll .cosmos-feature[data-feature-index="2"] .cosmos-feature-img {
+      opacity: 1;
     }
     .cosmos-features-grid-scroll .cosmos-feature-label { transform: none; opacity: 1; }
-    /* Grid 100% com largura forçada a 340px centralizada, igual aos cards de cima */
-    .cosmos-features-grid {
-      max-width: 340px !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
-      grid-template-columns: 1fr !important;
-    }
   }
   @media (prefers-reduced-motion: reduce) {
     .features-scroll-outer { height: auto; }
