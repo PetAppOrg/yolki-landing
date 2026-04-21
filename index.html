@@ -247,8 +247,7 @@
   [data-theme="dark"] .section-pricing,
   [data-theme="dark"] .section-app,
   [data-theme="dark"] .section-privacy,
-  [data-theme="dark"] .section-faq,
-  [data-theme="dark"] .section-blog { background: var(--surface-1); }
+  [data-theme="dark"] .section-faq { background: var(--surface-1); }
 
   /* Cards — elevated surface */
   [data-theme="dark"] .audience-card,
@@ -256,7 +255,6 @@
   [data-theme="dark"] .pricing-card:not(.pricing-featured),
   [data-theme="dark"] .testimonial-card.testimonial-light,
   [data-theme="dark"] .privacy-card,
-  [data-theme="dark"] .blog-card,
   [data-theme="dark"] .section-faq .faq-item,
   [data-theme="dark"] .phone-mockup,
   [data-theme="dark"] .phone-screen,
@@ -291,14 +289,12 @@
   [data-theme="dark"] .audience-card h3,
   [data-theme="dark"] .section-faq .faq-item summary,
   [data-theme="dark"] .cosmos-feature-label,
-  [data-theme="dark"] .blog-card h3,
   [data-theme="dark"] .screen-title,
   [data-theme="dark"] .screen-card strong { color: var(--text-primary); }
   [data-theme="dark"] .audience-card p,
   [data-theme="dark"] .section-faq .faq-item p,
   [data-theme="dark"] .cosmos-subtitle,
   [data-theme="dark"] .cosmos-body-side,
-  [data-theme="dark"] .blog-card p,
   [data-theme="dark"] .screen-card small,
   [data-theme="dark"] .testimonial-footer span,
   [data-theme="dark"] .plan-tagline,
@@ -310,7 +306,6 @@
   [data-theme="dark"] .cosmos-title-side,
   [data-theme="dark"] .pricing-main-title,
   [data-theme="dark"] .faq-main-title,
-  [data-theme="dark"] .blog-main-title,
   [data-theme="dark"] .compare-title { color: var(--text-primary); }
   [data-theme="dark"] .section-subtitle,
   [data-theme="dark"] .compare-subtitle,
@@ -3188,139 +3183,6 @@
   }
 
   /* ═══════════════════════════════════════════ */
-  /* BLOG / CONTEÚDO                              */
-  /* ═══════════════════════════════════════════ */
-  .section-blog {
-    padding: 120px 0;
-    background: var(--white);
-    position: relative;
-    z-index: 10;
-  }
-
-  .blog-main-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: clamp(32px, 4.5vw, 52px);
-    text-align: center;
-    color: var(--text-primary);
-    margin-bottom: 56px;
-    line-height: 1.15;
-  }
-
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-  }
-
-  .blog-card {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    border-radius: 20px;
-    background: var(--bg);
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid #EEEDEA;
-  }
-
-  .blog-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
-  }
-
-  .blog-image {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    margin: 12px 12px 0 12px;
-    width: calc(100% - 24px);
-    border-radius: 14px;
-  }
-
-  .blog-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s;
-  }
-
-  .blog-card:hover .blog-image img {
-    transform: scale(1.05);
-  }
-
-  .blog-img-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    border-radius: 14px;
-  }
-
-  .blog-body {
-    padding: 20px 20px 24px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .blog-date {
-    font-family: 'Nunito', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
-  }
-
-  .blog-body h3 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 1.35;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-  }
-
-  .blog-excerpt {
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--text-muted);
-    margin-bottom: 16px;
-    flex: 1;
-  }
-
-  .blog-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding-top: 12px;
-    border-top: 1px solid #EEEDEA;
-  }
-
-  .blog-meta span {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  .blog-time {
-    font-weight: 600;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .blog-time svg {
-    flex-shrink: 0;
-    opacity: 0.5;
-  }
-
-  /* ═══════════════════════════════════════════ */
   /* SOCIAL PROOF                                */
   /* ═══════════════════════════════════════════ */
   .section-proof {
@@ -6010,11 +5872,9 @@
     .section-cta,
     .section-app,
     .section-faq,
-    .section-blog,
     .jars-section,
     .cosmos-block { padding: 56px 0 32px !important; }
     .section-title { margin-top: 0; }
-    .blog-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; max-width: 360px; gap: 32px; padding-top: 16px; }
     .pricing-card { padding: 28px 22px 24px !important; border-radius: 18px; gap: 14px; }
     .pricing-featured { border-width: 3px; }
@@ -6051,7 +5911,6 @@
     .cosmos-title-side { font-size: clamp(28px, 6.5vw, 38px) !important; }
     .compare-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
     .faq-main-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
-    .blog-main-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
     .pricing-main-title { font-size: clamp(28px, 6.5vw, 38px) !important; }
 
     /* Compare section */
@@ -6253,7 +6112,6 @@
     .cosmos-card-stack,
     .cosmos-card-flip,
     .pricing-card,
-    .blog-card,
     .audience-card {
       width: 100%;
       max-width: 340px;
@@ -6822,60 +6680,6 @@
       <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Sem cartão</span>
       <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Sem spam</span>
     </span>
-  </div>
-</section>
-
-<!-- BLOG moved to /blog.html — hidden on home -->
-<section class="section-blog" id="conteudo" style="display:none;" aria-hidden="true">
-  <div class="section-container reveal-on-scroll-up">
-    <h2 class="blog-main-title">Reflexões que transformam<br>cuidado em ciência</h2>
-
-    <div class="blog-grid">
-      <a href="./reflexoes.html" class="blog-card">
-        <div class="blog-image">
-          <div class="blog-img-placeholder" style="background: linear-gradient(135deg, #F5D5B0, #E8B87A, #D4956A);">🐕</div>
-        </div>
-        <div class="blog-body">
-          <span class="blog-date">/NUTRIÇÃO</span>
-          <h3>5 alimentos que aumentam a longevidade do seu cão</h3>
-          <p class="blog-excerpt">Descubra quais ingredientes naturais podem fazer diferença real na saúde e expectativa de vida do seu melhor amigo...</p>
-          <div class="blog-meta">
-            <span>Dr. Carlos Mendes</span>
-            <span class="blog-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5 min de leitura</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="./reflexoes.html" class="blog-card">
-        <div class="blog-image">
-          <div class="blog-img-placeholder" style="background: linear-gradient(135deg, #B8D4E3, #7BAED0, #5A93BE);">🐾</div>
-        </div>
-        <div class="blog-body">
-          <span class="blog-date">/PREVENÇÃO</span>
-          <h3>Sinais precoces de problemas cardíacos em pets</h3>
-          <p class="blog-excerpt">Aprenda a identificar os sintomas que passam despercebidos e quando levar seu pet ao veterinário...</p>
-          <div class="blog-meta">
-            <span>Dra. Ana Santos</span>
-            <span class="blog-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 7 min de leitura</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="./reflexoes.html" class="blog-card">
-        <div class="blog-image">
-          <div class="blog-img-placeholder" style="background: linear-gradient(135deg, #C5E6C4, #8FCF8D, #5EB864);">🐶</div>
-        </div>
-        <div class="blog-body">
-          <span class="blog-date">/BEM-ESTAR</span>
-          <h3>Como criar uma rotina saudável para seu pet</h3>
-          <p class="blog-excerpt">Hábitos simples que você pode implementar hoje para melhorar a qualidade de vida do seu companheiro...</p>
-          <div class="blog-meta">
-            <span>Dr. Pedro Lima</span>
-            <span class="blog-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 6 min de leitura</span>
-          </div>
-        </div>
-      </a>
-    </div>
   </div>
 </section>
 
@@ -9493,7 +9297,7 @@ if (prefersReducedMotion) {
   // Titles: word-by-word irregular reveal (blur + slide)
   const titleSelectors = [
     '.section-title', '.cosmos-title', '.cosmos-title-side',
-    '.blog-main-title', '.pricing-main-title', '.faq-main-title',
+    '.pricing-main-title', '.faq-main-title',
     '.compare-title', '.compare-subtitle',
     '.pricing-faq-title', '.plan-name',
     '.hero-headline h1',
@@ -9503,7 +9307,7 @@ if (prefersReducedMotion) {
   const revealSelectors = [
     '.cosmos-body-side', '.section-subtitle',
     '.cosmos-feature', '.cosmos-card', '.cosmos-card-tall', '.cosmos-card-stack',
-    '.blog-card', '.pricing-card', '.faq-item',
+    '.pricing-card', '.faq-item',
     '.testimonial-card', '.jar-col',
     '.app-left', '.app-right',
     '.app-description', '.waitlist-note',
@@ -9512,7 +9316,7 @@ if (prefersReducedMotion) {
 
   // Parents whose direct children should stagger
   const staggerSelectors = [
-    '.cosmos-features-grid', '.blog-grid', '.pricing-grid',
+    '.cosmos-features-grid', '.pricing-grid',
     '.testimonials-grid', '.faq-list', '.jars-container',
   ];
 
