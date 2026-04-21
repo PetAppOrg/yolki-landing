@@ -447,9 +447,15 @@
 
   /* Compensa o nav fixo — adicionar padding-top no body */
   body { padding-top: 76px; }
+  .skip-link { position: fixed; top: -48px; left: 16px; z-index: 200; padding: 10px 16px; background: var(--text); color: #fff; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: top 0.2s ease; }
+  .skip-link:focus-visible { top: 12px; outline: 2px solid var(--primary); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Pular para conteúdo</a>
 
 <!-- Scroll progress bar -->
 <div class="nav-progress" id="navProgress" aria-hidden="true"></div>
@@ -494,6 +500,8 @@
 <div class="page-back">
   <a href="index.html" aria-label="Voltar para a página inicial">← Voltar para o início</a>
 </div>
+
+<main id="main-content">
 
 <!-- HERO -->
 <section class="hero">
@@ -596,6 +604,8 @@
     <p class="footnote">Gratuito · Sem cartão · Sem spam</p>
   </div>
 </section>
+
+</main>
 
 <script>
 // Theme toggle + scroll progress + lang picker (parity com index.html)

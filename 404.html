@@ -224,6 +224,11 @@
     50% { transform: translateY(calc(-50% - 10px)); }
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .mascot-404, .dot { animation: none !important; }
+    * { transition-duration: 0.01ms !important; }
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
     .page-404 {

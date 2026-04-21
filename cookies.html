@@ -32,10 +32,13 @@
   th, td { text-align: left; padding: 8px 10px; border: 1px solid rgba(0,0,0,0.08); vertical-align: top; }
   th { background: #F0F0EE; font-weight: 600; }
   footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.08); color: #6B6B6B; font-size: 13px; }
+  .skip-link { position: fixed; top: -48px; left: 16px; z-index: 200; padding: 10px 16px; background: #1A1A1A; color: #fff; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; text-decoration: none; transition: top 0.2s ease; }
+  .skip-link:focus-visible { top: 12px; outline: 2px solid #01BCB5; outline-offset: 2px; }
 </style>
 </head>
 <body>
-<div class="wrap">
+<a class="skip-link" href="#main-content">Pular para conteúdo</a>
+<main class="wrap" id="main-content">
 
 <header>
   <img src="/assets/brand/yolki-logo.svg" alt="Yolki Pet">
@@ -94,7 +97,7 @@
   Veja também: <a href="/privacidade.html">Política de Privacidade</a> · <a href="/lgpd.html">Aviso LGPD</a>
 </footer>
 
-</div>
+</main>
 <script>
 document.getElementById('openCookiePrefsInline').addEventListener('click', function(e) {
   e.preventDefault();

@@ -53,10 +53,13 @@
   }
   .contact-card strong { display: block; font-family: 'Poppins', sans-serif; font-weight: 600; margin-bottom: 4px; }
   footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.08); color: #6B6B6B; font-size: 13px; }
+  .skip-link { position: fixed; top: -48px; left: 16px; z-index: 200; padding: 10px 16px; background: #1A1A1A; color: #fff; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; text-decoration: none; transition: top 0.2s ease; }
+  .skip-link:focus-visible { top: 12px; outline: 2px solid #01BCB5; outline-offset: 2px; }
 </style>
 </head>
 <body>
-<div class="wrap">
+<a class="skip-link" href="#main-content">Pular para conteúdo</a>
+<main class="wrap" id="main-content">
 
 <header>
   <img src="/assets/brand/yolki-logo.svg" alt="Yolki Pet">
@@ -83,6 +86,6 @@
   Veja também: <a href="/index.html">Site principal</a> · <a href="https://coflint.com" target="_blank" rel="noopener">Coflint</a>
 </footer>
 
-</div>
+</main>
 </body>
 </html>

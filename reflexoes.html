@@ -349,9 +349,15 @@
     .nav-logo img { height: 48px; }
     .nav-back { font-size: 13px; padding: 7px 14px; }
   }
+  .skip-link { position: fixed; top: -48px; left: 16px; z-index: 200; padding: 10px 16px; background: var(--text-primary); color: #fff; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: top 0.2s ease; }
+  .skip-link:focus-visible { top: 12px; outline: 2px solid var(--primary); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Pular para conteúdo</a>
 
 <nav id="siteNav">
   <a class="nav-logo" href="index.html">
@@ -392,6 +398,8 @@
 <div class="reflexoes-back">
   <a href="./" aria-label="Voltar para a página inicial">← Voltar para o início</a>
 </div>
+
+<main id="main-content">
 
 <header class="blog-header">
   <h1>Reflexões que transformam<br><span class="hl">cuidado em ciência</span></h1>
@@ -448,6 +456,8 @@
 <div class="blog-cta-back">
   <a href="./#download">Garantir minha vaga no Yolki →</a>
 </div>
+
+</main>
 
 <footer>
   © 2026 Yolki Pet by Coflint OÜ · <a href="./">Voltar ao site</a>
