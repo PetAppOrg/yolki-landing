@@ -6147,23 +6147,18 @@
   /* Jars grid (Matter.js physics) */
   .jars-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas:
-      "yolki yolki"
-      "gpt   net";
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "yolki gpt net";
     gap: 6px;
     max-width: 1100px;
     width: 100%;
-    margin: -80px auto 0;
+    margin: 0 auto;
     align-items: start;
     justify-items: center;
   }
   .jars-section .jar-col:nth-child(1) { grid-area: yolki; }
   .jars-section .jar-col:nth-child(2) { grid-area: gpt; }
   .jars-section .jar-col:nth-child(3) { grid-area: net; }
-  @media (max-width: 900px) {
-    .jars-container { margin-top: 0; }
-  }
   .jars-section .jar-col {
     display: flex;
     flex-direction: column;
