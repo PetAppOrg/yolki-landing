@@ -7495,7 +7495,7 @@
 </div>
 
 <!-- Supabase client (for waitlist + referral) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.104.0" integrity="sha384-DBZI/1Gz1C29oeP5N6ORumbrmMNoaze4Afb4/c3JkFv79Wh3n1DIzbLRVbu6sJQT" crossorigin="anonymous"></script>
 <script>
   window.__SUPABASE_URL__ = 'https://evfzrtgmuhosvbtbihcg.supabase.co';
   window.__SUPABASE_KEY__ = 'sb_publishable_fudNkYqIArYsrgw26UNysw_3njzf_w-';
@@ -9555,6 +9555,8 @@ if (prefersReducedMotion) {
       if (window.Matter) return resolve();
       const s = document.createElement('script');
       s.src = 'https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js';
+      s.integrity = 'sha384-OqQP3UcU7efkEYDRjGmQou2uEvzGFGRtwdYXTjnupeB9cWogSgQ4BOhyklFBYbBR';
+      s.crossOrigin = 'anonymous';
       s.async = true;
       s.onload = resolve;
       s.onerror = reject;
