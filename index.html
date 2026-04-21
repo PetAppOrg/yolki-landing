@@ -2973,22 +2973,53 @@
     opacity: 0.95;
   }
 
-  /* Mobile: cada card é sticky. Gap grande (90vh) força o usuário a rolar
-     bastante ANTES do próximo card aparecer — dá tempo de virar e ler. */
+  /* Mobile: layout simples — cards empilhados vertical, sem flip.
+     Front (imagem) em cima, back (texto) logo abaixo. */
   @media (max-width: 768px) {
-    .cosmos-flip-outer { height: auto; }
-    .cosmos-flip-sticky { position: static; height: auto; display: block; padding: 48px 0; overflow: visible; }
-    .cosmos-flip-sticky .cosmos-title { position: static; margin-bottom: 32px; }
+    .cosmos-flip-outer { height: auto; overflow: visible; }
+    .cosmos-flip-sticky {
+      position: static; height: auto;
+      display: block; padding: 0;
+      overflow: visible;
+    }
+    .cosmos-flip-sticky .cosmos-title { position: static; margin-bottom: 24px; }
     .cosmos-collage-3col {
-      display: flex;
+      display: flex !important;
       flex-direction: column;
-      gap: 90vh;
+      gap: 24px;
       max-width: 340px !important;
       margin: 0 auto !important;
     }
     .cosmos-card-flip {
-      position: sticky;
-      top: 15vh;
+      position: static !important;
+      aspect-ratio: auto !important;
+      perspective: none;
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      isolation: auto;
+    }
+    .cosmos-card-flip .cosmos-card-inner {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      transform: none !important;
+      transform-style: flat;
+      transition: none;
+    }
+    .cosmos-card-flip .cosmos-card-face {
+      position: static;
+      inset: auto;
+      backface-visibility: visible;
+      -webkit-backface-visibility: visible;
+      transform: none !important;
+      -webkit-transform: none !important;
+      border-radius: 0;
+    }
+    .cosmos-card-flip .cosmos-card-front { aspect-ratio: 4 / 3; }
+    .cosmos-card-flip .cosmos-card-back {
+      padding: 24px;
+      gap: 8px;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -7864,40 +7895,7 @@ if (prefersReducedMotion) {
 
   const isMobile = matchMedia('(max-width: 768px)').matches;
   if (isMobile) {
-    // Mobile: progressão step-based baseada em progress do outer sticky.
-    // 6 marcos: enter0 → flip0 → enter1 → flip1 → enter2 → flip2.
-    // O outer tem 360vh — o usuário é FORÇADO a rolar todo o caminho,
-    // não dá pra pular com 1 swipe: a sticky segura até acabar o scroll.
-    const STEPS = [
-      { at: 0.03, card: 0, act: 'enter' },
-      { at: 0.18, card: 0, act: 'flip'  },
-      { at: 0.35, card: 1, act: 'enter' },
-      { at: 0.50, card: 1, act: 'flip'  },
-      { at: 0.67, card: 2, act: 'enter' },
-      { at: 0.82, card: 2, act: 'flip'  }
-    ];
-    let ticking = false;
-    function update() {
-      const rect = outer.getBoundingClientRect();
-      const total = outer.offsetHeight - window.innerHeight;
-      if (total <= 0) return;
-      const progress = Math.min(1, Math.max(0, -rect.top / total));
-      STEPS.forEach(step => {
-        const card = cards[step.card];
-        if (!card) return;
-        const cls = step.act === 'enter' ? 'is-entered' : 'is-flipped';
-        if (progress >= step.at) card.classList.add(cls);
-        else card.classList.remove(cls);
-      });
-    }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => { update(); ticking = false; });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    update();
+    // Mobile: layout achatado, sem flip. JS nao faz nada.
     return;
   }
 
