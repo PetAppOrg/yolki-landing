@@ -6147,13 +6147,20 @@
   /* Jars grid (Matter.js physics) */
   .jars-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "yolki yolki"
+      "gpt   net";
     gap: 6px;
     max-width: 1100px;
     width: 100%;
     margin: -80px auto 0;
     align-items: start;
+    justify-items: center;
   }
+  .jars-section .jar-col:nth-child(1) { grid-area: yolki; }
+  .jars-section .jar-col:nth-child(2) { grid-area: gpt; }
+  .jars-section .jar-col:nth-child(3) { grid-area: net; }
   @media (max-width: 900px) {
     .jars-container { margin-top: 0; }
   }
@@ -6161,15 +6168,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
   .jars-section .jar-wrapper {
     width: 100%;
-    max-width: 300px;
+    max-width: 390px;
     position: relative;
   }
   @media (min-width: 900px) {
     .jars-section .jar-wrapper {
-      max-width: min(300px, calc((100vh - 440px) / 1.7));
+      max-width: min(390px, calc((100vh - 440px) / 1.31));
     }
   }
   .jars-section .jar-wrapper svg {
@@ -6213,7 +6221,6 @@
     .jars-section { min-height: auto; }
     .jars-section > .section-container { padding: 0 6px; }
     .jars-container {
-      grid-template-columns: repeat(3, 1fr);
       gap: 0;
       padding: 0;
       margin: 0;
