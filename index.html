@@ -3384,14 +3384,15 @@
     border-radius: 14px;
   }
 
-  /* Card-specific: Yves uses uncropped photo on desktop, cropped on mobile */
+  /* Card-specific: Yves full-bleed no mobile, contain+bottom no desktop */
   .testimonial-photo--yves img {
     display: block;
     object-position: center top;
   }
   @media (min-width: 769px) {
     .testimonial-photo--yves img {
-      object-position: center 20%;
+      object-fit: contain;
+      object-position: center bottom;
     }
   }
 
@@ -7121,10 +7122,7 @@
     <div class="testimonials-grid" id="testimonialsScrollGrid">
       <div class="testimonial-card testimonial-dark" data-testimonial-index="0">
         <div class="testimonial-photo testimonial-photo--yves" style="background: var(--primary);">
-          <picture>
-            <source media="(min-width: 769px)" srcset="assets/photos/yves-matos-desktop.webp">
-            <img src="assets/photos/yves-matos.webp" alt="Yves Matos" loading="lazy">
-          </picture>
+          <img src="assets/photos/yves-matos.webp" alt="Yves Matos" loading="lazy">
         </div>
         <div class="testimonial-body">
           <p>"Sinto que finalmente entendo o que meu cachorro precisa. Isso muda tudo."</p>
