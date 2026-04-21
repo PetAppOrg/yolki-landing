@@ -2615,6 +2615,8 @@
     position: relative;
     z-index: 10;
     overflow: hidden;
+    view-timeline-name: --screens-scroll;
+    view-timeline-axis: block;
   }
   .screens-header {
     text-align: center;
@@ -2657,22 +2659,22 @@
     @media (prefers-reduced-motion: no-preference) {
       .phone-shot-wrap.phone-left {
         animation: phone-slide-in-left linear both;
-        animation-timeline: view();
-        animation-range: entry 0% cover 45%;
+        animation-timeline: --screens-scroll;
+        animation-range: entry 0% cover 50%;
       }
       .phone-shot-wrap.phone-right {
         animation: phone-slide-in-right linear both;
-        animation-timeline: view();
-        animation-range: entry 0% cover 45%;
+        animation-timeline: --screens-scroll;
+        animation-range: entry 0% cover 50%;
       }
     }
   }
   @keyframes phone-slide-in-left {
-    from { transform: translateX(-80vw) rotate(-6deg); opacity: 0; }
+    from { transform: translateX(-110vw) rotate(-8deg); opacity: 0; }
     to   { transform: translateX(0) rotate(0); opacity: 1; }
   }
   @keyframes phone-slide-in-right {
-    from { transform: translateX(80vw) rotate(6deg); opacity: 0; }
+    from { transform: translateX(110vw) rotate(8deg); opacity: 0; }
     to   { transform: translateX(0) rotate(0); opacity: 1; }
   }
   .phone-mockup {
