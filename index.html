@@ -123,11 +123,14 @@
   :root {
     /* ─── COR (hex fallback + OKLCH Display-P3 quando suportado) ─── */
     --primary: #01BCB5;
+    --primary-strong: #007F7A;
     --secondary: #A76FFF;
     --accent: #FFB139;
     --success: #5EB864;
+    --success-text: #2F7F34;
     --warning: #F9D84D;
     --error: #FB5A61;
+    --error-text: #C42B37;
     --info: #4286CD;
     --bg: #FAFAF8;
     --text-primary: #040404;
@@ -2224,9 +2227,9 @@
   .billing-toggle-wrap .toggle-label.active { color: #fff; }
   .billing-toggle-wrap .toggle-label .save-badge {
     background: var(--success);
-    color: #fff;
+    color: #0D2A10;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     padding: 4px 10px;
     border-radius: 50px;
     letter-spacing: 0.3px;
@@ -2318,7 +2321,7 @@
     display: inline-block;
     font-size: 15px;
     font-weight: 800;
-    color: var(--success);
+    color: var(--success-text);
     background: rgba(94, 184, 100, 0.12);
     padding: 4px 12px;
     border-radius: 999px;
@@ -2404,9 +2407,9 @@
     letter-spacing: 0.2px;
   }
   .plan-cta-primary {
-    background: var(--primary);
+    background: var(--primary-strong);
     color: #fff;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--primary-strong);
     box-shadow: 0 6px 20px rgba(1, 188, 181, 0.25);
   }
   .plan-cta-primary:hover {
@@ -3586,7 +3589,7 @@
     right: 0;
     margin: 0 auto;
     width: fit-content;
-    background: var(--primary);
+    background: var(--primary-strong);
     color: #fff;
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
@@ -3618,7 +3621,7 @@
     right: 0;
     margin: 0 auto;
     width: fit-content;
-    background: #B8B8B8;
+    background: #6B6B6B;
     color: #fff;
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
@@ -3654,7 +3657,7 @@
   .hl-num {
     font-style: normal;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--primary-strong);
   }
 
   .plan-price {
@@ -3749,12 +3752,12 @@
   .pricing-corp-cta-btn {
     flex-shrink: 0;
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
     padding: 11px 22px;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--primary-strong);
     border-radius: 999px;
-    color: var(--primary);
+    color: var(--primary-strong);
     text-decoration: none;
     white-space: nowrap;
     transition: background 0.2s, color 0.2s, transform 0.15s;
@@ -5453,7 +5456,7 @@
   .cookie-btn-ghost { background: transparent; color: rgba(255,255,255,0.7); }
   .cookie-btn-ghost:hover { color: #fff; }
   .cookie-btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.25); }
-  .cookie-btn-primary { background: var(--primary); color: #fff; }
+  .cookie-btn-primary { background: var(--primary-strong); color: #fff; }
 
   @media (max-width: 680px) {
     .cookie-banner-inner { grid-template-columns: 1fr; }
@@ -5619,23 +5622,23 @@
   }
   .footer-subscribe button {
     flex: 0 0 auto;
-    background: var(--primary);
+    background: var(--primary-strong);
     color: #fff;
     border: none;
     border-radius: 999px;
     padding: 10px 14px;
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 13px;
     cursor: pointer;
     transition: background 0.15s ease, opacity 0.15s ease;
     white-space: nowrap;
   }
-  .footer-subscribe button:hover { background: #00A8A3; }
+  .footer-subscribe button:hover { background: #006A66; }
   .footer-subscribe.is-submitting button { opacity: 0.7; cursor: wait; }
   .footer-subscribe.is-success button,
   .footer-subscribe.is-success button:hover {
-    background: #5EB864;
+    background: #2F7F34;
     cursor: default;
   }
   .footer-news-micro {
@@ -5687,7 +5690,7 @@
   .footer-copy {
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
-    color: #6b6b6b;
+    color: #B0B0B0;
     margin: 0;
     text-align: right;
   }
@@ -6166,7 +6169,7 @@
     display: block;
     margin-bottom: 4px;
   }
-  .compare-privacy-body strong em { font-style: italic; color: var(--error); font-weight: 700; }
+  .compare-privacy-body strong em { font-style: italic; color: var(--error-text); font-weight: 700; }
   .compare-privacy-body p {
     font-family: 'Nunito', sans-serif;
     font-size: 14px;
@@ -6175,7 +6178,7 @@
     margin: 0;
   }
   .compare-privacy-body a {
-    color: var(--success);
+    color: var(--success-text);
     text-decoration: none;
     font-weight: 600;
     white-space: nowrap;
