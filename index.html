@@ -1510,10 +1510,10 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--secondary);
+    background: #8F52E8;
     color: var(--white);
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
     padding: 0 32px;
     height: 56px;
@@ -1525,7 +1525,7 @@
     box-shadow: 0 6px 20px rgba(167, 111, 255, 0.28);
   }
   .hero-cta-primary:hover {
-    background: #8F52E8;
+    background: #7A3FCF;
     transform: translateY(-2px);
     box-shadow: 0 10px 28px rgba(167, 111, 255, 0.38);
   }
@@ -1851,7 +1851,6 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-muted);
-    opacity: 0.75;
   }
   .video-caption .video-caption-play {
     display: inline-block;
@@ -5506,7 +5505,7 @@
   .footer-badge svg { color: var(--primary); flex-shrink: 0; }
 
   /* COLS — Produto / Empresa / Legal / Newsletter heading */
-  .footer-col h4 {
+  .footer-col h3 {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 16px;
@@ -5746,7 +5745,7 @@
     .footer-empresa-divider + p { margin-top: 14px; }
     /* Empresa/Legal cols centralizadas */
     .footer-col { text-align: center; }
-    .footer-col h4 { text-align: center; }
+    .footer-col h3 { text-align: center; }
     .footer-col a { text-align: center; }
     .footer-news-desc { text-align: center; }
     .footer-news-micro { text-align: center; justify-content: center; }
@@ -6324,7 +6323,7 @@
   </div>
   <div class="nav-right">
     <div class="lang-picker">
-      <button type="button" class="lang-btn" id="langBtn" aria-label="Escolher idioma" aria-haspopup="menu" aria-expanded="false">
+      <button type="button" class="lang-btn" id="langBtn" aria-haspopup="menu" aria-expanded="false" title="Escolher idioma">
         <span class="lang-code js-lang-current" id="langCurrent">PT</span>
         <svg class="lang-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
@@ -6425,7 +6424,7 @@
       <source src="assets/video/hero-video.mp4#t=0.1" type="video/mp4">
     </video>
     <div class="video-overlay" id="videoOverlay">
-      <button class="video-play-btn" id="videoPlayBtn">
+      <button type="button" class="video-play-btn" id="videoPlayBtn" aria-label="Reproduzir vídeo">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>
@@ -7398,7 +7397,7 @@
 
       <!-- COL 2 — PRODUTO -->
       <div class="footer-col">
-        <h4>Produto</h4>
+        <h3>Produto</h3>
         <a href="#como-funciona">Como funciona</a>
         <a href="#comparacao">Comparativo</a>
         <a href="#planos">Planos</a>
@@ -7409,7 +7408,7 @@
 
       <!-- COL 3 — EMPRESA -->
       <div class="footer-col">
-        <h4>Empresa</h4>
+        <h3>Empresa</h3>
         <a href="https://coflint.com" target="_blank" rel="noopener">Sobre</a>
         <a href="mailto:hello@yolki.pet">Contato</a>
         <a href="/imprensa.html">Imprensa</a>
@@ -7422,7 +7421,7 @@
 
       <!-- COL 4 — LEGAL -->
       <div class="footer-col">
-        <h4>Legal</h4>
+        <h3>Legal</h3>
         <a href="/termos.html">Termos de uso</a>
         <a href="/privacidade.html">Política de privacidade</a>
         <a href="/cookies.html">Política de cookies</a>
@@ -7432,7 +7431,7 @@
 
       <!-- COL 5 — NEWSLETTER -->
       <div class="footer-col footer-news">
-        <h4>Newsletter</h4>
+        <h3>Newsletter</h3>
         <p class="footer-news-desc">Receba novidades do Yolki direto no seu email.</p>
         <form class="footer-subscribe" id="footerSubscribeForm" onsubmit="return false;">
           <input type="email" name="email" id="footerSubscribeEmail" placeholder="nome@email.com" required autocomplete="email" inputmode="email" aria-label="Seu email" aria-describedby="footerNewsMicro">
@@ -7458,7 +7457,7 @@
           <svg class="ic nav-theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
         <div class="lang-picker">
-          <button type="button" class="lang-btn" aria-label="Escolher idioma" aria-haspopup="menu" aria-expanded="false">
+          <button type="button" class="lang-btn" aria-haspopup="menu" aria-expanded="false" title="Escolher idioma">
             <span class="lang-code js-lang-current">PT</span>
             <svg class="lang-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
