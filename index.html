@@ -5567,6 +5567,31 @@
     color: rgba(255, 255, 255, 0.6);
     margin: 0 0 14px;
   }
+  #footerSubscribeForm { display: flex; flex-direction: column; gap: 8px; max-width: 380px; }
+  .footer-subscribe-name {
+    background: #fff;
+    border: none;
+    border-radius: 9999px;
+    padding: 14px 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #1A1A1A;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .footer-subscribe-name::placeholder { color: #999; opacity: 1; }
+  .footer-subscribe-name:read-only { background: transparent; color: #1A1A1A; -webkit-text-fill-color: #1A1A1A; opacity: 1; cursor: default; }
+  .footer-subscribe-name:-webkit-autofill,
+  .footer-subscribe-name:-webkit-autofill:hover,
+  .footer-subscribe-name:-webkit-autofill:focus,
+  .footer-subscribe-name:-webkit-autofill:active {
+    -webkit-text-fill-color: #1A1A1A !important;
+    caret-color: #1A1A1A;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    transition: background-color 9999s ease-in-out 0s;
+  }
   .footer-subscribe {
     display: flex;
     align-items: center;
@@ -5755,6 +5780,8 @@
     .footer-news-desc { text-align: center; }
     .footer-news-micro { text-align: center; justify-content: center; }
     .footer-subscribe { margin: 0 auto; }
+    #footerSubscribeForm { margin: 0 auto; align-items: center; }
+    .footer-subscribe-name { text-align: center; }
   }
 
   /* Navbar esconde quando footer entra em view */
@@ -7438,9 +7465,12 @@
       <div class="footer-col footer-news">
         <h3>Newsletter</h3>
         <p class="footer-news-desc">Receba novidades do Yolki direto no seu email.</p>
-        <form class="footer-subscribe" id="footerSubscribeForm" onsubmit="return false;">
-          <input type="email" name="email" id="footerSubscribeEmail" placeholder="nome@email.com" required autocomplete="email" inputmode="email" aria-label="Seu email" aria-describedby="footerNewsMicro">
-          <button type="submit" id="footerSubscribeBtn">Inscrever</button>
+        <form id="footerSubscribeForm" onsubmit="return false;">
+          <input class="footer-subscribe-name" type="text" name="name" id="footerSubscribeName" placeholder="Seu nome" required autocomplete="given-name" aria-label="Seu nome" aria-describedby="footerNewsMicro">
+          <div class="footer-subscribe">
+            <input type="email" name="email" id="footerSubscribeEmail" placeholder="nome@email.com" required autocomplete="email" inputmode="email" aria-label="Seu email" aria-describedby="footerNewsMicro">
+            <button type="submit" id="footerSubscribeBtn">Inscrever</button>
+          </div>
         </form>
         <p class="footer-news-micro" id="footerNewsMicro" role="status" aria-live="polite">1 email por semana · cancele quando quiser</p>
       </div>
@@ -9018,11 +9048,12 @@ if (prefersReducedMotion) {
 (function() {
   const form = document.getElementById('footerSubscribeForm');
   if (!form) return;
+  const nameInput = document.getElementById('footerSubscribeName');
   const emailInput = document.getElementById('footerSubscribeEmail');
+  const pill = form.querySelector('.footer-subscribe');
   const btn = document.getElementById('footerSubscribeBtn');
   const micro = document.getElementById('footerNewsMicro');
 
-  const MICRO_DEFAULT = '1 email por semana · cancele quando quiser';
   const SUCCESS_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
 
   function setMicro(state, msg) {
@@ -9038,9 +9069,16 @@ if (prefersReducedMotion) {
 
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    if (succeeded) return; // Don't resubmit after success
+    if (succeeded) return;
 
+    const name = (nameInput.value || '').trim();
     const email = (emailInput.value || '').trim();
+
+    if (!name) {
+      setMicro('error', 'Informe seu nome.');
+      nameInput.focus();
+      return;
+    }
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       setMicro('error', 'Informe um email válido.');
       emailInput.focus();
@@ -9051,32 +9089,35 @@ if (prefersReducedMotion) {
       return;
     }
 
-    form.classList.add('is-submitting');
+    if (pill) pill.classList.add('is-submitting');
     btn.disabled = true;
     btn.textContent = 'Inscrevendo...';
 
     try {
-      const fallbackName = email.split('@')[0].slice(0, 40) || 'Assinante';
-      const { data: result, error } = await window.sbClient.rpc('join_waitlist', {
-        p_name: fallbackName,
+      const { data: result, error } = await window.sbClient.rpc('subscribe_newsletter', {
+        p_name: name,
         p_email: email,
-        p_city: null,
-        p_referred_by: null,
         p_source: 'footer',
       });
       if (error) throw error;
       if (!result || !result.success) throw new Error('Falha no cadastro.');
 
       succeeded = true;
-      form.classList.remove('is-submitting');
-      form.classList.add('is-success');
+      if (pill) {
+        pill.classList.remove('is-submitting');
+        pill.classList.add('is-success');
+      }
       btn.textContent = '✓ Inscrito';
       btn.disabled = true;
+      nameInput.readOnly = true;
       emailInput.readOnly = true;
-      setMicro('success', 'Pronto! Fica de olho no seu email.');
+      const msg = result.already_subscribed
+        ? 'Você já está inscrito. Obrigado!'
+        : 'Pronto! Fica de olho no seu email.';
+      setMicro('success', msg);
     } catch (err) {
       console.error('Footer subscribe error:', err);
-      form.classList.remove('is-submitting');
+      if (pill) pill.classList.remove('is-submitting');
       setMicro('error', 'Não deu pra inscrever agora. Tente de novo em instantes.');
       btn.disabled = false;
       btn.textContent = 'Inscrever';
