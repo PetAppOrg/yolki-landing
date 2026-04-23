@@ -5336,7 +5336,20 @@
     transition: transform 0.15s ease, box-shadow 0.25s ease;
   }
   .corp-submit:hover { transform: translateY(-1px); background: #7A3FCF; box-shadow: 0 8px 24px rgba(143, 82, 232, 0.28); }
-  .corp-submit:disabled { opacity: 0.7; cursor: progress; transform: none; box-shadow: none; }
+
+  /* ─── SUBMIT BUTTONS: disabled state unificado (form inválido + loading) ─── */
+  form button[type="submit"]:disabled,
+  form input[type="submit"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  form button[type="submit"]:disabled:hover,
+  form input[type="submit"]:disabled:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
 
   .corp-disclaimer {
     font-family: 'Nunito', sans-serif;
@@ -8435,6 +8448,7 @@ if (prefersReducedMotion) {
     if (submitDefault) {
       submitDefault.textContent = isRh ? 'Quero conhecer' : 'Enviar indicação';
     }
+    form.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   openBtn.addEventListener('click', (e) => { e.preventDefault(); open(); });
@@ -8511,6 +8525,23 @@ if (prefersReducedMotion) {
     }
     form.hidden = true;
     success.hidden = false;
+  });
+})();
+
+// ─── SUBMIT BUTTON SYNC (desabilita submit até form estar válido) ───
+(function() {
+  document.querySelectorAll('form').forEach(form => {
+    const submit = form.querySelector('button[type="submit"], input[type="submit"]');
+    if (!submit) return;
+    if (!form.querySelector('[required]')) return;
+
+    const update = () => {
+      submit.disabled = !form.checkValidity();
+    };
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+    form.addEventListener('reset', () => setTimeout(update, 0));
+    update();
   });
 })();
 
