@@ -5264,6 +5264,9 @@
 
   .corp-form { display: flex; flex-direction: column; gap: 14px; }
   .corp-fields { display: flex; flex-direction: column; gap: 14px; }
+  .corp-fields[hidden],
+  .corp-trust[hidden],
+  .corp-disclaimer[hidden] { display: none; }
   .corp-field { display: flex; flex-direction: column; gap: 6px; }
   .corp-field textarea {
     font-family: 'Nunito', sans-serif;
@@ -7311,17 +7314,17 @@
       <p>Pets no pacote de benefícios. Retenção, saúde mental do time e diferencial real.</p>
     </div>
 
-    <div class="corp-tabs" role="tablist">
-      <button type="button" class="corp-tab active" data-corp-tab="rh" role="tab" aria-selected="true">Sou do RH</button>
-      <button type="button" class="corp-tab" data-corp-tab="funcionario" role="tab" aria-selected="false">Indico pro meu RH</button>
+    <div class="corp-tabs" role="tablist" aria-label="Escolha seu perfil">
+      <button type="button" class="corp-tab active" data-corp-tab="rh" role="tab" id="corpTabRh" aria-selected="true" aria-controls="corpPanelRh">Sou do RH</button>
+      <button type="button" class="corp-tab" data-corp-tab="funcionario" role="tab" id="corpTabFuncionario" aria-selected="false" aria-controls="corpPanelFuncionario" tabindex="-1">Indico pro meu RH</button>
     </div>
 
-    <form class="corp-form" id="corpForm" data-mode="rh">
+    <form class="corp-form" id="corpForm" data-mode="rh" novalidate>
       <!-- MODE A — Sou do RH -->
-      <div class="corp-fields corp-fields-rh">
+      <div class="corp-fields corp-fields-rh" id="corpPanelRh" role="tabpanel" aria-labelledby="corpTabRh">
         <label class="corp-field">
           <span>Seu nome</span>
-          <input type="text" name="name_rh" placeholder="Ex: Maria Souza" required autocomplete="name" inputmode="text">
+          <input type="text" name="name" placeholder="Ex: Maria Souza" required autocomplete="name" inputmode="text">
         </label>
         <label class="corp-field">
           <span>Email corporativo</span>
@@ -7344,44 +7347,55 @@
         </label>
         <label class="corp-field">
           <span>Mensagem <span class="corp-opt">(opcional)</span></span>
-          <textarea name="message" rows="3" placeholder="Conte brevemente o que você procura (opcional)" maxlength="500"></textarea>
+          <textarea name="message" rows="3" placeholder="Conte brevemente o que você procura" maxlength="500"></textarea>
         </label>
       </div>
 
       <!-- MODE B — Indico pro meu RH -->
-      <div class="corp-fields corp-fields-funcionario" hidden>
+      <div class="corp-fields corp-fields-funcionario" id="corpPanelFuncionario" role="tabpanel" aria-labelledby="corpTabFuncionario" hidden>
         <label class="corp-field">
           <span>Seu nome</span>
-          <input type="text" name="name_emp" placeholder="Ex: Maria Souza" required autocomplete="name" inputmode="text" disabled>
+          <input type="text" name="name" placeholder="Ex: Maria Souza" required autocomplete="name" inputmode="text" disabled>
         </label>
         <label class="corp-field">
-          <span>Empresa onde você trabalha</span>
-          <input type="text" name="company_emp" placeholder="Nome da empresa" required autocomplete="organization" disabled>
+          <span>Seu email</span>
+          <input type="email" name="email" placeholder="maria@empresa.com.br" required autocomplete="email" inputmode="email" disabled>
         </label>
         <label class="corp-field">
-          <span>Email do RH</span>
-          <input type="email" name="rh_email" placeholder="rh@empresa.com.br" required autocomplete="off" inputmode="email" disabled>
+          <span>Empresa</span>
+          <input type="text" name="company" placeholder="Nome da empresa onde você trabalha" required autocomplete="organization" disabled>
         </label>
         <label class="corp-field">
-          <span>Como prefere que abordemos?</span>
+          <span>Email do RH <span class="corp-opt">(se souber)</span></span>
+          <input type="email" name="rh_email" placeholder="rh@empresa.com.br" autocomplete="off" inputmode="email" disabled>
+        </label>
+        <label class="corp-field">
+          <span>Como devemos tratar sua indicação?</span>
           <select name="intro_type" required disabled>
             <option value="" disabled selected>Selecione uma opção</option>
             <option value="mention">Pode mencionar meu nome</option>
             <option value="anonymous">Prefiro ficar anônimo</option>
-            <option value="talk_first">Quero falar com o RH antes</option>
           </select>
+        </label>
+        <label class="corp-field">
+          <span>Mensagem <span class="corp-opt">(opcional)</span></span>
+          <textarea name="message" rows="3" placeholder="Algum contexto útil pra gente abordar o RH?" maxlength="500" disabled></textarea>
         </label>
       </div>
 
-      <p class="corp-trust">Seus dados são usados apenas para responder sobre benefícios pet. Sem spam.</p>
+      <p class="corp-trust" data-trust-rh>Seus dados são usados apenas para responder sobre benefícios pet. Sem spam.</p>
+      <p class="corp-trust" data-trust-funcionario hidden>Se escolher anônimo, seu nome nunca é mencionado no contato com o RH. Sem spam.</p>
 
       <button type="submit" class="corp-submit" data-cta="corp-submit">
         <span class="corp-submit-default">Quero conhecer</span>
         <span class="corp-submit-loading" hidden>Enviando…</span>
       </button>
 
-      <p class="corp-disclaimer">
+      <p class="corp-disclaimer" data-disclaimer-rh>
         Você recebe um material completo sobre benefícios pet — casos, dados e como implementar. Respondemos assim que possível. Dados tratados conforme a LGPD.
+      </p>
+      <p class="corp-disclaimer" data-disclaimer-funcionario hidden>
+        A gente entra em contato com o RH da sua empresa respeitando a preferência que você escolher e te avisa por email quando fizer a abordagem. Dados tratados conforme a LGPD.
       </p>
     </form>
 
@@ -7391,7 +7405,7 @@
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
         </svg>
       </div>
-      <h3>Chegou. 🐾</h3>
+      <h3 id="corpSuccessTitle">Chegou. 🐾</h3>
       <p id="corpSuccessCopy">Vamos preparar um material completo sobre benefícios pet — casos, dados e como implementar — e te enviar no email informado assim que possível.</p>
       <button type="button" class="corp-success-close" data-close-corp>Fechar</button>
     </div>
@@ -8361,11 +8375,16 @@ if (prefersReducedMotion) {
   const form = document.getElementById('corpForm');
   const success = document.getElementById('corpSuccess');
   const successCopy = document.getElementById('corpSuccessCopy');
+  const successTitle = document.getElementById('corpSuccessTitle');
   if (!modal || !openBtn || !form) return;
 
-  const tabs = modal.querySelectorAll('[data-corp-tab]');
+  const tabs = Array.from(modal.querySelectorAll('[data-corp-tab]'));
   const fieldsRh = modal.querySelector('.corp-fields-rh');
   const fieldsEmp = modal.querySelector('.corp-fields-funcionario');
+  const trustRh = modal.querySelector('[data-trust-rh]');
+  const trustEmp = modal.querySelector('[data-trust-funcionario]');
+  const disclaimerRh = modal.querySelector('[data-disclaimer-rh]');
+  const disclaimerEmp = modal.querySelector('[data-disclaimer-funcionario]');
   const submitBtn = form.querySelector('.corp-submit');
   const submitDefault = form.querySelector('.corp-submit-default');
   const submitLoading = form.querySelector('.corp-submit-loading');
@@ -8377,7 +8396,7 @@ if (prefersReducedMotion) {
     modal.hidden = false;
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    const firstInput = form.querySelector('input, select');
+    const firstInput = form.querySelector('.corp-fields:not([hidden]) input, .corp-fields:not([hidden]) select');
     if (firstInput) setTimeout(() => firstInput.focus(), 100);
   }
   function close() {
@@ -8385,11 +8404,16 @@ if (prefersReducedMotion) {
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     if (lastFocus) lastFocus.focus();
-    // Reset após fechar
     form.hidden = false;
     success.hidden = true;
     form.reset();
     setMode('rh');
+  }
+
+  function togglePanel(panel, show) {
+    if (!panel) return;
+    panel.hidden = !show;
+    panel.querySelectorAll('input, select, textarea').forEach(el => { el.disabled = !show; });
   }
 
   function setMode(mode) {
@@ -8398,16 +8422,15 @@ if (prefersReducedMotion) {
       const match = t.dataset.corpTab === mode;
       t.classList.toggle('active', match);
       t.setAttribute('aria-selected', match ? 'true' : 'false');
+      t.setAttribute('tabindex', match ? '0' : '-1');
     });
     const isRh = mode === 'rh';
-    if (fieldsRh) {
-      fieldsRh.hidden = !isRh;
-      fieldsRh.querySelectorAll('input, select, textarea').forEach(el => { el.disabled = !isRh; });
-    }
-    if (fieldsEmp) {
-      fieldsEmp.hidden = isRh;
-      fieldsEmp.querySelectorAll('input, select, textarea').forEach(el => { el.disabled = isRh; });
-    }
+    togglePanel(fieldsRh, isRh);
+    togglePanel(fieldsEmp, !isRh);
+    if (trustRh) trustRh.hidden = !isRh;
+    if (trustEmp) trustEmp.hidden = isRh;
+    if (disclaimerRh) disclaimerRh.hidden = !isRh;
+    if (disclaimerEmp) disclaimerEmp.hidden = isRh;
     if (submitDefault) {
       submitDefault.textContent = isRh ? 'Quero conhecer' : 'Enviar indicação';
     }
@@ -8422,10 +8445,21 @@ if (prefersReducedMotion) {
     if (e.key === 'Escape' && !modal.hidden) close();
   });
 
-  tabs.forEach(t => t.addEventListener('click', () => setMode(t.dataset.corpTab)));
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => setMode(t.dataset.corpTab));
+    t.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const dir = e.key === 'ArrowRight' ? 1 : -1;
+      const next = tabs[(i + dir + tabs.length) % tabs.length];
+      setMode(next.dataset.corpTab);
+      next.focus();
+    });
+  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
     const mode = form.dataset.mode;
     const data = Object.fromEntries(new FormData(form).entries());
     data.mode = mode;
@@ -8442,18 +8476,15 @@ if (prefersReducedMotion) {
       }
     } catch (_) { /* tabela pode não existir ainda — segue fluxo */ }
 
-    // Fallback: sempre abrir email pré-preenchido em nova aba (redundante + garante recebimento)
-    const senderName = data.name_rh || data.name_emp || '';
+    const introMap = { mention: 'pode mencionar meu nome', anonymous: 'prefere ficar anônimo' };
     const subject = mode === 'rh'
-      ? `Plano corporativo — ${data.company || senderName}`
-      : `Indicação pro meu RH — ${data.company_emp || senderName}`;
-    const introMap = { mention: 'pode mencionar meu nome', anonymous: 'prefere ficar anônimo', talk_first: 'quer falar com o RH antes' };
+      ? `Plano corporativo — ${data.company || data.name || ''}`
+      : `Indicação pro meu RH — ${data.company || data.name || ''}`;
     const body = mode === 'rh'
-      ? `Olá, tenho interesse em avaliar Yolki como benefício pet corporativo.\n\nNome: ${senderName}\nEmpresa: ${data.company || ''}\nEmail: ${data.email || ''}\nTamanho do time: ${data.team_size || ''}\n\nMensagem: ${data.message || '(sem mensagem)'}`
-      : `Olá, gostaria de indicar Yolki como benefício pet pra empresa onde trabalho.\n\nNome: ${senderName}\nEmpresa: ${data.company_emp || ''}\nEmail do RH: ${data.rh_email || ''}\nAbordagem: ${introMap[data.intro_type] || 'não especificado'}`;
+      ? `Olá, tenho interesse em avaliar Yolki como benefício pet corporativo.\n\nNome: ${data.name || ''}\nEmpresa: ${data.company || ''}\nEmail: ${data.email || ''}\nTamanho do time: ${data.team_size || ''}\n\nMensagem: ${data.message || '(sem mensagem)'}`
+      : `Olá, gostaria de indicar Yolki como benefício pet pra empresa onde trabalho.\n\nNome: ${data.name || ''}\nEmail: ${data.email || ''}\nEmpresa: ${data.company || ''}\nEmail do RH: ${data.rh_email || '(não informado)'}\nAbordagem: ${introMap[data.intro_type] || 'não especificado'}\n\nMensagem: ${data.message || '(sem mensagem)'}`;
     const mailto = 'mailto:hello@yolki.pet?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
-    // Dispara mailto em background (não intrusivo)
     const a = document.createElement('a');
     a.href = mailto;
     a.style.display = 'none';
@@ -8461,14 +8492,16 @@ if (prefersReducedMotion) {
     a.click();
     document.body.removeChild(a);
 
-    // Mostra sucesso
     submitBtn.disabled = false;
     submitDefault.hidden = false;
     submitLoading.hidden = true;
+    if (successTitle) {
+      successTitle.textContent = mode === 'rh' ? 'Chegou. 🐾' : 'Indicação recebida. 🐾';
+    }
     if (successCopy) {
       successCopy.textContent = mode === 'rh'
         ? 'Vamos preparar um material completo sobre benefícios pet — casos, dados e como implementar — e te enviar no email informado assim que possível.'
-        : 'Ótima indicação! Vamos entrar em contato com o RH da ' + (data.company_emp || 'sua empresa') + ' assim que possível, respeitando o que você escolheu sobre como ser mencionado.';
+        : 'Ótima indicação! Vamos entrar em contato com o RH da ' + (data.company || 'sua empresa') + ' respeitando sua preferência e te avisamos por email quando fizermos a abordagem.';
     }
     form.hidden = true;
     success.hidden = false;
