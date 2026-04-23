@@ -8919,14 +8919,12 @@ if (prefersReducedMotion) {
       inviteSubmit.disabled = true;
       setInviteButtonLabel('Enviando...');
       try {
-        // TODO: quando o template transacional estiver configurado, passar sendCopy
-        // para uma nova param p_send_copy e fazer o RPC disparar também pra quem convida.
-        void sendCopy;
         const { data: res, error } = await window.sbClient.rpc('send_referral_invite', {
           p_from_email: currentUserEmail,
           p_to_email: toEmail,
           p_to_name: toName || null,
           p_message: message || null,
+          p_send_copy: sendCopy,
         });
         if (error) throw error;
         if (res && res.success) {
