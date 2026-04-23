@@ -5259,8 +5259,8 @@
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
   }
-  .corp-tab.active { background: var(--surface-2); color: var(--text-primary); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
-  [data-theme="dark"] .corp-tab.active { background: var(--surface-4); color: var(--text-primary); }
+  .corp-tab.active { background: var(--primary-strong); color: #fff; box-shadow: 0 2px 8px rgba(0, 127, 122, 0.25); }
+  [data-theme="dark"] .corp-tab.active { background: var(--primary-strong); color: #fff; }
 
   .corp-form { display: flex; flex-direction: column; gap: 14px; }
   .corp-fields { display: flex; flex-direction: column; gap: 14px; }
@@ -5287,12 +5287,6 @@
     font-weight: 400 !important;
     color: var(--text-muted) !important;
     font-size: 12px !important;
-  }
-  .corp-hint {
-    font-family: 'Nunito', sans-serif;
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 2px;
   }
   .corp-trust {
     font-family: 'Nunito', sans-serif;
@@ -5342,6 +5336,8 @@
   }
   .corp-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(1, 188, 181, 0.28); }
   .corp-submit:disabled { opacity: 0.7; cursor: progress; transform: none; box-shadow: none; }
+  .corp-form[data-mode="funcionario"] .corp-submit { background: #8F52E8; }
+  .corp-form[data-mode="funcionario"] .corp-submit:hover { background: #7A3FCF; box-shadow: 0 8px 24px rgba(143, 82, 232, 0.28); }
 
   .corp-disclaimer {
     font-family: 'Nunito', sans-serif;
@@ -7374,7 +7370,6 @@
         <label class="corp-field">
           <span>Contato do RH <span class="corp-opt">(opcional)</span></span>
           <input type="text" name="rh_contact" placeholder="Email, LinkedIn ou site da empresa" autocomplete="off" disabled>
-          <small class="corp-hint">Se não souber, a gente procura pelos canais da empresa.</small>
         </label>
         <label class="corp-field">
           <span>Como devemos tratar sua indicação?</span>
