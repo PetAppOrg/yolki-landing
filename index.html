@@ -5288,6 +5288,12 @@
     color: var(--text-muted) !important;
     font-size: 12px !important;
   }
+  .corp-hint {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
   .corp-trust {
     font-family: 'Nunito', sans-serif;
     font-size: 12px;
@@ -7366,8 +7372,9 @@
           <input type="text" name="company" placeholder="Nome da empresa onde você trabalha" required autocomplete="organization" disabled>
         </label>
         <label class="corp-field">
-          <span>Email do RH <span class="corp-opt">(se souber)</span></span>
-          <input type="email" name="rh_email" placeholder="rh@empresa.com.br" autocomplete="off" inputmode="email" disabled>
+          <span>Contato do RH <span class="corp-opt">(opcional)</span></span>
+          <input type="text" name="rh_contact" placeholder="Email, LinkedIn ou site da empresa" autocomplete="off" disabled>
+          <small class="corp-hint">Se não souber, a gente procura pelos canais da empresa.</small>
         </label>
         <label class="corp-field">
           <span>Como devemos tratar sua indicação?</span>
@@ -8482,7 +8489,7 @@ if (prefersReducedMotion) {
       : `Indicação pro meu RH — ${data.company || data.name || ''}`;
     const body = mode === 'rh'
       ? `Olá, tenho interesse em avaliar Yolki como benefício pet corporativo.\n\nNome: ${data.name || ''}\nEmpresa: ${data.company || ''}\nEmail: ${data.email || ''}\nTamanho do time: ${data.team_size || ''}\n\nMensagem: ${data.message || '(sem mensagem)'}`
-      : `Olá, gostaria de indicar Yolki como benefício pet pra empresa onde trabalho.\n\nNome: ${data.name || ''}\nEmail: ${data.email || ''}\nEmpresa: ${data.company || ''}\nEmail do RH: ${data.rh_email || '(não informado)'}\nAbordagem: ${introMap[data.intro_type] || 'não especificado'}\n\nMensagem: ${data.message || '(sem mensagem)'}`;
+      : `Olá, gostaria de indicar Yolki como benefício pet pra empresa onde trabalho.\n\nNome: ${data.name || ''}\nEmail: ${data.email || ''}\nEmpresa: ${data.company || ''}\nContato do RH: ${data.rh_contact || '(não informado — procurar pelos canais da empresa)'}\nAbordagem: ${introMap[data.intro_type] || 'não especificado'}\n\nMensagem: ${data.message || '(sem mensagem)'}`;
     const mailto = 'mailto:hello@yolki.pet?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
     const a = document.createElement('a');
@@ -8499,9 +8506,14 @@ if (prefersReducedMotion) {
       successTitle.textContent = mode === 'rh' ? 'Chegou. 🐾' : 'Indicação recebida. 🐾';
     }
     if (successCopy) {
-      successCopy.textContent = mode === 'rh'
-        ? 'Vamos preparar um material completo sobre benefícios pet — casos, dados e como implementar — e te enviar no email informado assim que possível.'
-        : 'Ótima indicação! Vamos entrar em contato com o RH da ' + (data.company || 'sua empresa') + ' respeitando sua preferência e te avisamos por email quando fizermos a abordagem.';
+      if (mode === 'rh') {
+        successCopy.textContent = 'Vamos preparar um material completo sobre benefícios pet — casos, dados e como implementar — e te enviar no email informado assim que possível.';
+      } else {
+        const empresa = data.company || 'sua empresa';
+        successCopy.textContent = data.rh_contact
+          ? `Ótima indicação! Vamos entrar em contato com o RH da ${empresa} respeitando sua preferência e te avisamos por email quando fizermos a abordagem.`
+          : `Ótima indicação! Vamos localizar o RH da ${empresa} pelos canais públicos (site, LinkedIn) e fazer a abordagem respeitando sua preferência. Te avisamos por email quando conseguirmos o contato.`;
+      }
     }
     form.hidden = true;
     success.hidden = false;
