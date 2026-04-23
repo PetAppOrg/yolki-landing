@@ -1,0 +1,12 @@
+{
+  "name": "yolki-landing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "translate": "node scripts/translate.mjs"
+  },
+  "devDependencies": {
+    "cheerio": "^1.0.0"
+  }
+}

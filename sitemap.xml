@@ -1,42 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://yolki.pet/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yolki.pet/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://yolki.pet/en/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yolki.pet/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://yolki.pet/comparacao</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/comparacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/comparacao"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yolki.pet/en/comparacao</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/comparacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/comparacao"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yolki.pet/reflexoes</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/reflexoes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/reflexoes"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yolki.pet/en/reflexoes</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/reflexoes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/reflexoes"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yolki.pet/imprensa</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/imprensa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/imprensa"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://yolki.pet/en/imprensa</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/imprensa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/imprensa"/>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://yolki.pet/privacidade</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/privacidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/privacidade"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yolki.pet/en/privacidade</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/privacidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/privacidade"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://yolki.pet/termos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/termos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/termos"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yolki.pet/en/termos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/termos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/termos"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://yolki.pet/cookies</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/cookies"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/cookies"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yolki.pet/en/cookies</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/cookies"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/cookies"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://yolki.pet/lgpd</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/lgpd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/lgpd"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yolki.pet/en/lgpd</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yolki.pet/lgpd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yolki.pet/en/lgpd"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
