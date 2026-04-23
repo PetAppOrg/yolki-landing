@@ -8478,44 +8478,46 @@ if (prefersReducedMotion) {
     const mode = form.dataset.mode;
     const data = Object.fromEntries(new FormData(form).entries());
     data.mode = mode;
-    data.source = 'landing-pricing';
-    data.created_at = new Date().toISOString();
 
     submitBtn.disabled = true;
     submitDefault.hidden = true;
     submitLoading.hidden = false;
 
+    let rpcError = null;
     try {
-      if (window.sbClient && window.sbClient.from) {
-        await window.sbClient.from('corporate_leads').insert(data);
+      if (window.sbClient && window.sbClient.rpc) {
+        const { data: result, error } = await window.sbClient.rpc('send_corporate_lead_emails', { p_data: data });
+        if (error) rpcError = error.message || 'unknown_error';
+        else if (result && result.success === false) rpcError = result.error || 'unknown_error';
+      } else {
+        rpcError = 'client_unavailable';
       }
-    } catch (_) { /* tabela pode não existir ainda — segue fluxo */ }
-
-    const introMap = { mention: 'pode mencionar meu nome', anonymous: 'prefere ficar anônimo' };
-    const subject = mode === 'rh'
-      ? `Plano corporativo — ${data.company || data.name || ''}`
-      : `Indicação pro meu RH — ${data.company || data.name || ''}`;
-    const body = mode === 'rh'
-      ? `Olá, tenho interesse em avaliar Yolki como benefício pet corporativo.\n\nNome: ${data.name || ''}\nEmpresa: ${data.company || ''}\nEmail: ${data.email || ''}\nTamanho do time: ${data.team_size || ''}\n\nMensagem: ${data.message || '(sem mensagem)'}`
-      : `Olá, gostaria de indicar Yolki como benefício pet pra empresa onde trabalho.\n\nNome: ${data.name || ''}\nEmail: ${data.email || ''}\nEmpresa: ${data.company || ''}\nContato do RH: ${data.rh_contact || '(não informado — procurar pelos canais da empresa)'}\nAbordagem: ${introMap[data.intro_type] || 'não especificado'}\n\nMensagem: ${data.message || '(sem mensagem)'}`;
-    const mailto = 'mailto:hello@yolki.pet?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-    const a = document.createElement('a');
-    a.href = mailto;
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    } catch (err) {
+      rpcError = (err && err.message) || 'exception';
+    }
 
     submitBtn.disabled = false;
     submitDefault.hidden = false;
     submitLoading.hidden = true;
+
+    if (rpcError) {
+      if (successTitle) successTitle.textContent = 'Ops…';
+      if (successCopy) {
+        successCopy.textContent = rpcError === 'rate_limited'
+          ? 'Você já enviou algumas solicitações nas últimas 24h. Aguarde um pouco antes de tentar de novo — se for urgente, escreve pra hello@yolki.pet.'
+          : 'Não conseguimos enviar agora. Tenta de novo em alguns minutos, ou escreve pra hello@yolki.pet.';
+      }
+      form.hidden = true;
+      success.hidden = false;
+      return;
+    }
+
     if (successTitle) {
       successTitle.textContent = mode === 'rh' ? 'Chegou. 🐾' : 'Indicação recebida. 🐾';
     }
     if (successCopy) {
       if (mode === 'rh') {
-        successCopy.textContent = 'Vamos preparar um material completo sobre benefícios pet — casos, dados e como implementar — e te enviar no email informado assim que possível.';
+        successCopy.textContent = 'Obrigado pelo interesse — vamos te procurar nos próximos dias úteis com os planos corporativos. Um email de confirmação já saiu pra você.';
       } else {
         const empresa = data.company || 'sua empresa';
         successCopy.textContent = data.rh_contact
