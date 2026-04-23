@@ -7578,6 +7578,46 @@
   if (window.supabase && window.supabase.createClient) {
     window.sbClient = window.supabase.createClient(window.__SUPABASE_URL__, window.__SUPABASE_KEY__);
   }
+
+  // Geo helper: busca { country, region, city } via /api/geo (headers Vercel), cacheia na sessão
+  (function() {
+    var EMPTY = { country: null, region: null, city: null };
+    var cached = null;
+    var pending = null;
+    try {
+      var s = sessionStorage.getItem('__geo_cache__');
+      if (s) cached = JSON.parse(s);
+    } catch (e) {}
+
+    window.__fetchGeo = function() {
+      if (cached) return Promise.resolve(cached);
+      if (pending) return pending;
+
+      var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var timer = setTimeout(function() { if (ctrl) try { ctrl.abort(); } catch (e) {} }, 1500);
+
+      pending = fetch('/api/geo', ctrl ? { signal: ctrl.signal } : undefined)
+        .then(function(r) { return r.ok ? r.json() : EMPTY; })
+        .catch(function() { return EMPTY; })
+        .then(function(data) {
+          clearTimeout(timer);
+          cached = {
+            country: (data && data.country) || null,
+            region: (data && data.region) || null,
+            city: (data && data.city) || null,
+          };
+          try { sessionStorage.setItem('__geo_cache__', JSON.stringify(cached)); } catch (e) {}
+          pending = null;
+          return cached;
+        });
+      return pending;
+    };
+
+    // Pre-fetch: a requisição pro /api/geo roda em paralelo com o resto do carregamento
+    if (typeof fetch === 'function') {
+      try { window.__fetchGeo(); } catch (e) {}
+    }
+  })();
 </script>
 
 <script>
@@ -8199,6 +8239,7 @@ if (prefersReducedMotion) {
   async function saveQuizToSupabase(ans) {
     if (!window.sbClient) return;
     try {
+      const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       await window.sbClient.from('quiz_submissions').insert({
         session_id: getSessionId(),
         especie:      ans.especie      || null,
@@ -8209,7 +8250,10 @@ if (prefersReducedMotion) {
         tempo:        ans.tempo        || null,
         user_agent:   navigator.userAgent,
         referrer:     document.referrer || null,
-        answers:      ans
+        answers:      ans,
+        geo_country:  geo.country,
+        geo_region:   geo.region,
+        geo_city:     geo.city
       });
     } catch (err) {
       console.warn('Quiz submission failed (tabela quiz_submissions pode nao existir):', err);
@@ -8499,6 +8543,10 @@ if (prefersReducedMotion) {
     let rpcError = null;
     try {
       if (window.sbClient && window.sbClient.rpc) {
+        const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
+        data.geo_country = geo.country;
+        data.geo_region = geo.region;
+        data.geo_city = geo.city;
         const { data: result, error } = await window.sbClient.rpc('send_corporate_lead_emails', { p_data: data });
         if (error) rpcError = error.message || 'unknown_error';
         else if (result && result.success === false) rpcError = result.error || 'unknown_error';
@@ -8753,12 +8801,16 @@ if (prefersReducedMotion) {
     }
 
     try {
+      const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       await window.sbClient.rpc('join_waitlist', {
         p_name: 'Pet lover',
         p_email: email,
         p_city: null,
         p_referred_by: null,
         p_source: 'exit-intent',
+        p_geo_country: geo.country,
+        p_geo_region: geo.region,
+        p_geo_city: geo.city,
       });
       formWrap.style.display = 'none';
       successBox.style.display = 'block';
@@ -9004,12 +9056,16 @@ if (prefersReducedMotion) {
       inviteSubmit.disabled = true;
       setInviteButtonLabel('Enviando...');
       try {
+        const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
         const { data: res, error } = await window.sbClient.rpc('send_referral_invite', {
           p_from_email: currentUserEmail,
           p_to_email: toEmail,
           p_to_name: toName || null,
           p_message: message || null,
           p_send_copy: sendCopy,
+          p_geo_country: geo.country,
+          p_geo_region: geo.region,
+          p_geo_city: geo.city,
         });
         if (error) throw error;
         if (res && res.success) {
@@ -9099,12 +9155,16 @@ if (prefersReducedMotion) {
     }
 
     try {
+      const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       const { data: result, error } = await window.sbClient.rpc('join_waitlist', {
         p_name: name,
         p_email: email,
         p_city: city || null,
         p_referred_by: referredBy,
         p_source: 'main',
+        p_geo_country: geo.country,
+        p_geo_region: geo.region,
+        p_geo_city: geo.city,
       });
 
       if (error) throw error;
@@ -9177,10 +9237,14 @@ if (prefersReducedMotion) {
     btn.textContent = 'Inscrevendo...';
 
     try {
+      const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       const { data: result, error } = await window.sbClient.rpc('subscribe_newsletter', {
         p_name: name,
         p_email: email,
         p_source: 'footer',
+        p_geo_country: geo.country,
+        p_geo_region: geo.region,
+        p_geo_city: geo.city,
       });
       if (error) throw error;
       if (!result || !result.success) throw new Error('Falha no cadastro.');

@@ -136,7 +136,7 @@
       "description": "Quick demo of the Yolki Pet app: daily micro-lessons, health monitoring, and gamification for pet longevity.",
       "thumbnailUrl": "https://yolki.pet/assets/brand/og-image.webp",
       "uploadDate": "2026-04-01",
-      "contentUrl": "https://yolki.pet/assets/video/hero-video.mp4"
+      "contentUrl": "https://yolki.pet/assets/video/hero-video-en.mp4"
     },
     {
       "@type": "FAQPage",
@@ -6543,7 +6543,7 @@
   <!-- CTAs (separate block) -->
   <div class="hero-cta-group">
     <a href="#download" class="hero-cta-primary" data-cta="hero-primary">
-      <span>Reserve my free spot</span>
+      <span>Claim my free spot</span>
       <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
     </a>
     <a href="#video-reveal" class="hero-cta-secondary" data-cta="hero-secondary">
@@ -6562,8 +6562,8 @@
 <section class="section-video" id="video-reveal">
   <div class="video-card" id="videoCard">
     <video id="heroVideo" playsinline="" preload="metadata">
-      <source src="assets/video/hero-video.webm#t=0.1" type="video/webm">
-      <source src="assets/video/hero-video.mp4#t=0.1" type="video/mp4">
+      <source src="assets/video/hero-video-en.webm#t=0.1" type="video/webm">
+      <source src="assets/video/hero-video-en.mp4#t=0.1" type="video/mp4">
     </video>
     <div class="video-overlay" id="videoOverlay">
       <button type="button" class="video-play-btn" id="videoPlayBtn" aria-label="Play Video">
@@ -6816,7 +6816,7 @@
 <section class="section-inline-cta" aria-label="Join the Waitlist">
   <div class="section-container">
     <p class="inline-cta-lead">Does it make sense to you?</p>
-    <a href="#download" class="hero-cta-primary" data-cta="inline-post-preview">Join the waitlist →</a>
+    <a href="#download" class="hero-cta-primary" data-cta="inline-post-preview">Join the waiting list →</a>
     <span class="inline-cta-note">
       <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>Free</span>
       <span class="wn-item"><svg class="wn-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5EB864" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>No card required</span>
@@ -7167,7 +7167,7 @@
           <span class="price-period">forever</span>
         </div>
         <a href="#download" class="plan-cta plan-cta-primary" data-cta="plan-gratis" data-variant="secondary">
-          Get on the free list →
+          Join the waiting list →
         </a>
       </div>
 
@@ -7214,7 +7214,7 @@
         </div>
         <p class="plan-save" data-monthly="No anual, <strong class=&quot;plan-save-hero&quot;>economize R$ 180/ano</strong>" data-annual="<strong class=&quot;plan-save-hero&quot;>Economia de R$ 180/ano</strong><span class=&quot;plan-save-sub&quot;>Total R$ 298,80/ano</span>"><strong class="plan-save-hero">Save R$ 180/year</strong><span class="plan-save-sub">Total R$ 298.80/year</span></p>
         <a href="#download" class="plan-cta plan-cta-outline" data-cta="plan-familia">
-          Join with family →
+          Get the Family plan →
         </a>
       </div>
     </div>
@@ -7654,6 +7654,46 @@
   if (window.supabase && window.supabase.createClient) {
     window.sbClient = window.supabase.createClient(window.__SUPABASE_URL__, window.__SUPABASE_KEY__);
   }
+
+  // Geo helper: fetches { country, region, city } via /api/geo (Vercel headers), session-cached
+  (function() {
+    var EMPTY = { country: null, region: null, city: null };
+    var cached = null;
+    var pending = null;
+    try {
+      var s = sessionStorage.getItem('__geo_cache__');
+      if (s) cached = JSON.parse(s);
+    } catch (e) {}
+
+    window.__fetchGeo = function() {
+      if (cached) return Promise.resolve(cached);
+      if (pending) return pending;
+
+      var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var timer = setTimeout(function() { if (ctrl) try { ctrl.abort(); } catch (e) {} }, 1500);
+
+      pending = fetch('/api/geo', ctrl ? { signal: ctrl.signal } : undefined)
+        .then(function(r) { return r.ok ? r.json() : EMPTY; })
+        .catch(function() { return EMPTY; })
+        .then(function(data) {
+          clearTimeout(timer);
+          cached = {
+            country: (data && data.country) || null,
+            region: (data && data.region) || null,
+            city: (data && data.city) || null,
+          };
+          try { sessionStorage.setItem('__geo_cache__', JSON.stringify(cached)); } catch (e) {}
+          pending = null;
+          return cached;
+        });
+      return pending;
+    };
+
+    // Pre-fetch in parallel with page load
+    if (typeof fetch === 'function') {
+      try { window.__fetchGeo(); } catch (e) {}
+    }
+  })();
 </script>
 
 <script>
@@ -8275,6 +8315,7 @@ if (prefersReducedMotion) {
   async function saveQuizToSupabase(ans) {
     if (!window.sbClient) return;
     try {
+      const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       await window.sbClient.from('quiz_submissions').insert({
         session_id: getSessionId(),
         especie:      ans.especie      || null,
@@ -8285,7 +8326,10 @@ if (prefersReducedMotion) {
         tempo:        ans.tempo        || null,
         user_agent:   navigator.userAgent,
         referrer:     document.referrer || null,
-        answers:      ans
+        answers:      ans,
+        geo_country:  geo.country,
+        geo_region:   geo.region,
+        geo_city:     geo.city
       });
     } catch (err) {
       console.warn('Quiz submission failed (tabela quiz_submissions pode nao existir):', err);
@@ -8575,6 +8619,10 @@ if (prefersReducedMotion) {
     let rpcError = null;
     try {
       if (window.sbClient && window.sbClient.rpc) {
+        const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
+        data.geo_country = geo.country;
+        data.geo_region = geo.region;
+        data.geo_city = geo.city;
         const { data: result, error } = await window.sbClient.rpc('send_corporate_lead_emails', { p_data: data });
         if (error) rpcError = error.message || 'unknown_error';
         else if (result && result.success === false) rpcError = result.error || 'unknown_error';
@@ -8829,12 +8877,16 @@ if (prefersReducedMotion) {
     }
 
     try {
+      const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       await window.sbClient.rpc('join_waitlist', {
         p_name: 'Pet lover',
         p_email: email,
         p_city: null,
         p_referred_by: null,
         p_source: 'exit-intent',
+        p_geo_country: geo.country,
+        p_geo_region: geo.region,
+        p_geo_city: geo.city,
       });
       formWrap.style.display = 'none';
       successBox.style.display = 'block';
@@ -9080,12 +9132,16 @@ if (prefersReducedMotion) {
       inviteSubmit.disabled = true;
       setInviteButtonLabel('Enviando...');
       try {
+        const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
         const { data: res, error } = await window.sbClient.rpc('send_referral_invite', {
           p_from_email: currentUserEmail,
           p_to_email: toEmail,
           p_to_name: toName || null,
           p_message: message || null,
           p_send_copy: sendCopy,
+          p_geo_country: geo.country,
+          p_geo_region: geo.region,
+          p_geo_city: geo.city,
         });
         if (error) throw error;
         if (res && res.success) {
@@ -9175,12 +9231,16 @@ if (prefersReducedMotion) {
     }
 
     try {
+      const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       const { data: result, error } = await window.sbClient.rpc('join_waitlist', {
         p_name: name,
         p_email: email,
         p_city: city || null,
         p_referred_by: referredBy,
         p_source: 'main',
+        p_geo_country: geo.country,
+        p_geo_region: geo.region,
+        p_geo_city: geo.city,
       });
 
       if (error) throw error;
@@ -9253,10 +9313,14 @@ if (prefersReducedMotion) {
     btn.textContent = 'Inscrevendo...';
 
     try {
+      const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       const { data: result, error } = await window.sbClient.rpc('subscribe_newsletter', {
         p_name: name,
         p_email: email,
         p_source: 'footer',
+        p_geo_country: geo.country,
+        p_geo_region: geo.region,
+        p_geo_city: geo.city,
       });
       if (error) throw error;
       if (!result || !result.success) throw new Error('Falha no cadastro.');
@@ -9907,29 +9971,29 @@ if (prefersReducedMotion) {
     }
 
     const yolkiPills = [
-      { text: 'Sem fake news',        w: 114, color: '#01BCB5' },
-      { text: 'Resposta em segundos', w: 120, color: '#8F06CD' },
+      { text: 'No fake news',         w: 104, color: '#01BCB5' },
+      { text: 'Answers in seconds',   w: 120, color: '#8F06CD' },
       { text: '24/7',                 w: 64,  color: '#FDA600' },
-      { text: 'Raça e idade',         w: 110, color: '#5EB864' },
-      { text: 'Lembretes de vacinas', w: 120, color: '#4286CD' },
-      { text: 'Personalizado',        w: 114, color: '#01BCB5' }
+      { text: 'Breed & age',          w: 96,  color: '#5EB864' },
+      { text: 'Vaccine reminders',    w: 118, color: '#4286CD' },
+      { text: 'Personalized',         w: 108, color: '#01BCB5' }
     ];
     const gptPills = [
-      { text: 'Sem urgência',         w: 100 },
-      { text: 'Sem contexto do pet',  w: 114 },
-      { text: 'Pode inventar',        w: 96 },
-      { text: 'Sem histórico',        w: 96 },
-      { text: 'Genérico demais',      w: 104 },
-      { text: 'Sem vet por trás',     w: 100 }
+      { text: 'No urgency',           w: 88  },
+      { text: 'No pet context',       w: 102 },
+      { text: 'Makes stuff up',       w: 104 },
+      { text: 'No history',           w: 84  },
+      { text: 'Too generic',          w: 90  },
+      { text: 'No vet behind it',     w: 108 }
     ];
     const netPills = [
-      { text: 'Desatualizado',        w: 94 },
-      { text: 'Ads por todo lado',    w: 104 },
-      { text: 'Fontes duvidosas',     w: 100 },
-      { text: 'Conselhos perigosos',  w: 114 },
-      { text: 'Info conflitante',     w: 98 },
-      { text: 'Horas pesquisando',    w: 106 },
-      { text: 'Clickbait',            w: 80 }
+      { text: 'Outdated',             w: 72  },
+      { text: 'Ads everywhere',       w: 100 },
+      { text: 'Dubious sources',      w: 110 },
+      { text: 'Dangerous advice',     w: 112 },
+      { text: 'Conflicting info',     w: 108 },
+      { text: 'Hours searching',      w: 104 },
+      { text: 'Clickbait',            w: 80  }
     ];
 
     dropPills('pills-yolki', yolkiPills, true);
@@ -10002,7 +10066,7 @@ if (prefersReducedMotion) {
       <p>Before you go, get <strong>5 tips that could add years to your pet's life</strong>. Straight to your email, no spam.</p>
       <form class="exit-intent-form" id="exitIntentForm">
         <input type="email" name="email" placeholder="your@email.com" required="" autocomplete="email" aria-label="Email">
-        <button type="submit" id="exitIntentSubmit" data-cta="exit-intent">Get it</button>
+        <button type="submit" id="exitIntentSubmit" data-cta="exit-intent">Send me the tips</button>
       </form>
       <p class="exit-intent-small">Leave whenever you want. No spam, ever.</p>
     </div>
