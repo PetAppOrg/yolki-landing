@@ -8253,20 +8253,20 @@ if (prefersReducedMotion) {
     if (!window.sbClient) return;
     try {
       const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
-      await window.sbClient.from('quiz_submissions').insert({
-        session_id: getSessionId(),
-        especie:      ans.especie      || null,
-        idade:        ans.idade        || null,
-        objetivo:     ans.objetivo     || null,
-        conhecimento: ans.conhecimento || null,
-        duvida:       ans.duvida       || null,
-        tempo:        ans.tempo        || null,
-        user_agent:   navigator.userAgent,
-        referrer:     document.referrer || null,
-        answers:      ans,
-        geo_country:  geo.country,
-        geo_region:   geo.region,
-        geo_city:     geo.city
+      await window.sbClient.rpc('submit_quiz', {
+        p_session_id:   getSessionId(),
+        p_especie:      ans.especie      || null,
+        p_idade:        ans.idade        || null,
+        p_objetivo:     ans.objetivo     || null,
+        p_conhecimento: ans.conhecimento || null,
+        p_duvida:       ans.duvida       || null,
+        p_tempo:        ans.tempo        || null,
+        p_user_agent:   navigator.userAgent,
+        p_referrer:     document.referrer || null,
+        p_answers:      ans,
+        p_geo_country:  geo.country,
+        p_geo_region:   geo.region,
+        p_geo_city:     geo.city
       });
     } catch (err) {
       console.warn('Quiz submission failed (tabela quiz_submissions pode nao existir):', err);
