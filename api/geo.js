@@ -37,6 +37,9 @@ export default function handler(request) {
   if (origin && !allowed) {
     return new Response('Forbidden', { status: 403 });
   }
+  if (request.method !== 'GET') {
+    return new Response('Method Not Allowed', { status: 405, headers: { 'allow': 'GET, OPTIONS' } });
+  }
 
   const decode = (v) => {
     if (!v) return null;
