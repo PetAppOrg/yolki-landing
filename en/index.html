@@ -8975,14 +8975,14 @@ if (prefersReducedMotion) {
   }
 
   function renderSuccess(result) {
-    const firstName = (result.name || '').split(' ')[0] || 'tutor(a)';
+    const firstName = (result.name || '').split(' ')[0] || 'pet parent';
     nameEl.textContent = firstName;
     posEl.textContent = '#' + result.position;
 
     const link = buildReferralLink(result.referral_code);
     linkInput.value = link;
 
-    const shareText = `Entrei na lista do Yolki Pet — app que ajuda o meu pet a viver mais 🐾. Garante sua vaga comigo:`;
+    const shareText = `I just joined the Yolki Pet waitlist — the app that helps my pet live longer 🐾. Grab your spot with me:`;
     shareWA.href = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + link)}`;
 
     currentUserEmail = (result.email || '').toLowerCase() || null;
