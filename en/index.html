@@ -44,6 +44,7 @@
 })();
 </script>
 <script src="/assets/lang-switcher.js" defer=""></script>
+<script src="/assets/antispam.js" defer=""></script>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="/assets/brand/yolki-logo.svg">
 <link rel="apple-touch-icon" href="/assets/brand/yolki-logo.svg">
@@ -7351,7 +7352,7 @@
         <h2 class="section-title">Your pet can't<br>wait. <span class="hl">Neither can you.</span></h2>
         <p class="app-description">Sign up now and get priority access to Yolki Pet on launch day. Limited spots for Open Beta.</p>
 
-        <form class="waitlist-form waitlist-form-main" id="waitlistForm" onsubmit="return false;">
+        <form class="waitlist-form waitlist-form-main" id="waitlistForm" data-antispam="" onsubmit="return false;">
           <input type="text" name="name" placeholder="e.g. Maria Souza" required="" autocomplete="name" inputmode="text">
           <input type="email" name="email" placeholder="name@email.com" required="" autocomplete="email" inputmode="email">
           <input type="text" name="city" placeholder="e.g. Salvador-BA" required="" autocomplete="address-level2">
@@ -7433,7 +7434,7 @@
       <button type="button" class="corp-tab" data-corp-tab="funcionario" role="tab" id="corpTabFuncionario" aria-selected="false" aria-controls="corpPanelFuncionario" tabindex="-1">I'll recommend to my HR team</button>
     </div>
 
-    <form class="corp-form" id="corpForm" data-mode="rh" novalidate="">
+    <form class="corp-form" id="corpForm" data-mode="rh" data-antispam="" novalidate="">
       <!-- MODE A — Sou do RH -->
       <div class="corp-fields corp-fields-rh" id="corpPanelRh" role="tabpanel" aria-labelledby="corpTabRh">
         <label class="corp-field">
@@ -7593,7 +7594,7 @@
       <div class="footer-col footer-news">
         <h3>Newsletter</h3>
         <p class="footer-news-desc">Get Yolki news straight to your email.</p>
-        <form id="footerSubscribeForm" onsubmit="return false;">
+        <form id="footerSubscribeForm" data-antispam="" onsubmit="return false;">
           <div class="footer-subscribe">
             <input type="email" name="email" id="footerSubscribeEmail" placeholder="name@email.com" required="" autocomplete="email" inputmode="email" aria-label="Your Email" aria-describedby="footerNewsMicro">
             <button type="submit" id="footerSubscribeBtn">Subscribe</button>
@@ -10080,7 +10081,7 @@ if (prefersReducedMotion) {
       <div class="exit-intent-emoji" aria-hidden="true">🐾</div>
       <h3 id="exit-intent-title">Hold on!</h3>
       <p>Before you go, get <strong>5 tips that could add years to your pet's life</strong>. Straight to your email, no spam.</p>
-      <form class="exit-intent-form" id="exitIntentForm">
+      <form class="exit-intent-form" id="exitIntentForm" data-antispam="">
         <input type="email" name="email" placeholder="your@email.com" required="" autocomplete="email" aria-label="Email">
         <button type="submit" id="exitIntentSubmit" data-cta="exit-intent">Send me the tips</button>
       </form>
@@ -10114,7 +10115,7 @@ if (prefersReducedMotion) {
     <h2 id="invite-modal-title" class="yp-title">Invite someone</h2>
     <p id="invite-modal-subtitle" class="yp-subtitle">We'll send the invite with your link — you move up in the queue when they join.</p>
 
-    <form class="yp-form" id="inviteForm" novalidate="">
+    <form class="yp-form" id="inviteForm" data-antispam="" novalidate="">
       <div class="yp-field">
         <label class="yp-label" for="inviteToEmail">Email</label>
         <div class="yp-input-wrap">
