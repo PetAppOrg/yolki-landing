@@ -9543,6 +9543,7 @@ if (prefersReducedMotion) {
     if (el.dataset.splitDone) return;
     el.dataset.splitDone = '1';
     let wordIndex = 0;
+    let lastWordSpan = null;
 
     function recurse(node) {
       // Clone children array since we'll modify the DOM
@@ -9551,6 +9552,13 @@ if (prefersReducedMotion) {
         if (child.nodeType === Node.TEXT_NODE) {
           const text = child.textContent;
           if (!text.trim()) return;
+          // Pontuação solta (ex: "." após um <span>) — anexa ao word anterior
+          // pra evitar que caia sozinha numa linha ao fazer wrap.
+          if (/^[.,!?;:]+$/.test(text.trim()) && lastWordSpan) {
+            lastWordSpan.textContent += text.trim();
+            node.removeChild(child);
+            return;
+          }
           const parts = text.split(/(\s+)/);
           const frag = document.createDocumentFragment();
           parts.forEach(part => {
@@ -9562,6 +9570,7 @@ if (prefersReducedMotion) {
               // Irregular jitter: 0 to 180ms random extra delay
               span.style.setProperty('--wd', (Math.random() * 0.18).toFixed(3) + 's');
               frag.appendChild(span);
+              lastWordSpan = span;
             } else {
               frag.appendChild(document.createTextNode(part));
             }
