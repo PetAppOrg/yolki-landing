@@ -8547,6 +8547,7 @@ if (prefersReducedMotion) {
         data.geo_country = geo.country;
         data.geo_region = geo.region;
         data.geo_city = geo.city;
+        data.language = 'pt';
         const { data: result, error } = await window.sbClient.rpc('send_corporate_lead_emails', { p_data: data });
         if (error) rpcError = error.message || 'unknown_error';
         else if (result && result.success === false) rpcError = result.error || 'unknown_error';
@@ -8811,6 +8812,7 @@ if (prefersReducedMotion) {
         p_geo_country: geo.country,
         p_geo_region: geo.region,
         p_geo_city: geo.city,
+        p_language: 'pt',
       });
       formWrap.style.display = 'none';
       successBox.style.display = 'block';
@@ -9066,6 +9068,7 @@ if (prefersReducedMotion) {
           p_geo_country: geo.country,
           p_geo_region: geo.region,
           p_geo_city: geo.city,
+          p_language: 'pt',
         });
         if (error) throw error;
         if (res && res.success) {
@@ -9165,6 +9168,7 @@ if (prefersReducedMotion) {
         p_geo_country: geo.country,
         p_geo_region: geo.region,
         p_geo_city: geo.city,
+        p_language: 'pt',
       });
 
       if (error) throw error;
@@ -9245,6 +9249,7 @@ if (prefersReducedMotion) {
         p_geo_country: geo.country,
         p_geo_region: geo.region,
         p_geo_city: geo.city,
+        p_language: 'pt',
       });
       if (error) throw error;
       if (!result || !result.success) throw new Error('Falha no cadastro.');
