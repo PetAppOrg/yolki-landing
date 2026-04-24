@@ -7583,7 +7583,6 @@
         <h3>Newsletter</h3>
         <p class="footer-news-desc">Get Yolki news straight to your email.</p>
         <form id="footerSubscribeForm" onsubmit="return false;">
-          <input class="footer-subscribe-name" type="text" name="name" id="footerSubscribeName" placeholder="Your Name" required="" autocomplete="given-name" aria-label="Your Name" aria-describedby="footerNewsMicro">
           <div class="footer-subscribe">
             <input type="email" name="email" id="footerSubscribeEmail" placeholder="name@email.com" required="" autocomplete="email" inputmode="email" aria-label="Your Email" aria-describedby="footerNewsMicro">
             <button type="submit" id="footerSubscribeBtn">Subscribe</button>
@@ -9271,7 +9270,6 @@ if (prefersReducedMotion) {
 (function() {
   const form = document.getElementById('footerSubscribeForm');
   if (!form) return;
-  const nameInput = document.getElementById('footerSubscribeName');
   const emailInput = document.getElementById('footerSubscribeEmail');
   const pill = form.querySelector('.footer-subscribe');
   const btn = document.getElementById('footerSubscribeBtn');
@@ -9294,14 +9292,8 @@ if (prefersReducedMotion) {
     e.preventDefault();
     if (succeeded) return;
 
-    const name = (nameInput.value || '').trim();
     const email = (emailInput.value || '').trim();
 
-    if (!name) {
-      setMicro('error', 'Enter your name.');
-      nameInput.focus();
-      return;
-    }
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       setMicro('error', 'Enter a valid email.');
       emailInput.focus();
@@ -9319,7 +9311,7 @@ if (prefersReducedMotion) {
     try {
       const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       const { data: result, error } = await window.sbClient.rpc('subscribe_newsletter', {
-        p_name: name,
+        p_name: null,
         p_email: email,
         p_source: 'footer',
         p_geo_country: geo.country,
@@ -9337,7 +9329,6 @@ if (prefersReducedMotion) {
       }
       btn.textContent = '✓ Subscribed';
       btn.disabled = true;
-      nameInput.readOnly = true;
       emailInput.readOnly = true;
       const msg = result.already_subscribed
         ? "You're already subscribed. Thanks!"

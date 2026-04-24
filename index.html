@@ -1481,7 +1481,8 @@
     bottom: 170px;
     left: max(60px, calc((100% - 1600px) / 2));
     z-index: 20;
-    max-width: 900px;
+    /* Reserva espaço da órbita à direita para não sobrepor em desktop estreito */
+    max-width: min(900px, calc(100vw - min(682px, 53vw, 90vh) - 2 * max(60px, (100vw - 1600px) / 2) - 32px));
     animation: fadeInUp 1s ease-out 0.6s both;
   }
 
@@ -1505,7 +1506,7 @@
     font-size: var(--fs-lead); /* clamp(18px, 1.4vw, 22px) — maior do design system */
     line-height: 1.45;
     color: var(--text-primary);
-    max-width: min(900px, 86vw);
+    max-width: min(900px, 86vw, calc(100vw - min(682px, 53vw, 90vh) - 2 * max(60px, (100vw - 1600px) / 2) - 32px));
     margin-top: 20px;
     text-wrap: balance;
     position: relative;
@@ -2614,11 +2615,14 @@
     display: block;
     filter: drop-shadow(0 24px 60px rgba(0, 0, 0, 0.18)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.08));
     transition: transform 0.4s ease;
+    /* força camada GPU desde o primeiro paint — evita bug do Chromium onde drop-shadow
+       em WebP lossy com alpha é aplicado ao bounding box até o primeiro repaint */
+    transform: translate3d(0, 0, 0);
   }
-  .phone-shot:hover { transform: translateY(-6px); }
+  .phone-shot:hover { transform: translate3d(0, -6px, 0); }
   @media (prefers-reduced-motion: reduce) {
     .phone-shot { transition: none; }
-    .phone-shot:hover { transform: none; }
+    .phone-shot:hover { transform: translate3d(0, 0, 0); }
   }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
@@ -7507,7 +7511,6 @@
         <h3>Newsletter</h3>
         <p class="footer-news-desc">Receba novidades do Yolki direto no seu email.</p>
         <form id="footerSubscribeForm" onsubmit="return false;">
-          <input class="footer-subscribe-name" type="text" name="name" id="footerSubscribeName" placeholder="Seu nome" required="" autocomplete="given-name" aria-label="Seu nome" aria-describedby="footerNewsMicro">
           <div class="footer-subscribe">
             <input type="email" name="email" id="footerSubscribeEmail" placeholder="nome@email.com" required="" autocomplete="email" inputmode="email" aria-label="Seu email" aria-describedby="footerNewsMicro">
             <button type="submit" id="footerSubscribeBtn">Inscrever</button>
@@ -9195,7 +9198,6 @@ if (prefersReducedMotion) {
 (function() {
   const form = document.getElementById('footerSubscribeForm');
   if (!form) return;
-  const nameInput = document.getElementById('footerSubscribeName');
   const emailInput = document.getElementById('footerSubscribeEmail');
   const pill = form.querySelector('.footer-subscribe');
   const btn = document.getElementById('footerSubscribeBtn');
@@ -9218,14 +9220,8 @@ if (prefersReducedMotion) {
     e.preventDefault();
     if (succeeded) return;
 
-    const name = (nameInput.value || '').trim();
     const email = (emailInput.value || '').trim();
 
-    if (!name) {
-      setMicro('error', 'Informe seu nome.');
-      nameInput.focus();
-      return;
-    }
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       setMicro('error', 'Informe um email válido.');
       emailInput.focus();
@@ -9243,7 +9239,7 @@ if (prefersReducedMotion) {
     try {
       const geo = window.__fetchGeo ? await window.__fetchGeo() : { country: null, region: null, city: null };
       const { data: result, error } = await window.sbClient.rpc('subscribe_newsletter', {
-        p_name: name,
+        p_name: null,
         p_email: email,
         p_source: 'footer',
         p_geo_country: geo.country,
@@ -9261,7 +9257,6 @@ if (prefersReducedMotion) {
       }
       btn.textContent = '✓ Inscrito';
       btn.disabled = true;
-      nameInput.readOnly = true;
       emailInput.readOnly = true;
       const msg = result.already_subscribed
         ? 'Você já está inscrito. Obrigado!'
